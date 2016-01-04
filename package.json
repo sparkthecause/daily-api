@@ -26,6 +26,7 @@
     "express-sslify": "^1.0.1"
   },
   "devDependencies": {
+    "piping": "^0.3.0",
     "webpack": "^1.12.9"
   }
 }
