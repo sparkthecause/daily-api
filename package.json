@@ -22,7 +22,7 @@
   "homepage": "https://github.com/sparkthecause/daily-www#readme",
   "dependencies": {
     "express": "^4.13.3",
-    "handlebars": "^4.0.5"
+    "express-handlebars": "^2.0.1"
   },
   "devDependencies": {
     "webpack": "^1.12.9"
