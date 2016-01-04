@@ -15,8 +15,15 @@ if ( process.env.NODE_ENV === 'production' ) {
 
 }
 
+app.engine('hbs', exphbs({
+  defaultLayout: 'main',
+  extname: '.hbs'
+}));
+
+app.set('view engine', 'hbs');
+
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.render('home');
 });
 
 let server = app.listen(3000);
