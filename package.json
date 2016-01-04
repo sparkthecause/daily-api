@@ -1,0 +1,19 @@
+{
+  "name": "daily-www",
+  "version": "0.1.0",
+  "description": "Website for Spark Daily",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sparkthecause/daily-www.git"
+  },
+  "author": "Charles Burgess",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sparkthecause/daily-www/issues"
+  },
+  "homepage": "https://github.com/sparkthecause/daily-www#readme"
+}
