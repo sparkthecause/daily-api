@@ -30,6 +30,6 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
     res.render('home');
   });
 
-  let server = app.listen(3000);
+  let server = app.listen(process.env.PORT || 3000);
 
 }
