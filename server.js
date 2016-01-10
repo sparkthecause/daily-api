@@ -13,7 +13,7 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   if ( process.env.NODE_ENV === 'production' ) {
 
     var enforce = require('express-sslify');
-    app.use( enforce.HTTPS( true ) );
+    app.use( enforce.HTTPS({ trustProtoHeader: true }) );
 
   }
 
