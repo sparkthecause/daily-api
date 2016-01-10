@@ -25,20 +25,17 @@
   },
   "homepage": "https://github.com/sparkthecause/daily-www#readme",
   "dependencies": {
-    "bootstrap": "^3.3.6",
-    "bootstrap-webpack": "0.0.5",
+    "css-loader": "^0.23.1",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "express-sslify": "^1.0.1",
-    "less": "^2.5.3"
-  },
-  "devDependencies": {
-    "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "image-webpack-loader": "^1.6.2",
-    "piping": "^0.3.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9"
+  },
+  "devDependencies": {
+    "piping": "^0.3.0"
   }
 }
