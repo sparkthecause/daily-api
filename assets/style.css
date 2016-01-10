@@ -86,12 +86,17 @@ p {
   text-align: center;
   padding: 10px;
   margin: 30px 0px 30px 0px;
-  min-width: 250px;
+  width: 300px;
   color: #8E59CD;
 }
 @media (min-width: 600px) {
   .hero input {
     min-width: 350px;
+  }
+}
+@media (max-width: 400px) {
+  .hero input {
+    max-width: 200px;
   }
 }
 .hero input ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
