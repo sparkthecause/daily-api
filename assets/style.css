@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'Avenir-Roman';
+  src: url('./font/Avenir-Roman-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./font/Avenir-Roman-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./font/Avenir-Roman-webfont.svg') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Avenir-Black';
+  src: url('./font/Avenir-Black-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('./font/Avenir-Black-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('./font/Avenir-Black-webfont.svg') format('svg'); /* Legacy iOS */
+}
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+body {
+    font-family: "Avenir-Roman";
+    background-color: #f8f8f8;
+    text-align: center;
+
+    background-image: url(./img/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-position: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+h1, h2 {
+    font-family: "Avenir-Black";
+    margin: 0px;
+}
+h1 {
+  font-size: 48px;
+}
+h2 {
+    font-size: 32pt;
+    padding-top: 30px;
+}
+p {
+    font-size: 16px;
+}
+.header {
+  background-color: #8E59CD;
+  color: #ffffff;
+  height: 75px;
+  line-height: 75px;
+}
+.banner {
+  background-color: #64ADFA;
+  color: #ffffff;
+  height: 50px;
+  line-height: 50px;
+}
+.banner p {
+  font-size: 24px;
+}
+.hero {
+  color: #8E59CD;
+}
+.page-wrap {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.footer, .page-wrap:after {
+  height: 50px;
+}
+.footer {
+  background-color: #8E59CD;
+  color: #ffffff;
+  height: 50px;
+  line-height: 50px;
+}
