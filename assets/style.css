@@ -39,7 +39,6 @@ h1 {
 }
 h2 {
     font-size: 32pt;
-    padding-top: 30px;
 }
 p {
     font-size: 16px;
@@ -49,6 +48,7 @@ p {
   color: #ffffff;
   height: 75px;
   line-height: 75px;
+  margin-left: -15px;
 }
 .banner {
   background-color: #64ADFA;
@@ -57,10 +57,76 @@ p {
   line-height: 50px;
 }
 .banner p {
-  font-size: 24px;
+  font-size: 20px;
+}
+.hero-outer {
+    display: table;
+    position: absolute;
+    height: 75%;
+    width: 100%;
+}
+.hero-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+.hero-inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: /*whatever width you want*/;
 }
 .hero {
   color: #8E59CD;
+  padding: 0px 10px 0px 10px;
+}
+.hero input {
+  border-radius: 30px;
+  font-size: 22px;
+  border: 3px solid #8E59CD;
+  background-color: transparent;
+  text-align: center;
+  padding: 10px;
+  margin: 30px 0px 30px 0px;
+  min-width: 250px;
+  color: #8E59CD;
+}
+@media (min-width: 600px) {
+  .hero input {
+    min-width: 350px;
+  }
+}
+.hero input ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+  color: #8E59CD;
+}
+.hero input ::-moz-placeholder { /* Firefox 18- */
+  color: #8E59CD;
+}
+.hero input ::-moz-placeholder { /* Firefox 19+ */
+  color: #8E59CD;
+}
+.hero input ::-ms-input-placeholder { /* IE 10+ */
+  color: #8E59CD;
+}
+.hero input ::-ms-input-placeholder { /* Edge */
+  color: #8E59CD;
+}
+.hero input :placeholder-shown {
+  color: #8E59CD;
+}
+.hero input :focus {
+border: 3px solid #64ADFA;
+
+  border-radius: 3px;
+    outline: none;
+}
+.hero button {
+  border-radius: 30px;
+  font-size: 22px;
+  border: 3px solid #8E59CD;
+  background-color: #8E59CD;
+  text-align: center;
+  padding: 10px;
+  margin: 30px 0px 30px 0px;
+  color: #FFFFFF;
 }
 .page-wrap {
   min-height: 100%;
