@@ -10,6 +10,7 @@
        url('./font/Avenir-Black-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
        url('./font/Avenir-Black-webfont.svg') format('svg'); /* Legacy iOS */
 }
+@import url("./home.css");
 * {
 	margin: 0;
 }
@@ -20,7 +21,6 @@ body {
     font-family: "Avenir-Roman";
     background-color: #f8f8f8;
     text-align: center;
-
     background-image: url(./img/background.jpg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -49,114 +49,18 @@ p {
   line-height: 75px;
   margin-left: -15px;
 }
-.banner {
-  background-color: #64ADFA;
-  color: #ffffff;
-  height: 50px;
-  line-height: 50px;
-}
-.banner p {
-  font-size: 20px;
-}
-.hero-outer {
-    display: table;
-    position: absolute;
-    height: 70%;
-    width: 100%;
-}
-.hero-middle {
-    display: table-cell;
-    vertical-align: middle;
-}
-.hero-inner {
-    margin-left: auto;
-    margin-right: auto;
-    width: /*whatever width you want*/;
-}
-.hero {
-  color: #8E59CD;
-  padding: 0px 15px 0px 15px;
-}
-.hero h1 {
-  font-size: 40px;
-  line-height: 48px;
-}
-.hero input {
-  border-radius: 30px;
-  font-size: 18px;
-  border: 3px solid #8E59CD;
-  background-color: transparent;
-  text-align: center;
-  padding: 14px 10px 12px 10px;
-  margin: 40px 0px 30px 0px;
-  width: 300px;
-  color: #8E59CD;
-}
-@media (min-width: 600px) {
-  .hero input {
-    min-width: 350px;
-  }
-}
-@media (max-width: 400px) {
-  .hero input {
-    max-width: 200px;
-  }
-}
-.hero input::-webkit-input-placeholder { /* Safari, Chrome and Opera */
-  color: #8E59CD;
-}
-.hero input::-moz-placeholder { /* Firefox 18- */
-  color: #8E59CD;
-}
-.hero input::-moz-placeholder { /* Firefox 19+ */
-  color: #8E59CD;
-}
-.hero input::-ms-input-placeholder { /* IE 10+ */
-  color: #8E59CD;
-}
-.hero input::-ms-input-placeholder { /* Edge */
-  color: #8E59CD;
-}
-.hero input:placeholder-shown {
-  color: #8E59CD;
-}
-.hero input:focus {
-  outline: none;
-}
-.hero button {
-  border-radius: 30px;
-  font-size: 22px;
-  border: 3px solid #8E59CD;
-  background-color: #8E59CD;
-  text-align: center;
-  padding: 10px;
-  margin: 30px 0px 30px 0px;
-  color: #FFFFFF;
-}
-@media (max-height: 550px) {
-  .hero input, .hero button {
-    margin: 25px 0px 15px 0px;
-  }
-  .hero-outer {
-    height: 60%;
-  }
-}
-.page-wrap {
-  min-height: 100%;
-  margin-bottom: -50px;
-}
-.page-wrap:after {
-  content: "";
-  display: block;
-}
-.footer, .page-wrap:after {
-  height: 50px;
+.wrapper {
+	min-height: 100%;
+	margin: 0 auto -50px;
 }
 .footer {
   background-color: #8E59CD;
   color: #ffffff;
   height: 50px;
   line-height: 50px;
+}
+.push {
+  height: 50px;
 }
 @media (min-width: 400px) {
   .mobile-only {
