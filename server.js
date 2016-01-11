@@ -12,7 +12,7 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   // Redirect non-HTTPS traffic in production
   if ( process.env.NODE_ENV === 'production' ) {
 
-    var enforce = require('express-sslify');
+    const enforce = require('express-sslify');
     // Disable until we buy the SSL addon
     // app.use( enforce.HTTPS({ trustProtoHeader: true }) );
 
@@ -31,6 +31,10 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
     res.render('home');
   });
 
-  let server = app.listen(process.env.PORT || 3000);
+  app.get('/archive', function (req, res) {
+    res.render('archive');
+  });
+
+  const server = app.listen(process.env.PORT || 3000);
 
 }

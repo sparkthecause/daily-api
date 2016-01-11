@@ -1,0 +1,31 @@
+.navigator {
+  background-color: #FFFFFF;
+  color: #8E59CD;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px 10px 0px 10px;
+}
+.navigator p {
+  font-size: 20px;
+}
+.subscribe-bar {
+  background-color: #FFFFFF;
+  color: #8E59CD;
+  height: 75px;
+  line-height: 75px;
+  padding: 0px 10px 0px 10px;
+}
+.shadow-below {
+  -moz-box-shadow:    0px 5px 5px 0px #959595;
+  -webkit-box-shadow: 0px 5px 5px 0px #959595;
+  box-shadow:         0px 5px 5px 0px #959595;
+}
+.shadow-above {
+  -moz-box-shadow:    0px -5px 5px 0px #959595;
+  -webkit-box-shadow: 0px -5px 5px 0px #959595;
+  box-shadow:         0px -5px 5px 0px #959595;
+}
+.wrapper-large {
+	min-height: 100%;
+	margin: 0 auto -125px;
+}

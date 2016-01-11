@@ -1,3 +1,12 @@
+body {
+  background-image: url(./img/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
 .banner {
   background-color: #64ADFA;
   color: #ffffff;
@@ -12,7 +21,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: -50px;
     margin-top: -125px;
 }
 .hero-middle {
@@ -26,7 +35,7 @@
 }
 .hero {
   color: #8E59CD;
-  padding: 0px 15px 0px 15px;
+  padding: 60px 15px 0px 15px;
 }
 .hero h1 {
   font-size: 40px;
@@ -87,8 +96,5 @@
 @media (max-height: 550px) {
   .hero input, .hero button {
     margin: 25px 0px 15px 0px;
-  }
-  .hero-outer {
-    height: 60%;
   }
 }
