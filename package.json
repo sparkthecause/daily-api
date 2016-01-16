@@ -8,11 +8,8 @@
     "npm": "3.3.12"
   },
   "scripts": {
-    "postinstall": "npm run webpack",
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --progress --colors",
-    "webpack-watch": "webpack --progress --colors --watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -25,16 +22,9 @@
   },
   "homepage": "https://github.com/sparkthecause/daily-www#readme",
   "dependencies": {
-    "css-loader": "^0.23.1",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
-    "express-sslify": "^1.0.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.8.5",
-    "image-webpack-loader": "^1.6.2",
-    "style-loader": "^0.13.0",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.12.9"
+    "express-sslify": "^1.0.1"
   },
   "devDependencies": {
     "piping": "^0.3.0"

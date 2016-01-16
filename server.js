@@ -25,7 +25,7 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
   app.set('view engine', 'hbs');
 
-  app.use(express.static('public'));
+  app.use(express.static('assets'));
 
   app.get('/', function (req, res) {
     res.render('home');

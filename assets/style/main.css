@@ -1,0 +1,236 @@
+/* FONTELLO - CUSTOM ICON FONTS */
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot');
+  src: url('../font/fontello.eot#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff') format('woff'),
+       url('../font/fontello.ttf') format('truetype'),
+       url('../font/fontello.svg#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?13220930#fontello') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-right-big:before { content: '\e800'; } /* '' */
+.icon-left-big:before { content: '\e801'; } /* '' */
+.icon-facebook-squared:before { content: '\e802'; } /* '' */
+.icon-instagram:before { content: '\e803'; } /* '' */
+.icon-spark-logo:before { content: '\e804'; } /* '' */
+.icon-mail-squared:before { content: '\e805'; } /* '' */
+
+/* MAIN CSS */
+
+@font-face {
+  font-family: 'Avenir-Roman';
+  src: url('../font/Avenir-Roman-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../font/Avenir-Roman-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../font/Avenir-Roman-webfont.svg') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Avenir-Black';
+  src: url('../font/Avenir-Black-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../font/Avenir-Black-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../font/Avenir-Black-webfont.svg') format('svg'); /* Legacy iOS */
+}
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+body {
+    font-family: "Avenir-Roman";
+    background-color: #f8f8f8;
+    text-align: center;
+}
+h1, h2 {
+    font-family: "Avenir-Black";
+}
+h1 {
+  font-size: 48px;
+}
+h2 {
+    font-size: 32pt;
+}
+p {
+    font-size: 16px;
+}
+.header {
+  height: 75px;
+  line-height: 75px;
+  margin-left: -15px;
+  background-color: #8E59CD;
+  color: #ffffff;
+}
+.footer {
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  width:100%;
+  height: 50px;
+  line-height: 50px;
+  background-color: #8E59CD;
+  color: #ffffff;
+}
+.push {
+  height: 50px;
+}
+@media (min-width: 400px) {
+  .mobile-only {
+    display: none;
+  }
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+/* HOME PAGE */
+
+body {
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+.banner {
+  background-color: #64ADFA;
+  color: #ffffff;
+  height: 50px;
+  line-height: 50px;
+}
+.banner p {
+  font-size: 20px;
+}
+.hero-outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin-bottom: -50px;
+    margin-top: -125px;
+}
+.hero-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+.hero-inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.hero {
+  color: #8E59CD;
+  padding: 60px 15px 0px 15px;
+}
+.hero h1 {
+  font-size: 40px;
+  line-height: 48px;
+}
+.hero input {
+  border-radius: 30px;
+  font-size: 18px;
+  border: 3px solid #8E59CD;
+  background-color: transparent;
+  text-align: center;
+  padding: 14px 10px 12px 10px;
+  margin: 40px 0px 30px 0px;
+  width: 300px;
+  color: #8E59CD;
+}
+@media (min-width: 600px) {
+  .hero input {
+    min-width: 350px;
+  }
+}
+@media (max-width: 400px) {
+  .hero input {
+    max-width: 200px;
+  }
+}
+.hero input::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+  color: #8E59CD;
+}
+.hero input::-moz-placeholder { /* Firefox 18- */
+  color: #8E59CD;
+}
+.hero input::-moz-placeholder { /* Firefox 19+ */
+  color: #8E59CD;
+}
+.hero input::-ms-input-placeholder { /* IE 10+ */
+  color: #8E59CD;
+}
+.hero input::-ms-input-placeholder { /* Edge */
+  color: #8E59CD;
+}
+.hero input:placeholder-shown {
+  color: #8E59CD;
+}
+.hero input:focus {
+  outline: none;
+}
+.hero button {
+  border-radius: 30px;
+  font-size: 22px;
+  border: 3px solid #8E59CD;
+  background-color: #8E59CD;
+  text-align: center;
+  padding: 10px;
+  margin: 30px 0px 30px 0px;
+  color: #FFFFFF;
+}
+@media (max-height: 550px) {
+  .hero input, .hero button {
+    margin: 25px 0px 15px 0px;
+  }
+}
