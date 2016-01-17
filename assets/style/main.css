@@ -233,10 +233,10 @@ body {
   }
 }
 
-/* ARCHIVE */
+/* ARCHIVE PAGE */
 
 .navigator {
-  background-color: #FFFFFF;
+  background-color: #F8f8F8;
   color: #8E59CD;
   height: 50px;
   line-height: 50px;
@@ -257,9 +257,6 @@ body {
 .header-spacer {
   height: 125px;
 }
-.archive-main {
-  background-color: #FFFFFF;
-}
 .subscribe-bar {
   position:fixed;
   left:0px;
@@ -268,7 +265,7 @@ body {
   height: 75px;
   line-height: 75px;
   padding: 0px 10px 0px 10px;
-  background-color: #FFFFFF;
+  background-color: #F8F8F8;
   color: #8E59CD;
 }
 .shadow-below {
