@@ -106,8 +106,13 @@ a {
 }
 .header {
   height: 75px;
+  width: 100%;
   line-height: 75px;
-  margin-left: -15px;
+  margin-left: -10px; /* corrcet icon spacing */
+  padding-right: 10px; /* corrcet icon spacing */
+  position:fixed;
+  left: 0px;
+  top: 0px;
   background-color: #8E59CD;
   color: #ffffff;
 }
@@ -156,6 +161,7 @@ body {
   width: 100%;
   height: 50px;
   font-size: 20px;
+  top: 75px;
 }
 .hero {
   color: #8E59CD;
@@ -224,4 +230,56 @@ body {
   .hero input, .hero button {
     margin: 25px 0px 15px 0px;
   }
+}
+
+/* ARCHIVE */
+
+.navigator {
+  background-color: #FFFFFF;
+  color: #8E59CD;
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  left: 0px;
+  top: 75px;
+  width: 100%;
+}
+.navigator .float-left {
+  padding-left: 10px;
+}
+.navigator .float-right {
+  padding-right: 10px;
+}
+.navigator p {
+  font-size: 20px;
+}
+.header-spacer {
+  height: 125px;
+}
+.archive-main {
+  background-color: #FFFFFF;
+}
+.subscribe-bar {
+  position:fixed;
+  left:0px;
+  bottom:50px;
+  width:100%;
+  height: 75px;
+  line-height: 75px;
+  padding: 0px 10px 0px 10px;
+  background-color: #FFFFFF;
+  color: #8E59CD;
+}
+.shadow-below {
+  -moz-box-shadow:    0px 5px 5px 0px #959595;
+  -webkit-box-shadow: 0px 5px 5px 0px #959595;
+  box-shadow:         0px 5px 5px 0px #959595;
+}
+.shadow-above {
+  -moz-box-shadow:    0px -5px 5px 0px #959595;
+  -webkit-box-shadow: 0px -5px 5px 0px #959595;
+  box-shadow:         0px -5px 5px 0px #959595;
+}
+.push {
+  height: 125px;
 }
