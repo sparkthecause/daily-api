@@ -155,6 +155,7 @@ body {
 .banner {
   background-color: #64ADFA;
   display: block;
+  position: fixed;
   color: #ffffff;
   height: 50px;
   line-height: 50px;
