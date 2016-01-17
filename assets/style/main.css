@@ -143,15 +143,6 @@ a {
 
 /* HOME PAGE */
 
-body {
-  background-image: url(../img/background.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  }
 .banner {
   background-color: #64ADFA;
   display: block;
@@ -163,6 +154,17 @@ body {
   height: 50px;
   font-size: 20px;
   top: 75px;
+}
+.hero-bg {
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 .hero {
   color: #8E59CD;
