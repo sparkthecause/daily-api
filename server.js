@@ -18,10 +18,12 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
   }
 
-  app.engine('hbs', exphbs({
+  const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs'
-  }));
+  });
+
+  app.engine('hbs', hbs.engine);
 
   app.set('view engine', 'hbs');
 
@@ -32,7 +34,29 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   });
 
   app.get('/archive', function (req, res) {
-    res.render('archive');
+    res.render('archive', {
+      "daily": {
+        "edition_id": "lkw4enr385dsad7324",
+        "published_on": "2016-01-07",
+        "subject": "And so it begins...",
+        "contents": [{
+          "content_id": "asfkjhi6wwe",
+          "priority": 0,
+          "edition_id": "lkw4enr385dsad7324",
+          "is_approved": 1,
+          "content_type": 4,
+          "title": "Title!",
+          "images": {
+            "main": {
+              "image_id": "h48dhfker8",
+              "src": "https://cdn.sparkthecause.com",
+              "href": "http://ellen.tv"
+            }
+          },
+          "descprition_html": "<p>We love you</p>"
+        }]
+      }
+    });
   });
 
   const server = app.listen(process.env.PORT || 3000);

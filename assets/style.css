@@ -221,12 +221,12 @@ input:focus {
   background-color: #8E59CD;
   text-align: center;
   padding: 10px;
-  margin: 30px 0px 30px 5px;
+  margin: 30px 0px 30px 0px;
   color: #FFFFFF;
 }
 @media (max-height: 550px) {
   .hero input, .hero button {
-    margin: 25px 0px 15px 5px;
+    margin: 25px 0px 15px 0px;
   }
 }
 
@@ -297,7 +297,7 @@ input:focus {
   background-color: #8E59CD;
   text-align: center;
   padding: 8px 6px 8px 6px;
-  margin-left: 5px;
+  margin: 0px 5px 0px 5px;
   color: #FFFFFF;
 }
 .shadow-below {
@@ -326,3 +326,5 @@ input:focus {
     display: none !important;
   }
 }
+
+/* EDITION PARTIAL */
