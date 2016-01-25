@@ -13,8 +13,7 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   if ( process.env.NODE_ENV === 'production' ) {
 
     const enforce = require('express-sslify');
-    // Disable until we buy the SSL addon
-    // app.use( enforce.HTTPS({ trustProtoHeader: true }) );
+    app.use( enforce.HTTPS({ trustProtoHeader: true }) );
 
   }
 
