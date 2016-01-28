@@ -2,11 +2,17 @@
 
 const express = require('express');
 const exphbs = require('express-handlebars');
+const pg = require('pg-promise')();
 
 const app = express();
+const config = require('./config');
 
 if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
+  const postgresURL = config.postgres.test; //process.env.DATABASE_URL || (process.env.CI) ? :
+  const db = pg(postgresURL);
+
+  app.set('db', db);
   app.disable( 'x-powered-by' );
 
   // Redirect non-HTTPS traffic in production
@@ -33,6 +39,17 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   });
 
   app.get('/archive', function (req, res) {
+
+    const db = app.get('db');
+
+    db.query("select * from editions")
+    .then(function (data) {
+        console.log(data); // display found audit records;
+    })
+    .catch(function (error) {
+        console.log(error); // display the error;
+    });
+
     res.render('archive', {
       "daily": {
         "edition_id": "lkw4enr385dsad7324",
