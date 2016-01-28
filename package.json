@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postgres": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql"
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,14 @@
   },
   "homepage": "https://github.com/sparkthecause/daily-www#readme",
   "dependencies": {
+    "bluebird": "^3.1.5",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
-    "express-sslify": "^1.0.1"
+    "express-sslify": "^1.0.1",
+    "pg-promise": "^3.0.6"
   },
   "devDependencies": {
+    "pg-monitor": "^0.4.5",
     "piping": "^0.3.0"
   }
 }
