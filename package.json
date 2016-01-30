@@ -10,18 +10,20 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postgres": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql"
+    "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
+    "pg-schema-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f schema.sql",
+    "pg-data": "psql -d daily_development -a -f data.sql"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sparkthecause/daily-www.git"
+    "url": "git+https://github.com/sparkthecause/daily.git"
   },
   "author": "Charles Burgess",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sparkthecause/daily-www/issues"
+    "url": "https://github.com/sparkthecause/daily/issues"
   },
-  "homepage": "https://github.com/sparkthecause/daily-www#readme",
+  "homepage": "https://github.com/sparkthecause/daily#readme",
   "dependencies": {
     "bluebird": "^3.1.5",
     "express": "^4.13.3",
