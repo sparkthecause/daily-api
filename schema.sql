@@ -62,7 +62,7 @@ CREATE TABLE editions (
 CREATE TABLE images (
     image_id uuid DEFAULT uuid_generate_v4() NOT NULL,
     extension text NOT NULL,
-    image_type text DEFAULT 'main'::text NOT NULL,
+    position int DEFAULT 1::int NOT NULL,
     href text,
     blurb_id uuid
 );
