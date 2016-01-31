@@ -2,14 +2,15 @@
 
 const express = require('express');
 const exphbs = require('express-handlebars');
-const pg = require('pg-promise')();
+const Promise = require('bluebird');
+const pg = require('pg-promise')({promiseLib: Promise});
 
 const app = express();
 const config = require('./config');
 
 if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
-  const postgresURL = config.postgres.test; //process.env.DATABASE_URL || (process.env.CI) ? :
+  const postgresURL = config.postgres.development; //process.env.DATABASE_URL || (process.env.CI) ? :
   const db = pg(postgresURL);
 
   app.set('db', db);
@@ -42,37 +43,28 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
     const db = app.get('db');
 
-    db.query("select * from editions")
-    .then(function (data) {
-        console.log(data); // display found audit records;
+    const editionsQuery = `SELECT * FROM editions WHERE editions.publish_on = now()::date`;
+    const blurbsQuery = `SELECT blurbs.* FROM blurbs WHERE edition_id = (SELECT edition_id FROM editions WHERE publish_on = now()::date)`;
+    const imagesQuery = `SELECT * FROM images WHERE blurb_id = (SELECT blurb_id FROM editions WHERE publish_on = now()::date)`;
+
+    Promise.join(db.query(editionsQuery), db.query(blurbsQuery), db.query(imagesQuery), function(editions, blurbs, images) {
+
+      for ( const edition of editions ) {
+        edition.blurbs = blurbs;
+        for ( const blurb of edition.blurbs ) {
+          blurb.images = images;
+        }
+      }
+
+      res.render('archive', {
+        "daily": editions[0]
+      });
+
     })
     .catch(function (error) {
         console.log(error); // display the error;
     });
 
-    res.render('archive', {
-      "daily": {
-        "edition_id": "lkw4enr385dsad7324",
-        "published_on": "2016-01-07",
-        "subject": "And so it begins...",
-        "contents": [{
-          "content_id": "asfkjhi6wwe",
-          "priority": 0,
-          "edition_id": "lkw4enr385dsad7324",
-          "is_approved": 1,
-          "content_type": 4,
-          "title": "Title!",
-          "images": {
-            "main": {
-              "image_id": "h48dhfker8",
-              "src": "https://cdn.sparkthecause.com",
-              "href": "http://ellen.tv"
-            }
-          },
-          "descprition_html": "<p>We love you</p>"
-        }]
-      }
-    });
   });
 
   const server = app.listen(process.env.PORT || 3000);
