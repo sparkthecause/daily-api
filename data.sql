@@ -9,7 +9,7 @@ INSERT INTO "blurb_types"("blurb_type_id","name") VALUES
 -- EDITIONS --
 
 INSERT INTO "editions" ("edition_id","publish_on","subject","approved_at") VALUES
-(E'346401bd-9957-4ee5-9bfc-f8f1b80cd767',E'2016-01-30 17:12:41.098931',E'My First Edition!',E'2016-01-29 00:00:00');
+(E'346401bd-9957-4ee5-9bfc-f8f1b80cd767',E'2016-01-30',E'My First Edition!',E'2016-01-29 00:00:00');
 
 -- BLURBS --
 

@@ -50,7 +50,7 @@ CREATE TABLE blurbs (
 
 CREATE TABLE editions (
     edition_id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    publish_on timestamp without time zone,
+    publish_on date,
     subject text,
     approved_at timestamp without time zone
 );
