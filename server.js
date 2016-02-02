@@ -1,20 +1,22 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const exphbs = require('express-handlebars');
-const Promise = require('bluebird');
-const pg = require('pg-promise')({promiseLib: Promise});
-
+// const Promise = require('bluebird');
 const app = express();
 const config = require('./config');
 
 if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
-  const postgresURL = config.postgres.development; //process.env.DATABASE_URL || (process.env.CI) ? :
-  const db = pg(postgresURL);
-
-  app.set('db', db);
   app.disable( 'x-powered-by' );
+
+  const postgresURL = config.postgres.development; //process.env.DATABASE_URL || (process.env.CI) ? :
+  const pg = require('knex')({
+    client: 'pg',
+    connection: postgresURL,
+    debug: true
+  });
+  app.set('knex', pg);
 
   // Redirect non-HTTPS traffic in production
   if ( process.env.NODE_ENV === 'production' ) {
@@ -30,7 +32,6 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   });
 
   app.engine('hbs', hbs.engine);
-
   app.set('view engine', 'hbs');
 
   app.use(express.static('assets'));
@@ -39,31 +40,46 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
     res.render('home');
   });
 
+  // app.use( '/api', require( './api' )( app ) );
+
   app.get('/archive', function (req, res) {
 
-    const db = app.get('db');
+    const knex = app.get('knex');
 
-    const editionsQuery = `SELECT * FROM editions WHERE editions.publish_on = now()::date`;
-    const blurbsQuery = `SELECT blurbs.* FROM blurbs WHERE edition_id = (SELECT edition_id FROM editions WHERE publish_on = now()::date)`;
-    const imagesQuery = `SELECT * FROM images WHERE blurb_id = (SELECT blurb_id FROM editions WHERE publish_on = now()::date)`;
+    const publishDate = '2016-02-01';
 
-    Promise.join(db.query(editionsQuery), db.query(blurbsQuery), db.query(imagesQuery), function(editions, blurbs, images) {
+    knex.select().from('editions').where({'publish_on': publishDate})
+    .then( rows => {
 
-      for ( const edition of editions ) {
-        edition.blurbs = blurbs;
-        for ( const blurb of edition.blurbs ) {
-          blurb.images = images;
-        }
-      }
+      console.log(rows);
 
       res.render('archive', {
-        "daily": editions[0]
+        "daily": rows[0]
       });
 
-    })
-    .catch(function (error) {
-        console.log(error); // display the error;
     });
+
+    // const editionsQuery = `SELECT * FROM editions WHERE editions.publish_on = now()::date`;
+    // const blurbsQuery = `SELECT blurbs.* FROM blurbs WHERE edition_id = (SELECT edition_id FROM editions WHERE publish_on = now()::date)`;
+    // const imagesQuery = `SELECT * FROM images WHERE blurb_id = (SELECT blurb_id FROM editions WHERE publish_on = now()::date)`;
+    //
+    // Promise.join(db.query(editionsQuery), db.query(blurbsQuery), db.query(imagesQuery), function(editions, blurbs, images) {
+    //
+    //   for ( const edition of editions ) {
+    //     edition.blurbs = blurbs;
+    //     for ( const blurb of edition.blurbs ) {
+    //       blurb.images = images;
+    //     }
+    //   }
+    //
+    //   res.render('archive', {
+    //     "daily": editions[0]
+    //   });
+    //
+    // })
+    // .catch(function (error) {
+    //     console.log(error); // display the error;
+    // });
 
   });
 
