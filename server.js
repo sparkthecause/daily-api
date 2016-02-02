@@ -40,7 +40,7 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
     res.render('home');
   });
 
-  // app.use( '/api', require( './api' )( app ) );
+  app.use( '/api', require( './api' )( app ) );
 
   app.get('/archive', function (req, res) {
 
