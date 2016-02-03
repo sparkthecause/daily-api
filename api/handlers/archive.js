@@ -17,7 +17,7 @@ module.exports = class Archive {
     const blurbsPromise = this.knex.select().from('blurbs').where('edition_id', 'in', editionsSubquery);
     const imagesPromise = this.knex.select().from('images').where('blurb_id', 'in', blurbsSubquery);
 
-    return Promise.join(editionsPromise, blurbsPromise, imagesPromise, function(editions, blurbs, images) {
+    return Promise.join(editionsPromise, blurbsPromise, imagesPromise, (editions, blurbs, images) => {
 
       if (editions.length < 1) throw error('404');
 
