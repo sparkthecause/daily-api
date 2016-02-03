@@ -9,7 +9,9 @@ module.exports = class Archive {
   editionForDate( publishDate ) {
 
     // const publishDate = '2016-02-01';
-    return this.knex.select().from('editions').where({'publish_on': publishDate})
+    return this.knex.select().from('editions').where({
+      'publish_on': publishDate
+    })
     .then( rows => {
 
       if (rows.length < 1) throw error('404');
