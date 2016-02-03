@@ -1,23 +1,18 @@
 'use strict';
 
 const router = require('express').Router();
+const ArchiveHandler = require('./handlers/archive');
 
 module.exports = function( app ) {
 
-    const config = app.get( 'config' );
-    const knex = app.get( 'knex' );
+    const archiveHandler = new ArchiveHandler( app );
 
     router.route('/archive')
     .get( function( req, res ) {
 
-      const publishDate = '2016-02-01';
-
-      knex.select().from('editions').where({'publish_on': publishDate})
-      .then( rows => {
-
-        res.json(rows[0]);
-
-      });
+      archiveHandler.editionForDate(req.query.date)
+      .then( result => { res.json(result) })
+      .catch( error => { res.status(404).send('No edition found for that date.') });
 
     });
 
