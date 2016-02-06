@@ -4,6 +4,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 // const Promise = require('bluebird');
 const app = express();
+const bodyParser = require('body-parser')
 const config = require('./config');
 
 if ( process.env.NODE_ENV === "production" || require("piping")() ) {

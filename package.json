@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint",
+    "lint": "eslint api/**",
     "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
     "pg-schema-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f schema.sql",
     "pg-data": "psql -d daily_development -a -f data.sql"
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/sparkthecause/daily#readme",
   "dependencies": {
     "bluebird": "^3.2.2",
+    "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "express-handlebars": "^3.0.0",
     "express-sslify": "^1.0.1",
@@ -35,7 +37,20 @@
     "pg": "^4.4.4"
   },
   "devDependencies": {
+    "eslint": "^1.10.3",
     "pg-monitor": "^0.4.5",
     "piping": "^0.3.0"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+        "semi": [2, "always"]
+    }
   }
+
 }
