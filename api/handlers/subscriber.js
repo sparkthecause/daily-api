@@ -7,4 +7,4 @@ module.exports = class Subscriber {
     this.knex = app.get( 'knex' );
   }
 
-}
+};

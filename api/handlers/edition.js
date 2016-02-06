@@ -19,7 +19,7 @@ module.exports = class Edition {
 
     return Promise.join(editionsPromise, blurbsPromise, imagesPromise, (editions, blurbs, images) => {
 
-      if (editions.length < 1) throw error('404');
+      if (editions.length < 1) throw Error('404');
 
       for ( const edition of editions ) {
         edition.blurbs = blurbs;
@@ -36,4 +36,4 @@ module.exports = class Edition {
 
   }
 
-}
+};
