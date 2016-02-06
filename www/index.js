@@ -3,8 +3,14 @@
 const router = require('express').Router();
 const ArchiveHandler = require('../api/handlers/archive');
 
+const today = function() {
+  const date = new Date();
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+}
+
 module.exports = app => {
 
+  const knex = app.get('knex');
   const archiveHandler = new ArchiveHandler( app );
 
   app.get('/', (req, res) => {
@@ -14,9 +20,9 @@ module.exports = app => {
   router.route('/archive')
   .get((req, res) => {
 
-    const knex = app.get('knex');
+    const publishDate = req.query.date || today();
 
-    archiveHandler.editionForDate(req.query.date)
+    archiveHandler.editionForDate(publishDate)
     .then( result => {
 
       res.render('archive', {
@@ -25,11 +31,15 @@ module.exports = app => {
 
     })
     .catch( error => {
-      res.status(404).send('No edition found for that date.');
+
+      res.render('archive', {
+        "error": "No edition found for that date."
+      });
+
     });
 
   });
 
-    return router;
+  return router;
 
 };
