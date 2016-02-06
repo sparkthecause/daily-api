@@ -1,16 +1,16 @@
 'use strict';
 
 const router = require('express').Router();
-const ArchiveHandler = require('./handlers/archive');
+const EditionHandler = require('./handlers/edition');
 
 module.exports = app => {
 
-    const archiveHandler = new ArchiveHandler( app );
+    const editionHandler = new EditionHandler( app );
 
-    router.route('/archive')
+    router.route('/edition')
     .get((req, res) => {
 
-      archiveHandler.editionForDate(req.query.date)
+      editionHandler.editionForDate(req.query.date)
       .then( result => {
         res.json(result);
       })

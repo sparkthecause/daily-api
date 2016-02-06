@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird');
 
-module.exports = class Archive {
+module.exports = class Edition {
   constructor( app ) {
     this.config = app.get( 'config' );
     this.knex = app.get( 'knex' );
