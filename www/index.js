@@ -4,9 +4,7 @@ const router = require('express').Router();
 const moment = require('moment');
 const ArchiveHandler = require('../api/handlers/archive');
 
-const today = function() {
-  return moment().format('YYYY-MM-DD');
-}
+const today = () => moment().format('YYYY-MM-DD');
 
 module.exports = app => {
 
