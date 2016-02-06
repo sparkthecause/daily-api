@@ -1,10 +1,24 @@
 <div class="navigator shadow-below">
-  <p><i class="icon-left-big float-left"></i> 1/2/16 <i class="icon-right-big float-right"></i></p>
+  <p>
+    <a class="float-left" href="/archive?date={{prevDay}}">
+      <i class="icon-left-big"></i>
+    </a>
+    {{date}}
+    <a class="float-right" href="/archive?date={{nextDay}}">
+      <i class="icon-right-big"></i>
+    </a>
+  </p>
 </div>
 
 <div class="header-spacer"></div>
 
-<div class="archive-main">{{> edition daily}}</div>
+<div class="archive-main">
+  {{#if daily}}
+    {{> edition daily}}
+  {{else}}
+    {{> error errorMessage}}
+  {{/if}}
+</div>
 
 <div class="push"></div>
 
