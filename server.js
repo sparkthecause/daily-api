@@ -10,7 +10,8 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
   app.disable( 'x-powered-by' );
 
-  const postgresURL = config.postgres.development; //process.env.DATABASE_URL || (process.env.CI) ? :
+  const postgresURL = config.postgres.url;
+
   const pg = require('knex')({
     client: 'pg',
     connection: postgresURL,
