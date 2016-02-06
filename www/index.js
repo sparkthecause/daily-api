@@ -24,14 +24,18 @@ module.exports = app => {
     .then( result => {
 
       res.render('archive', {
-        "daily": result
+        "daily": result,
+        "nextDay": '',
+        "prevDay": ''
       });
 
     })
     .catch( error => {
 
       res.render('archive', {
-        "error": "No edition found for that date."
+        "errorMessage": "No edition found for that date.",
+        "nextDay": '',
+        "prevDay": ''
       });
 
     });
