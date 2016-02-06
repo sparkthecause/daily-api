@@ -2,9 +2,12 @@
 
 const router = require('express').Router();
 const moment = require('moment');
+require('moment-business'); // modifies moment
 const ArchiveHandler = require('../api/handlers/archive');
 
 const today = () => moment().format('YYYY-MM-DD');
+const nextWeekDay = (date) => moment(date).addWeekDays(1).format('YYYY-MM-DD');
+const prevWeekDay = (date) => moment(date).subtractWeekDays(1).format('YYYY-MM-DD');
 
 module.exports = app => {
 
@@ -25,8 +28,9 @@ module.exports = app => {
 
       res.render('archive', {
         "daily": result,
-        "nextDay": '',
-        "prevDay": ''
+        "date": moment(publishDate).format('MMM Do'),
+        "nextDay": nextWeekDay(publishDate),
+        "prevDay": prevWeekDay(publishDate)
       });
 
     })
@@ -34,8 +38,9 @@ module.exports = app => {
 
       res.render('archive', {
         "errorMessage": "No edition found for that date.",
-        "nextDay": '',
-        "prevDay": ''
+        "date": moment(publishDate).format('MMM Do'),
+        "nextDay": nextWeekDay(publishDate),
+        "prevDay": prevWeekDay(publishDate)
       });
 
     });
