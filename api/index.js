@@ -32,7 +32,13 @@ module.exports = app => {
       res.json(result);
     })
     .catch( error => {
-      res.status(500).send(error);
+      if (error.message === "email already exists") {
+        res.status(400).send({
+          message: error.message
+        })
+      } else {
+        res.status(500).send(error);
+      }
     });
 
   });

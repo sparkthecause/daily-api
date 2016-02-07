@@ -16,7 +16,13 @@ module.exports = class Subscriber {
 
     })
     .catch( error => {
-      console.log(error);
+
+      if (error.constraint === "subscribers_email_address_key") {
+        throw new Error('email already exists');
+      } else {
+        return error;
+      }
+
     });
 
   }
