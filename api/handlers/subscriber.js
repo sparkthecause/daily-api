@@ -7,4 +7,18 @@ module.exports = class Subscriber {
     this.knex = app.get( 'knex' );
   }
 
+  newSubscriberWithEmail(email) {
+
+    return this.knex.insert({"email_address": email}).into('subscribers').returning('*')
+    .then( subscribers => {
+
+      return subscribers[0];
+
+    })
+    .catch( error => {
+      console.log(error);
+    });
+
+  }
+
 };

@@ -27,7 +27,7 @@ module.exports = app => {
   router.route('/subscribers')
   .post((req, res) => {
 
-    subscriberHandler.editionForDate(req.query.date)
+    subscriberHandler.newSubscriberWithEmail(req.body.email)
     .then( result => {
       res.json(result);
     })
