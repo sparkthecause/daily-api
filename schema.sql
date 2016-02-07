@@ -72,7 +72,7 @@ CREATE TABLE images (
 --
 
 CREATE TABLE subscribers (
-    email_address text NOT NULL,
+    email_address text NOT NULL UNIQUE,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     unsubscribed_at timestamp without time zone,
     subscriber_id uuid DEFAULT uuid_generate_v4() NOT NULL

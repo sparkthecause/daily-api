@@ -10,6 +10,10 @@ const config = require('./config');
 if ( process.env.NODE_ENV === "production" || require("piping")() ) {
 
   app.disable( 'x-powered-by' );
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
   const postgresURL = config.postgres.url;
 

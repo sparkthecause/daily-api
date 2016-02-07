@@ -27,12 +27,20 @@ module.exports = app => {
   router.route('/subscribers')
   .post((req, res) => {
 
-    subscriberHandler.editionForDate(req.query.date)
+    subscriberHandler.newSubscriberWithEmail(req.body.email)
     .then( result => {
       res.json(result);
     })
     .catch( error => {
-      res.status(500).send(error);
+      
+      let status = 500;
+      if (error.message === "email is in use") status = 400;
+      if (error.message === "email is invalid") status = 400;
+
+      res.status(status).send({
+        message: error.message || error
+      })
+
     });
 
   });
