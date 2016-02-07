@@ -13,7 +13,7 @@ module.exports = class Subscriber {
   newSubscriberWithEmail(email) {
 
     // check for an invalid email address
-    if (!validator.isEmail(email)) return Promise.reject(new Error('email is invalid'));
+    if (!email || !validator.isEmail(email)) return Promise.reject(new Error('email is invalid'));
 
     return this.knex.insert({"email_address": email}).into('subscribers').returning('*')
     .then( subscribers => {
