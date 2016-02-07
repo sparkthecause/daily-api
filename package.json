@@ -34,7 +34,8 @@
     "knex": "^0.9.0",
     "moment": "^2.11.2",
     "moment-business": "^2.0.0",
-    "pg": "^4.4.4"
+    "pg": "^4.4.4",
+    "validator": "^4.7.1"
   },
   "devDependencies": {
     "eslint": "^1.10.3",
@@ -49,8 +50,10 @@
       "node": true
     },
     "rules": {
-        "semi": [2, "always"]
+      "semi": [
+        2,
+        "always"
+      ]
     }
   }
-
 }

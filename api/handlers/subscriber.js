@@ -1,5 +1,8 @@
 'use strict';
 
+const Promise = require('bluebird');
+const validator = require('validator');
+
 module.exports = class Subscriber {
 
   constructor( app ) {
@@ -9,19 +12,23 @@ module.exports = class Subscriber {
 
   newSubscriberWithEmail(email) {
 
+    // check for an invalid email address
+    if (!validator.isEmail(email)) return Promise.reject(new Error('email is invalid'));
+
     return this.knex.insert({"email_address": email}).into('subscribers').returning('*')
     .then( subscribers => {
 
+      // return the subscriber record in full
       return subscribers[0];
 
     })
     .catch( error => {
 
-      if (error.constraint === "subscribers_email_address_key") {
-        throw new Error('email already exists');
-      } else {
-        return error;
-      }
+      // if the email is already in the db, throw an error
+      if (error.constraint === "subscribers_email_address_key") throw new Error('email is in use');
+
+      // if all else fails, throw the raw error
+      throw error;
 
     });
 
