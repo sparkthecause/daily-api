@@ -223,6 +223,8 @@ input:focus {
   padding: 10px;
   margin: 30px 0px 30px 0px;
   color: #FFFFFF;
+  cursor: pointer;
+  cursor: hand;
 }
 @media (max-height: 550px) {
   .hero input, .hero button {
@@ -299,6 +301,8 @@ input:focus {
   padding: 8px 6px 8px 6px;
   margin: 0px 5px 0px 5px;
   color: #FFFFFF;
+  cursor: pointer;
+  cursor: hand;
 }
 .shadow-below {
   -moz-box-shadow:    0px 5px 5px 0px #959595;
@@ -314,7 +318,34 @@ input:focus {
   height: 125px;
 }
 
+/* UNSUBSCRIBE PAGE */
+
+.unsubscribe-main {
+  color: #5a5a5a;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  margin-top: -100px;
+}
+.unsubscribe-btn {
+  height: 50px;
+  line-height: 24px;
+  background-color: #8E59CD;
+  color: #FFFFFF;
+  border-radius: 30px;
+  font-size: 18px;
+  border: 3px solid #8E59CD;
+  padding: 10px 30px 10px 30px;
+  margin: 20px 0px 35px 0px;
+  cursor: pointer;
+  cursor: hand;
+}
+
 /* UTILITIES */
+
+.purple {
+  color: #8E59CD;
+}
 
 @media (min-width: 767px) {
   .mobile-only {

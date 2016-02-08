@@ -32,12 +32,27 @@ module.exports = app => {
       res.json(result);
     })
     .catch( error => {
-      
+
       let status = 500;
       if (error.message === "email is in use") status = 400;
       if (error.message === "email is invalid") status = 400;
 
       res.status(status).send({
+        message: error.message || error
+      })
+
+    });
+
+  })
+  .delete((req, res) => {
+
+    subscriberHandler.unsubscribe(req.query.id)
+    .then( result => {
+      res.sendStatus(204);
+    })
+    .catch( error => {
+
+      res.status(500).send({
         message: error.message || error
       })
 

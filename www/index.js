@@ -47,6 +47,12 @@ module.exports = app => {
 
   });
 
+  app.get('/unsubscribe', (req, res) => {
+    res.render('unsubscribe', {
+      "id": req.query.id
+    });
+  });
+
   return router;
 
 };
