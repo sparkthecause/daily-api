@@ -14,8 +14,8 @@ module.exports = class Edition {
     const blurbsSubquery = this.knex.select('blurb_id').from('editions').where({'publish_on': publishDate});
 
     const editionsPromise = this.knex.select().from('editions').where({'publish_on': publishDate});
-    const blurbsPromise = this.knex.select().from('blurbs').where('edition_id', 'in', editionsSubquery);
-    const imagesPromise = this.knex.select().from('images').where('blurb_id', 'in', blurbsSubquery);
+    const blurbsPromise = this.knex.select().from('blurbs').where('edition_id', 'in', editionsSubquery).orderBy('priority', 'asc');
+    const imagesPromise = this.knex.select().from('images').where('blurb_id', 'in', blurbsSubquery).orderBy('position', 'asc');
 
     return Promise.join(editionsPromise, blurbsPromise, imagesPromise, (editions, blurbs, images) => {
 
