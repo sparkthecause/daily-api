@@ -2,12 +2,13 @@
 
 const express = require('express');
 const exphbs = require('express-handlebars');
-// const Promise = require('bluebird');
+const bodyParser = require('body-parser');
+const enforce = require('express-sslify');
+
 const app = express();
-const bodyParser = require('body-parser')
 const config = require('./config');
 
-if ( process.env.NODE_ENV === "production" || require("piping")() ) {
+if ( config.environment.isProduction || require("piping")() ) {
 
   app.disable( 'x-powered-by' );
   app.use(bodyParser.json());
@@ -20,17 +21,12 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   const pg = require('knex')({
     client: 'pg',
     connection: postgresURL,
-    debug: true
+    debug: config.environment.isDevelopment
   });
   app.set('knex', pg);
 
   // Redirect non-HTTPS traffic in production
-  if ( process.env.NODE_ENV === 'production' ) {
-
-    const enforce = require('express-sslify');
-    app.use( enforce.HTTPS({ trustProtoHeader: true }) );
-
-  }
+  if (config.environment.isProduction) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
   const hbs = exphbs.create({
     defaultLayout: 'main',
@@ -45,6 +41,6 @@ if ( process.env.NODE_ENV === "production" || require("piping")() ) {
   app.use('/', require('./www')(app));
   app.use('/api', require('./api')(app));
 
-  const server = app.listen(process.env.PORT || 3000);
+  const server = app.listen(config.port);
 
 }
