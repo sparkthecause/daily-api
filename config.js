@@ -1,28 +1,20 @@
 "use strict";
 
 const config = {
-  port: process.env.PORT || 3000,
-  environment: {
-    isProduction: process.env.NODE_ENV === 'production',
-    isDevelopment: process.env.NODE_ENV !== 'production',
-    isTest: process.env.NODE_ENV === 'test',
-    isCI: process.env.CI != undefined
+  base: {
+    port: process.env.PORT,
+    postgres: process.env.DATABASE_URL,
+    sendgrid: process.env.SENDGRID_API_KEY
   },
-  postgres: {
-    url: '',
-    production: process.env.DATABASE_URL,
-    codeship: `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`,
-    development: 'postgresql://localhost/daily_development',
-    test: (process.env.CI) ? this.postgres.codeship : 'postgresql://localhost/test'
+  test: {
+    port: 3001
+    postgres: process.env.CI ? `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test` : 'postgresql://localhost/test'
   }
+  local: {
+    port: 3000,
+    postgres: 'postgresql://localhost/daily_development'
+  },
+  staging: {}
 };
 
-if (config.environment.isProduction) {
-  config.postgres.url = config.postgres.production;
-} else if (config.environment.isTest) {
-  config.postgres.url = config.postgres.test;
-} else {
-  config.postgres.url = config.postgres.development;
-}
-
-module.exports = config;
+module.exports = Objcet.assign(config.base, config[process.env.ENV]);
