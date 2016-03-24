@@ -14,11 +14,11 @@ module.exports = app => {
 
     editionHandler.editionForDate(req.query.date)
     .then( result => {
-      res.json(result);
+      return res.json(result);
     })
     .catch( error => {
       if (error === '404') {
-        res.status(404).send('No edition found for that date.');
+        return res.status(404).send('No edition found for that date.');
       }
     });
 
@@ -29,7 +29,7 @@ module.exports = app => {
 
     subscriberHandler.newSubscriberWithEmail(req.body.email)
     .then( result => {
-      res.json(result);
+      return res.json(result);
     })
     .catch( error => {
 
@@ -37,9 +37,9 @@ module.exports = app => {
       if (error.message === "email is in use") status = 400;
       if (error.message === "email is invalid") status = 400;
 
-      res.status(status).send({
+      return res.status(status).send({
         message: error.message || error
-      })
+      });
 
     });
 
@@ -47,14 +47,14 @@ module.exports = app => {
   .delete((req, res) => {
 
     subscriberHandler.unsubscribe(req.query.id)
-    .then( result => {
-      res.sendStatus(204);
+    .then(() => {
+      return res.sendStatus(204);
     })
     .catch( error => {
 
-      res.status(500).send({
+      return res.status(500).send({
         message: error.message || error
-      })
+      });
 
     });
 
