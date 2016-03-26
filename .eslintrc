@@ -1,0 +1,31 @@
+{
+  "extends": "airbnb/base",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "classes": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "browser": true
+  },
+  "rules": {
+    "arrow-body-style": 0,
+    "comma-dangle": 0,
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "max-len": [2, 150, 2, { "ignoreUrls": true, "ignorePattern": "url.+" }],
+    "no-return-assign": 0,
+    "no-unused-vars": [2, {"args": "after-used", "varsIgnorePattern": "[sS]tyle"}],
+    "strict": 0,
+    "func-names": 0,
+    "block-scoped-var": 0,
+    "padded-blocks": [2, "always"],
+    "no-console": 1,
+    "no-alert": 1,
+    "no-unused-expressions": [2, { "allowShortCircuit": true }]
+  }
+}

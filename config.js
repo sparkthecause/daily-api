@@ -1,28 +1,18 @@
-"use strict";
+'use strict';
 
-const config = {
-  port: process.env.PORT || 3000,
-  environment: {
-    isProduction: process.env.NODE_ENV === 'production',
-    isDevelopment: process.env.NODE_ENV !== 'production',
-    isTest: process.env.NODE_ENV === 'test',
-    isCI: process.env.CI != undefined
-  },
-  postgres: {
-    url: '',
-    production: process.env.DATABASE_URL,
-    codeship: `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`,
-    development: 'postgresql://localhost/daily_development',
-    test: (process.env.CI) ? this.postgres.codeship : 'postgresql://localhost/test'
-  }
-};
-
-if (config.environment.isProduction) {
-  config.postgres.url = config.postgres.production;
-} else if (config.environment.isTest) {
-  config.postgres.url = config.postgres.test;
-} else {
-  config.postgres.url = config.postgres.development;
+if (process.env.NODE_ENV !== 'production' && process.env.ENV !== 'test') require('dotenv').config();
+if (process.env.CI_NAME && process.env.CI_NAME === 'codeship') {
+  process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
 }
 
-module.exports = config;
+module.exports = {
+  isProduction: process.env.NODE_ENV === 'production',
+  isDebug: process.env.DEBUG,
+  port: process.env.PORT,
+  postgres: process.env.DATABASE_URL,
+  sendgrid: process.env.SENDGRID_API_KEY,
+  email: {
+    from: 'daily@sparkthecause.com',
+    fromname: 'Spark Daily'
+  }
+};
