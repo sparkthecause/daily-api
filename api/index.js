@@ -1,6 +1,7 @@
 'use strict';
 
-const router = require('express').Router();
+const express = require('express');
+const router = new express.Router();
 const EditionHandler = require('./handlers/edition');
 const SubscriberHandler = require('./handlers/subscriber');
 const send = require('./utils/send');
@@ -14,13 +15,12 @@ module.exports = app => {
   .get((req, res) => {
 
     editionHandler.editionForDate(req.query.date)
-    .then( result => {
-      return res.json(result);
-    })
-    .catch( error => {
-      if (error === '404') {
-        return res.status(404).send('No edition found for that date.');
-      }
+    .then(result => res.json(result))
+    .catch(error => {
+
+      if (error === '404') return res.status(404).send('No edition found for that date.');
+      return res.status(500).send(error);
+
     });
 
   });
@@ -28,13 +28,9 @@ module.exports = app => {
   router.route('/send')
   .post((req, res) => {
 
-    send(app,{})
-    .then( json => {
-      return res.json(json);
-    })
-    .catch( error => {
-      return res.status(500).send(error);
-    });
+    send(app, {})
+    .then(json => res.json(json))
+    .catch(error => res.status(500).send(error));
 
   });
 
@@ -42,14 +38,12 @@ module.exports = app => {
   .post((req, res) => {
 
     subscriberHandler.newSubscriberWithEmail(req.body.email)
-    .then( result => {
-      return res.json(result);
-    })
-    .catch( error => {
+    .then(result => res.json(result))
+    .catch(error => {
 
       let status = 500;
-      if (error.message === "email is in use") status = 400;
-      if (error.message === "email is invalid") status = 400;
+      if (error.message === 'email is in use') status = 400;
+      if (error.message === 'email is invalid') status = 400;
 
       return res.status(status).send({
         message: error.message || error
@@ -61,10 +55,8 @@ module.exports = app => {
   .delete((req, res) => {
 
     subscriberHandler.unsubscribe(req.query.id)
-    .then(() => {
-      return res.sendStatus(204);
-    })
-    .catch( error => {
+    .then(() => res.sendStatus(204))
+    .catch(error => {
 
       return res.status(500).send({
         message: error.message || error

@@ -1,20 +1,20 @@
 'use strict';
 
 const Promise = require('bluebird');
-const Sendgrid  = require('sendgrid');
+const Sendgrid = require('sendgrid');
 
 module.exports = (app, options) => {
 
-  const config = app.get( 'config' );
-  const sendgrid = Sendgrid(config.sendgrid);
+  const config = app.get('config');
+  const sendgrid = new Sendgrid(config.sendgrid);
   const sendEmail = Promise.promisify(sendgrid.send, { context: sendgrid });
 
   return sendEmail({
-    to: options.to,
+    to: options.to || 'charles@cvburgess.com',
     from: config.email.from,
     fromname: config.email.fromname,
-    subject: options.subject,
-    text: undefined, // https://www.npmjs.com/package/html-to-text
+    subject: options.subject || 'new TEST',
+    text: 'ball' || undefined, // https://www.npmjs.com/package/html-to-text
     html: options.html
   });
 
