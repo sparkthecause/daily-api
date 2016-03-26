@@ -44,19 +44,5 @@
     "eslint": "^1.10.3",
     "nodemon": "^1.9.1",
     "pg-monitor": "^0.4.5"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true
-    },
-    "rules": {
-      "semi": [
-        2,
-        "always"
-      ]
-    }
   }
 }
