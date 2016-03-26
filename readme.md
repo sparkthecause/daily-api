@@ -10,17 +10,21 @@
 
 ## Running
 
-*All configuration information can be found in [config.js](./config.js).*
+*More configuration information can be inferred from [config.js](./config.js).*
 
 ### Local
 
-`ENV=local npm start` will run the API and UI on port `3000` and connect to a local PostgreSQL.
+*You will need to create a .env file similar to the [sample file (.sample-env)](./.sample-env) or pass in all of the environment variables when you run the scripts below. If you don't, stuff won't work... boo. See https://github.com/motdotla/dotenv for more information.*
 
-If you'd like to enable debugging, use `ENV=local npm run debug`.
+`npm start` will run the API and UI on port set via the environment variable `PORT` and connect to PostgreSQL instance at the url set via the environment variable `DATABASE_URL`.
+
+If you'd like to enable debugging, use `npm run debug` and set the environment variable `ENV=local`.
 
 ### Production
 
 `npm start` will run the API and UI on port set via the environment variable `PORT` and connect to PostgreSQL instance at the url set via the environment variable `DATABASE_URL`.
+
+***DO NOT USE A .ENV FILE IN PRODUCTION! SET ACTUAL ENVIRONMENT VARIABLES.***
 
 ## Helpful Tools
 
