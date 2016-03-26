@@ -3,11 +3,12 @@
 const router = require('express').Router();
 const EditionHandler = require('./handlers/edition');
 const SubscriberHandler = require('./handlers/subscriber');
+const send = require('./utils/send');
 
 module.exports = app => {
 
-  const editionHandler = new EditionHandler( app );
-  const subscriberHandler = new SubscriberHandler( app );
+  const editionHandler = new EditionHandler(app);
+  const subscriberHandler = new SubscriberHandler(app);
 
   router.route('/editions')
   .get((req, res) => {
@@ -20,6 +21,19 @@ module.exports = app => {
       if (error === '404') {
         return res.status(404).send('No edition found for that date.');
       }
+    });
+
+  });
+
+  router.route('/send')
+  .post((req, res) => {
+
+    send(app,{})
+    .then( json => {
+      return res.json(json);
+    })
+    .catch( error => {
+      return res.status(500).send(error);
     });
 
   });
