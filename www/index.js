@@ -1,6 +1,7 @@
 'use strict';
 
-const router = require('express').Router();
+const express = require('express');
+const router = new express.Router();
 const moment = require('moment');
 require('moment-business'); // modifies moment
 const EditionHandler = require('../api/handlers/edition');
@@ -11,12 +12,9 @@ const prevWeekDay = (date) => moment(date).subtractWeekDays(1).format('YYYY-MM-D
 
 module.exports = app => {
 
-  const knex = app.get('knex');
-  const editionHandler = new EditionHandler( app );
+  const editionHandler = new EditionHandler(app);
 
-  app.get('/', (req, res) => {
-    res.render('home');
-  });
+  app.get('/', (req, res) => res.render('home'));
 
   router.route('/archive')
   .get((req, res) => {
@@ -24,23 +22,23 @@ module.exports = app => {
     const publishDate = req.query.date || today();
 
     editionHandler.editionForDate(publishDate)
-    .then( result => {
+    .then(result => {
 
       res.render('archive', {
-        "daily": result,
-        "date": moment(publishDate).format('MMM Do'),
-        "nextDay": nextWeekDay(publishDate),
-        "prevDay": prevWeekDay(publishDate)
+        daily: result,
+        date: moment(publishDate).format('MMM Do'),
+        nextDay: nextWeekDay(publishDate),
+        prevDay: prevWeekDay(publishDate)
       });
 
     })
-    .catch( error => {
+    .catch(() => {
 
       res.render('archive', {
-        "errorMessage": "No edition found for that date.",
-        "date": moment(publishDate).format('MMM Do'),
-        "nextDay": nextWeekDay(publishDate),
-        "prevDay": prevWeekDay(publishDate)
+        errorMessage: 'No edition found for that date.',
+        date: moment(publishDate).format('MMM Do'),
+        nextDay: nextWeekDay(publishDate),
+        prevDay: prevWeekDay(publishDate)
       });
 
     });
@@ -48,9 +46,11 @@ module.exports = app => {
   });
 
   app.get('/unsubscribe', (req, res) => {
+
     res.render('unsubscribe', {
-      "id": req.query.id
+      id: req.query.id
     });
+
   });
 
   return router;
