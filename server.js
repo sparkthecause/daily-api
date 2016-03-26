@@ -8,39 +8,33 @@ const enforce = require('express-sslify');
 const app = express();
 const config = require('./config');
 
-if ( config.environment.isProduction || require("piping")() ) {
+app.disable( 'x-powered-by' );
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-  app.disable( 'x-powered-by' );
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+const pg = require('knex')({
+  client: 'pg',
+  connection: config.postgres,
+  debug: config.isDebug
+});
+app.set('knex', pg);
 
-  const postgresURL = config.postgres.url;
+// Redirect non-HTTPS traffic in production
+if (config.isProduction) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
-  const pg = require('knex')({
-    client: 'pg',
-    connection: postgresURL,
-    debug: config.environment.isDevelopment
-  });
-  app.set('knex', pg);
+const hbs = exphbs.create({
+  defaultLayout: 'main',
+  extname: '.hbs'
+});
 
-  // Redirect non-HTTPS traffic in production
-  if (config.environment.isProduction) app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
 
-  const hbs = exphbs.create({
-    defaultLayout: 'main',
-    extname: '.hbs'
-  });
+app.use(express.static('assets'));
 
-  app.engine('hbs', hbs.engine);
-  app.set('view engine', 'hbs');
+app.use('/', require('./www')(app));
+app.use('/api', require('./api')(app));
 
-  app.use(express.static('assets'));
-
-  app.use('/', require('./www')(app));
-  app.use('/api', require('./api')(app));
-
-  const server = app.listen(config.port);
-
-}
+const server = app.listen(config.port);

@@ -11,6 +11,7 @@
     "start": "node server.js",
     "test": "npm run lint",
     "lint": "eslint api/**",
+    "debug": "DEBUG=1 nodemon server.js",
     "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
     "pg-schema-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f schema.sql",
     "pg-data": "psql -d daily_development -a -f data.sql"
@@ -40,8 +41,8 @@
   },
   "devDependencies": {
     "eslint": "^1.10.3",
-    "pg-monitor": "^0.4.5",
-    "piping": "^0.3.0"
+    "nodemon": "^1.9.1",
+    "pg-monitor": "^0.4.5"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
