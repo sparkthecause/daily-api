@@ -7,6 +7,7 @@ const enforce = require('express-sslify');
 
 const app = express();
 const config = require('./config');
+app.set('config', config);
 
 app.disable( 'x-powered-by' );
 app.use(bodyParser.json());

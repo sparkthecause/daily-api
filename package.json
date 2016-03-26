@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "npm run lint",
+    "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test npm run lint",
     "lint": "eslint api/**",
     "debug": "DEBUG=1 nodemon server.js",
     "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
@@ -40,6 +40,7 @@
     "validator": "^4.7.1"
   },
   "devDependencies": {
+    "dotenv": "^2.0.0",
     "eslint": "^1.10.3",
     "nodemon": "^1.9.1",
     "pg-monitor": "^0.4.5"
