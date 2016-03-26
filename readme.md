@@ -14,7 +14,8 @@
 
 ### Local
 
-*You will need to create a .env file similar to the [sample file (.sample-env)](./.sample-env) or pass in all of the environment variables when you run the scripts below. If you don't, stuff won't work... boo. See https://github.com/motdotla/dotenv for more information.*
+*You will need to create a .env file similar to the [sample file (.sample-env)](./.sample-env) or pass in all of the environment variables when you run the scripts below. If you don't, you'll get this error: `{ [Error: ENOENT: no such file or directory, open '.env'] errno: -2, code: 'ENOENT', syscall: 'open', path: '.env' }
+`. See https://github.com/motdotla/dotenv for more information.*
 
 `npm start` will run the API and UI on port set via the environment variable `PORT` and connect to PostgreSQL instance at the url set via the environment variable `DATABASE_URL`.
 
