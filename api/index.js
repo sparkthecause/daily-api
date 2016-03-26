@@ -28,7 +28,7 @@ module.exports = app => {
   router.route('/send')
   .post((req, res) => {
 
-    send(app, {})
+    send(app, req.body)
     .then(json => res.json(json))
     .catch(error => res.status(500).send(error));
 
