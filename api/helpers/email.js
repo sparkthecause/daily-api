@@ -29,7 +29,7 @@ module.exports = class Email {
       const templatePath = `${path.dirname(require.main.filename)}/email/email.mustache`;
       return readFile(templatePath, { encoding: 'utf-8' })
       .then(template => Mustache.render(template, {
-        content: blurbs.join()
+        content: blurbs.join('')
       }));
       // return edition;
 
