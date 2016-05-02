@@ -2,16 +2,14 @@
 
 const Mustache = require('mustache');
 const Promise = require('bluebird');
-const readFile = Promise.promisify(require('fs').readFile);
-const path = require('path');
+const request = require('request-promise');
+const config = require('../../config');
 
 module.exports = class Email {
 
   static blurbToHTML(blurb) {
 
-    const templatesPath = `${path.dirname(require.main.filename)}/email/components`;
-
-    return readFile(`${templatesPath}/title.mustache`, { encoding: 'utf-8' })
+    return request(`${config.cdn}/blurbs/${blurb.blurb_type_id}.mustache`)
     .then(template => Mustache.render(template, blurb));
 
   }
@@ -26,8 +24,7 @@ module.exports = class Email {
     .then(blurbs => {
 
       // Inject blurb snippets into main email template
-      const templatePath = `${path.dirname(require.main.filename)}/email/email.mustache`;
-      return readFile(templatePath, { encoding: 'utf-8' })
+      return request(`${config.cdn}/templates/email.mustache`)
       .then(template => Mustache.render(template, {
         content: blurbs.join('')
       }));
@@ -39,8 +36,7 @@ module.exports = class Email {
 
 };
 
-// Rank and loop through blurbs
-// Header -> Blurbs -> Footer
+// DONE: Rank and loop through blurbs ( Header -> Blurbs -> Footer )
 // Inject content
 // Inline CSS
 // Compress and inline images
