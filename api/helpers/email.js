@@ -9,6 +9,7 @@ module.exports = class Email {
 
   static blurbToHTML(blurb) {
 
+    blurb.cdn = config.cdn;
     return request(`${config.cdn}/blurbs/${blurb.blurb_type_id}.mustache`)
     .then(template => Mustache.render(template, blurb));
 
