@@ -20,6 +20,7 @@
     "max-len": [2, 150, 2, { "ignoreUrls": true, "ignorePattern": "url.+" }],
     "no-return-assign": 0,
     "no-unused-vars": [2, {"args": "after-used", "varsIgnorePattern": "[sS]tyle"}],
+    "no-param-reassign": ["error", { "props": false }],
     "strict": 0,
     "func-names": 0,
     "block-scoped-var": 0,

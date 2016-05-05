@@ -9,7 +9,7 @@ const app = express();
 const config = require('./config');
 app.set('config', config);
 
-app.disable( 'x-powered-by' );
+app.disable('x-powered-by');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -38,4 +38,4 @@ app.use(express.static('assets'));
 app.use('/', require('./www')(app));
 app.use('/api', require('./api')(app));
 
-const server = app.listen(config.port);
+app.listen(config.port);

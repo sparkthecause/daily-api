@@ -15,7 +15,7 @@ module.exports = app => {
   .get((req, res) => {
 
     editionHandler.editionForDate(req.query.date)
-    .then(result => res.json(result))
+    .then(result => res.set('Content-Type', 'text/html').send(result)) // res.json(result))
     .catch(error => {
 
       if (error === '404') return res.status(404).send('No edition found for that date.');

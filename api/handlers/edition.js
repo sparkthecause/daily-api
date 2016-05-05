@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const EmailHelper = require('../helpers/email');
 
 module.exports = class Edition {
   constructor(app) {
@@ -36,7 +37,8 @@ module.exports = class Edition {
 
       // Pick a random version of the edition - for A/B testing
       const editionIndex = Math.floor(Math.random() * (editions.length));
-      return editions[editionIndex];
+      // return editions[editionIndex];
+      return EmailHelper.htmlForEdition(editions[editionIndex]);
 
     });
 
