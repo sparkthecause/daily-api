@@ -36,9 +36,3 @@ module.exports = class Email {
   }
 
 };
-
-// DONE: Rank and loop through blurbs ( Header -> Blurbs -> Footer )
-// Inject content
-// Inline CSS
-// Compress and inline images
-// Remove whitespace / minify(?)
