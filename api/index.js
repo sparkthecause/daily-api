@@ -66,6 +66,12 @@ module.exports = app => {
   });
 
   router.route('/subscribers')
+  .get((req, res) => {
+
+    subscriberHandler.fetchActiveSubscribers()
+    .then(result => res.json(result));
+
+  })
   .post((req, res) => {
 
     // email: STRING 'charles@sparkthecause.com'

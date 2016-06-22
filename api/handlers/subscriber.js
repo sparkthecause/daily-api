@@ -12,6 +12,22 @@ module.exports = class Subscriber {
 
   }
 
+  fetchActiveSubscribers() {
+
+    // check for an invalid
+    return this.knex.select('subscriber_id', 'email_address').from('subscribers').whereNull('unsubscribed_at');
+    // .catch(error => {
+    //
+    //   // if the email is already in the db, throw an error
+    //   if (error.constraint === 'subscribers_email_address_key') throw new Error('email is in use');
+    //
+    //   // if all else fails, throw the raw error
+    //   throw error;
+    //
+    // });
+
+  }
+
   newSubscriberWithEmail(email) {
 
     // check for an invalid email address
