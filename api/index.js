@@ -17,7 +17,7 @@ module.exports = app => {
     // date: STRING '2016-02-01'
 
     editionHandler.editionForDate(req.query.date)
-    .then(result => res.set('Content-Type', 'text/html').send(result)) // res.json(result))
+    .then(result => res.json(result)) // res.set('Content-Type', 'text/html').send(result))
     .catch(error => {
 
       if (error === '404') return res.status(404).send('No edition found for that date.');
@@ -38,6 +38,30 @@ module.exports = app => {
     send(app, req.body)
     .then(json => res.json(json))
     .catch(error => res.status(500).send(error));
+
+  });
+
+  router.route('/send/daily')
+  .post((req, res) => {
+
+    const date = '2016-02-01';
+    editionHandler.editionHTMLforDate(date)
+    .then(html => {
+
+      return send(app, {
+        to: 'charles@sparkthecause.com',
+        subject: 'Test',
+        html
+      });
+
+    })
+    .then(json => res.json(json))
+    .catch(error => {
+
+      if (error === '404') return res.status(404).send('No edition found for that date.');
+      return res.status(500).send(error);
+
+    });
 
   });
 
