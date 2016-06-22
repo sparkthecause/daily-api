@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const Promise = require('bluebird');
 const router = new express.Router();
 const EditionHandler = require('./handlers/edition');
 const SubscriberHandler = require('./handlers/subscriber');
@@ -45,12 +46,15 @@ module.exports = app => {
   .post((req, res) => {
 
     const date = '2016-02-01';
-    editionHandler.editionHTMLforDate(date)
-    .then(html => {
+
+    const htmlPromise = editionHandler.editionHTMLforDate(date);
+    const subcribersPromise = subscriberHandler.fetchActiveSubscribers();
+
+    Promise.join(htmlPromise, subcribersPromise, (html, subscribers) => {
 
       return send(app, {
-        to: 'charles@sparkthecause.com',
-        subject: 'Test',
+        to: subscribers.map(subscriber => subscriber.email_address),
+        subject: 'Dynamic Test',
         html
       });
 
