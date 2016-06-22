@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const Promise = require('bluebird');
 const router = new express.Router();
 const EditionHandler = require('./handlers/edition');
 const SubscriberHandler = require('./handlers/subscriber');
@@ -17,7 +18,7 @@ module.exports = app => {
     // date: STRING '2016-02-01'
 
     editionHandler.editionForDate(req.query.date)
-    .then(result => res.set('Content-Type', 'text/html').send(result)) // res.json(result))
+    .then(result => res.json(result)) // res.set('Content-Type', 'text/html').send(result))
     .catch(error => {
 
       if (error === '404') return res.status(404).send('No edition found for that date.');
@@ -41,7 +42,40 @@ module.exports = app => {
 
   });
 
+  router.route('/send/daily')
+  .post((req, res) => {
+
+    const date = '2016-02-01';
+
+    const htmlPromise = editionHandler.editionHTMLforDate(date);
+    const subcribersPromise = subscriberHandler.fetchActiveSubscribers();
+
+    Promise.join(htmlPromise, subcribersPromise, (html, subscribers) => {
+
+      return send(app, {
+        to: subscribers.map(subscriber => subscriber.email_address),
+        subject: 'Dynamic Test',
+        html
+      });
+
+    })
+    .then(json => res.json(json))
+    .catch(error => {
+
+      if (error === '404') return res.status(404).send('No edition found for that date.');
+      return res.status(500).send(error);
+
+    });
+
+  });
+
   router.route('/subscribers')
+  .get((req, res) => {
+
+    subscriberHandler.fetchActiveSubscribers()
+    .then(result => res.json(result));
+
+  })
   .post((req, res) => {
 
     // email: STRING 'charles@sparkthecause.com'
@@ -62,6 +96,8 @@ module.exports = app => {
 
   })
   .delete((req, res) => {
+
+    // id: UUID '123-asdf-5678-ghjk'
 
     subscriberHandler.unsubscribe(req.query.id)
     .then(() => res.sendStatus(204))
