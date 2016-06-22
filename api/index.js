@@ -87,6 +87,8 @@ module.exports = app => {
   })
   .delete((req, res) => {
 
+    // id: UUID '123-asdf-5678-ghjk'
+
     subscriberHandler.unsubscribe(req.query.id)
     .then(() => res.sendStatus(204))
     .catch(error => {
