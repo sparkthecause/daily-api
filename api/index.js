@@ -14,6 +14,8 @@ module.exports = app => {
   router.route('/editions')
   .get((req, res) => {
 
+    // date: STRING '2016-02-01'
+
     editionHandler.editionForDate(req.query.date)
     .then(result => res.set('Content-Type', 'text/html').send(result)) // res.json(result))
     .catch(error => {
@@ -28,6 +30,11 @@ module.exports = app => {
   router.route('/send')
   .post((req, res) => {
 
+    // to: STRING 'charles@cvburgess.com'
+    // subject STRING
+    // text: STRING 'ball'
+    // html: STRING options.html
+
     send(app, req.body)
     .then(json => res.json(json))
     .catch(error => res.status(500).send(error));
@@ -36,6 +43,8 @@ module.exports = app => {
 
   router.route('/subscribers')
   .post((req, res) => {
+
+    // email: STRING 'charles@sparkthecause.com'
 
     subscriberHandler.newSubscriberWithEmail(req.body.email)
     .then(result => res.json(result))
