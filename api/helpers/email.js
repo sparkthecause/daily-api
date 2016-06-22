@@ -17,6 +17,8 @@ module.exports = class Email {
 
   static htmlForEdition(edition) {
 
+    if (!edition.blurbs) return '';
+
     // Sort blurbs based on priority
     edition.blurbs.sort((a, b) => a.priority - b.priority);
 
