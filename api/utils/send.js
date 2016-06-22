@@ -10,11 +10,11 @@ module.exports = (app, options) => {
   const sendEmail = Promise.promisify(sendgrid.send, { context: sendgrid });
 
   return sendEmail({
-    to: options.to || 'charles@cvburgess.com',
+    to: options.to,
     from: config.email.from,
     fromname: config.email.fromname,
-    subject: options.subject || 'new TEST',
-    text: 'ball' || undefined, // https://www.npmjs.com/package/html-to-text
+    subject: options.subject,
+    text: options.text, // https://www.npmjs.com/package/html-to-text
     html: options.html
   });
 
