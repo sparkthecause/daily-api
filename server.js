@@ -5,8 +5,9 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const enforce = require('express-sslify');
 
-const app = express();
 const config = require('./config');
+
+const app = express();
 app.set('config', config);
 
 app.disable('x-powered-by');
