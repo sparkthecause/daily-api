@@ -1,13 +1,15 @@
 'use strict';
 
 const express = require('express');
-const Promise = require('bluebird');
 const router = new express.Router();
 const EditionHandler = require('./handlers/edition');
 const SubscriberHandler = require('./handlers/subscriber');
 const send = require('./utils/send');
+const cron = require('./utils/cron');
 
-module.exports = app => {
+module.exports = (app) => {
+
+  cron(app);
 
   const editionHandler = new EditionHandler(app);
   const subscriberHandler = new SubscriberHandler(app);
@@ -39,33 +41,6 @@ module.exports = app => {
     send(app, req.body)
     .then(json => res.json(json))
     .catch(error => res.status(500).send(error));
-
-  });
-
-  router.route('/send/daily')
-  .post((req, res) => {
-
-    const date = '2016-02-01';
-
-    const htmlPromise = editionHandler.editionHTMLforDate(date);
-    const subcribersPromise = subscriberHandler.fetchActiveSubscribers();
-
-    Promise.join(htmlPromise, subcribersPromise, (html, subscribers) => {
-
-      return send(app, {
-        to: subscribers.map(subscriber => subscriber.email_address),
-        subject: 'Dynamic Test',
-        html
-      });
-
-    })
-    .then(json => res.json(json))
-    .catch(error => {
-
-      if (error === '404') return res.status(404).send('No edition found for that date.');
-      return res.status(500).send(error);
-
-    });
 
   });
 
