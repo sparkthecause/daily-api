@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird');
 const CronJob = require('cron').CronJob;
+const moment = require('moment');
 
 const EditionHandler = require('../handlers/edition');
 const SubscriberHandler = require('../handlers/subscriber');
@@ -17,7 +18,7 @@ module.exports = (app) => {
     onTick: () => {
 
       // Runs every weekday (Monday through Friday) at 5:30:00 AM.
-      const date = '2016-02-01';
+      const date = moment().format('YYYY-MM-DD');
 
       const htmlPromise = editionHandler.editionHTMLforDate(date);
       const subcribersPromise = subscriberHandler.fetchActiveSubscribers();
