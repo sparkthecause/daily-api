@@ -29,7 +29,8 @@ module.exports = class Email {
       // Inject blurb snippets into main email template
       return request(`${config.cdn}/templates/email.mustache`)
       .then(template => Mustache.render(template, {
-        content: blurbs.join('')
+        content: blurbs.join(''),
+        cdn: config.cdn
       }));
       // return edition;
 
