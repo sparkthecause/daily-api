@@ -234,6 +234,9 @@ input:focus {
 
 /* ARCHIVE PAGE */
 
+.archive-main {
+  padding: 30px;
+}
 .navigator {
   background-color: #F8f8F8;
   color: #8E59CD;
