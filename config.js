@@ -1,5 +1,3 @@
-'use strict';
-
 if (process.env.NODE_ENV !== 'production' && process.env.ENV !== 'test') require('dotenv').config();
 if (process.env.CI_NAME && process.env.CI_NAME === 'codeship') {
 
