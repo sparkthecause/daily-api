@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const router = new express.Router();
 const EditionHandler = require('./handlers/edition');

@@ -1,5 +1,3 @@
-'use strict';
-
 const Mustache = require('mustache');
 const Promise = require('bluebird');
 const request = require('request-promise');

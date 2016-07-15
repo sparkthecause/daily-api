@@ -1,5 +1,3 @@
-'use strict';
-
 const Promise = require('bluebird');
 const CronJob = require('cron').CronJob;
 const moment = require('moment');
