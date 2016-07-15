@@ -3,13 +3,13 @@
 const express = require('express');
 const router = new express.Router();
 const moment = require('moment');
-require('moment-business'); // modifies moment
+const business = require('moment-business');
 const EditionHandler = require('../api/handlers/edition');
 const EmailHelper = require('../api/helpers/email');
 
 const today = () => moment().format('YYYY-MM-DD');
-const nextWeekDay = (date) => moment(date).addWeekDays(1).format('YYYY-MM-DD');
-const prevWeekDay = (date) => moment(date).subtractWeekDays(1).format('YYYY-MM-DD');
+const nextWeekDay = (date) => business.addWeekDays(moment(date), 1);
+const prevWeekDay = (date) => business.subtractWeekDays(moment(date), 1);
 
 module.exports = app => {
 
@@ -29,8 +29,8 @@ module.exports = app => {
       res.render('archive', {
         daily: html,
         date: moment(publishDate).format('MMM Do'),
-        nextDay: nextWeekDay(publishDate),
-        prevDay: prevWeekDay(publishDate)
+        nextDay: nextWeekDay(publishDate).format('YYYY-MM-DD'),
+        prevDay: prevWeekDay(publishDate).format('YYYY-MM-DD')
       });
 
     })
@@ -39,8 +39,8 @@ module.exports = app => {
       res.render('archive', {
         errorMessage: 'No edition found for that date.',
         date: moment(publishDate).format('MMM Do'),
-        nextDay: nextWeekDay(publishDate),
-        prevDay: prevWeekDay(publishDate)
+        nextDay: nextWeekDay(publishDate).format('YYYY-MM-DD'),
+        prevDay: prevWeekDay(publishDate).format('YYYY-MM-DD')
       });
 
     });
