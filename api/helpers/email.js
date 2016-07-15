@@ -5,16 +5,13 @@ const config = require('../../config');
 
 module.exports = class Email {
 
-  static blurbToHTML(blurb) {
-
+  static blurbToHTML (blurb) {
     blurb.cdn = config.cdn;
     return request(`${config.cdn}/blurbs/${blurb.blurb_type_id}.mustache`)
     .then(template => Mustache.render(template, blurb));
-
   }
 
-  static htmlForEdition(edition) {
-
+  static htmlForEdition (edition) {
     if (!edition.blurbs) return '';
 
     // Sort blurbs based on priority
@@ -23,7 +20,6 @@ module.exports = class Email {
     // Convert blurbs to HTML snippets
     return Promise.all(edition.blurbs.map(blurb => this.blurbToHTML(blurb)))
     .then(blurbs => {
-
       // Inject blurb snippets into main email template
       return request(`${config.cdn}/templates/email.mustache`)
       .then(template => Mustache.render(template, {
@@ -31,9 +27,7 @@ module.exports = class Email {
         cdn: config.cdn
       }));
       // return edition;
-
     });
-
   }
 
 };
