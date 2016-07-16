@@ -1,6 +1,8 @@
-if (process.env.NODE_ENV !== 'production' && process.env.ENV !== 'test') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production' && process.env.ENV !== 'test') {
+  require('dotenv').config()
+}
 if (process.env.CI_NAME && process.env.CI_NAME === 'codeship') {
-  process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
+  process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`
 }
 
 module.exports = {
@@ -14,4 +16,4 @@ module.exports = {
     from: 'daily@sparkthecause.com',
     fromname: 'Spark Daily'
   }
-};
+}

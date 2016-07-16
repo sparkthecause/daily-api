@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test npm run lint",
-    "lint": "semistandard --verbose | snazzy",
+    "lint": "standard --verbose | snazzy",
     "debug": "DEBUG=1 nodemon server.js",
     "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
     "pg-schema-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f schema.sql",
@@ -47,10 +47,10 @@
     "dotenv": "^2.0.0",
     "nodemon": "^1.9.2",
     "pg-monitor": "^0.5.2",
-    "semistandard": "^8.0.0",
-    "snazzy": "^4.0.0"
+    "snazzy": "^4.0.0",
+    "standard": "^7.1.2"
   },
-  "semistandard": {
+  "standard": {
     "ignore": [
       "/assets"
     ]
