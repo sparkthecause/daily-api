@@ -1,5 +1,3 @@
-'use strict';
-
 const Mustache = require('mustache');
 const Promise = require('bluebird');
 const request = require('request-promise');
@@ -30,7 +28,7 @@ module.exports = class Email {
       // Inject blurb snippets into main email template
       return request(`${config.cdn}/templates/email.mustache`)
       .then(template => Mustache.render(template, {
-        cdn: 'https://cdn.sparkthecause.com',
+        cdn: config.cdn,
         content: blurbs.join('')
       }))
       .then(html => inlineCss(html, { url: 'filePath' }));
