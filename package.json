@@ -39,8 +39,8 @@
     "moment-business": "^3.0.0",
     "mustache": "^2.2.1",
     "pg": "^6.0.2",
+    "postmark": "^1.2.1",
     "request-promise": "^3.0.0",
-    "sendgrid": "^2.0.0",
     "validator": "^5.4.0"
   },
   "devDependencies": {
