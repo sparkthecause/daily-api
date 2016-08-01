@@ -10,7 +10,7 @@ module.exports = {
   isDebug: process.env.DEBUG,
   port: process.env.PORT,
   postgres: process.env.DATABASE_URL,
-  sendgrid: process.env.SENDGRID_API_KEY,
+  postmark: process.env.POSTMARK_API_KEY,
   cdn: 'https://cdn.sparkthecause.com/daily',
   email: {
     from: 'daily@sparkthecause.com',
