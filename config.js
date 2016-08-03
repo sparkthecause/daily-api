@@ -7,16 +7,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const isCodeship = (process.env.CI_NAME && process.env.CI_NAME === 'codeship');
-
 if (isCodeship) {
 
-  console.log(process.env);
   process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
 
 }
 
 module.exports = {
-  env: process.env.NODE_ENV,
+  env: process.env.NODE_ENV, // test, development, or production
   port: process.env.PORT,
   postgres: process.env.DATABASE_URL,
   postmark: process.env.POSTMARK_API_KEY,
