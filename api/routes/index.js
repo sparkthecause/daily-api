@@ -1,9 +1,9 @@
 const express = require('express');
 const router = new express.Router();
-const EditionHandler = require('./handlers/edition');
-const SubscriberHandler = require('./handlers/subscriber');
-const send = require('./utils/send');
-const cron = require('./utils/cron');
+const EditionHandler = require('../handlers/edition');
+const SubscriberHandler = require('../handlers/subscriber');
+const send = require('../utils/send');
+const cron = require('../utils/cron');
 
 module.exports = (app) => {
 

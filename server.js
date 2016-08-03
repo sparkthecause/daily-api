@@ -24,6 +24,6 @@ app.set('config', config);
 // Redirect non-HTTPS traffic in production - TODO: TEMP DISABLED
 // if (config.env === production) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
-app.use('/', require('./api')(app));
+app.use('/', require('./api/routes')(app));
 
 app.listen(config.port);
