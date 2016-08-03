@@ -21,7 +21,7 @@ module.exports = (app) => {
     .then(result => res.json(result)) // res.set('Content-Type', 'text/html').send(result))
     .catch(error => {
 
-      if (error === '404') return res.status(404).send('No edition found for that date.');
+      if (error.message === '404') return res.status(404).send('No edition found for that date.');
       return res.status(500).send(error);
 
     });
