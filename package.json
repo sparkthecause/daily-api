@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sparkthecause/daily.git"
+    "url": "git+https://github.com/sparkthecause/daily-api.git"
   },
   "author": "Charles Burgess",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sparkthecause/daily/issues"
+    "url": "https://github.com/sparkthecause/daily-api/issues"
   },
-  "homepage": "https://github.com/sparkthecause/daily#readme",
+  "homepage": "https://github.com/sparkthecause/daily-api",
   "dependencies": {
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
