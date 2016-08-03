@@ -21,8 +21,8 @@ const pg = require('knex')({
 })
 app.set('knex', pg)
 
-// Redirect non-HTTPS traffic in production
-if (config.isProduction) app.use(enforce.HTTPS({ trustProtoHeader: true }))
+// Redirect non-HTTPS traffic in production - TODO: TEMP DISABLED
+// if (config.isProduction) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 const hbs = exphbs.create({
   defaultLayout: 'main',

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test npm run lint",
+    "pretest": "npm run lint",
+    "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test",
     "lint": "standard --verbose | snazzy",
     "debug": "DEBUG=1 nodemon server.js",
     "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
