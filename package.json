@@ -11,7 +11,7 @@
     "start": "node server.js",
     "pretest": "npm run lint",
     "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test",
-    "lint": "eslint api www --fix",
+    "lint": "eslint api --fix",
     "debug": "DEBUG=1 nodemon server.js",
     "pg-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f database/schema.sql",
     "pg-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f database/schema.sql"
