@@ -1,13 +1,20 @@
-if (process.env.NODE_ENV !== 'production' && process.env.ENV !== 'test') require('dotenv').config();
-if (process.env.CI_NAME && process.env.CI_NAME === 'codeship') {
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (process.env.NODE_ENV === 'development') {
+
+  require('dotenv').config();
+
+}
+
+const isCodeship = (process.env.CI_NAME && process.env.CI_NAME === 'codeship');
+if (isCodeship) {
 
   process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
 
 }
 
 module.exports = {
-  isProduction: process.env.NODE_ENV === 'production',
-  isDebug: process.env.DEBUG,
+  env: process.env.NODE_ENV, // test, development, or production
   port: process.env.PORT,
   postgres: process.env.DATABASE_URL,
   postmark: process.env.POSTMARK_API_KEY,

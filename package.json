@@ -1,7 +1,7 @@
 {
-  "name": "daily-www",
+  "name": "daily-api",
   "version": "0.1.0",
-  "description": "Website for Spark Daily",
+  "description": "API for Spark Daily",
   "main": "server.js",
   "engines": {
     "node": "6.3.0",
@@ -11,28 +11,26 @@
     "start": "node server.js",
     "pretest": "npm run lint",
     "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test",
-    "lint": "eslint api www --fix",
+    "lint": "eslint api --fix",
     "debug": "DEBUG=1 nodemon server.js",
-    "pg-schema-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f schema.sql",
-    "pg-schema-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f schema.sql",
-    "pg-data": "psql -d daily_development -a -f data.sql"
+    "pg-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f database/schema.sql",
+    "pg-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f database/schema.sql"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sparkthecause/daily.git"
+    "url": "git+https://github.com/sparkthecause/daily-api.git"
   },
   "author": "Charles Burgess",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sparkthecause/daily/issues"
+    "url": "https://github.com/sparkthecause/daily-api/issues"
   },
-  "homepage": "https://github.com/sparkthecause/daily#readme",
+  "homepage": "https://github.com/sparkthecause/daily-api",
   "dependencies": {
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "cron": "^1.1.0",
     "express": "^4.14.0",
-    "express-handlebars": "^3.0.0",
     "express-sslify": "^1.1.0",
     "inline-css": "^2.2.2",
     "knex": "^0.11.7",
@@ -46,8 +44,8 @@
   },
   "devDependencies": {
     "dotenv": "^2.0.0",
-    "nodemon": "^1.9.2",
-    "pg-monitor": "^0.5.2",
-    "semistandard": "^8.0.0"
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^7.0.0",
+    "nodemon": "^1.9.2"
   }
 }
