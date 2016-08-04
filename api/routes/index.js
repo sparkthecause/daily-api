@@ -6,7 +6,6 @@ const send = require('../utils/send');
 const cron = require('../utils/cron');
 
 module.exports = (app) => {
-
   cron(app);
 
   const editionHandler = new EditionHandler(app);
@@ -14,23 +13,18 @@ module.exports = (app) => {
 
   router.route('/editions')
   .get((req, res) => {
-
     // date: STRING '2016-02-01'
 
     editionHandler.editionForDate(req.query.date)
     .then(result => res.json(result)) // res.set('Content-Type', 'text/html').send(result))
     .catch(error => {
-
       if (error.message === '404') return res.status(404).send('No edition found for that date.');
       return res.status(500).send(error);
-
     });
-
   });
 
   router.route('/send')
   .post((req, res) => {
-
     // to: STRING 'charles@cvburgess.com'
     // subject STRING
     // text: STRING 'ball'
@@ -39,24 +33,19 @@ module.exports = (app) => {
     send(app, req.body)
     .then(json => res.json(json))
     .catch(error => res.status(500).send(error));
-
   });
 
   router.route('/subscribers')
   .get((req, res) => {
-
     subscriberHandler.fetchActiveSubscribers()
     .then(result => res.json(result));
-
   })
   .post((req, res) => {
-
     // email: STRING 'charles@sparkthecause.com'
 
     subscriberHandler.newSubscriberWithEmail(req.body.email)
     .then(result => res.json(result))
     .catch(error => {
-
       let status = 500;
       if (error.message === 'email is in use') status = 400;
       if (error.message === 'email is invalid') status = 400;
@@ -64,26 +53,19 @@ module.exports = (app) => {
       return res.status(status).send({
         message: error.message || error
       });
-
     });
-
   })
   .delete((req, res) => {
-
     // id: UUID '123-asdf-5678-ghjk'
 
     subscriberHandler.unsubscribe(req.query.id)
     .then(() => res.sendStatus(204))
     .catch(error => {
-
       return res.status(500).send({
         message: error.message || error
       });
-
     });
-
   });
 
   return router;
-
 };
