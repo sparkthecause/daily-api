@@ -11,7 +11,7 @@
     "start": "node server.js",
     "pretest": "npm run lint",
     "test": "PORT=3001 DATABASE_URL=postgresql://localhost/test",
-    "lint": "eslint api --fix",
+    "lint": "semistandard --fix --verbose | snazzy",
     "debug": "DEBUG=1 nodemon server.js",
     "pg-test": "psql -c 'DROP DATABASE IF EXISTS test' && psql -c 'CREATE DATABASE test' && psql -d test -a -f database/schema.sql",
     "pg-dev": "psql -c 'DROP DATABASE IF EXISTS daily_development' && psql -c 'CREATE DATABASE daily_development' && psql -d daily_development -a -f database/schema.sql"
@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "dotenv": "^2.0.0",
-    "eslint": "^3.2.2",
-    "eslint-config-airbnb": "^7.0.0",
-    "nodemon": "^1.9.2"
+    "nodemon": "^1.9.2",
+    "semistandard": "^8.0.0",
+    "snazzy": "^4.0.0"
   }
 }

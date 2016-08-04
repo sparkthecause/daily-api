@@ -1,16 +1,12 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 if (process.env.NODE_ENV === 'development') {
-
   require('dotenv').config();
-
 }
 
 const isCodeship = (process.env.CI_NAME && process.env.CI_NAME === 'codeship');
 if (isCodeship) {
-
   process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
-
 }
 
 module.exports = {
