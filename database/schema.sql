@@ -41,6 +41,7 @@ CREATE TABLE blurbs (
     approved_at timestamp without time zone,
     title text,
     description text,
+    blurb_type text,
     blurb_type_id uuid
 );
 
