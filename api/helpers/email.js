@@ -1,15 +1,13 @@
-const Mustache = require('mustache');
 const Promise = require('bluebird');
 const inlineCss = require('inline-css');
-const readFile = Promise.promisify(require('fs').readFile);
+const templates = require('daily-templates');
 const config = require('../../config');
 
 module.exports = class Email {
 
   static blurbToHTML (blurb) {
     blurb.cdn = config.cdn;
-    return readFile(`${__dirname}/../../templates/blurbs/${blurb.blurb_type_id}.mustache`, 'utf8')
-    .then(template => Mustache.render(template, blurb));
+    return templates(blurb.blurb_type, blurb);
   }
 
   static htmlForEdition (edition) {
@@ -22,11 +20,10 @@ module.exports = class Email {
     return Promise.all(edition.blurbs.map(blurb => this.blurbToHTML(blurb)))
     .then(blurbs => {
       // Inject blurb snippets into main email template
-      return readFile(`${__dirname}/../../templates/editions/email.mustache`, 'utf8')
-      .then(template => Mustache.render(template, {
+      return templates('body-default', {
         cdn: config.cdn,
         content: blurbs.join('')
-      }))
+      })
       .then(html => inlineCss(html, { url: 'filePath' }));
     });
   }
