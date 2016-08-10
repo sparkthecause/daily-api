@@ -1,6 +1,6 @@
-# Spark Daily
+# Spark Daily - API
 
-[ ![Codeship Status for sparkthecause/daily-www](https://codeship.com/projects/3b9f5410-99e6-0133-68ef-3e6d3d1cec07/status?branch=master)](https://codeship.com/projects/126314)
+[ ![Codeship Status for sparkthecause/daily-api](https://codeship.com/projects/3b9f5410-99e6-0133-68ef-3e6d3d1cec07/status?branch=master)](https://codeship.com/projects/126314)
 
 ## Getting Started
 
