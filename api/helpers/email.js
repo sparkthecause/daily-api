@@ -1,13 +1,11 @@
 const Promise = require('bluebird');
 const inlineCss = require('inline-css');
 const templates = require('daily-templates');
-const config = require('../../config');
 
 module.exports = class Email {
 
   static blurbToHTML (blurb) {
-    blurb.cdn = config.cdn;
-    return templates(blurb.blurb_type, blurb);
+    return templates(blurb.blurb_type, blurb.data);
   }
 
   static htmlForEdition (edition) {
@@ -17,11 +15,12 @@ module.exports = class Email {
     edition.blurbs.sort((a, b) => a.position - b.position);
 
     // Convert blurbs to HTML snippets
+    // TODO: Use Promise.join() with a spread operator(?)
     return Promise.all(edition.blurbs.map(blurb => this.blurbToHTML(blurb)))
     .then(blurbs => {
       // Inject blurb snippets into main email template
-      return templates('body-default', {
-        cdn: config.cdn,
+      return templates('body', {
+        css_href: edition.css_href,
         content: blurbs.join('')
       })
       .then(html => inlineCss(html, { url: 'filePath' }));
