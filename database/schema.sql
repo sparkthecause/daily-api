@@ -36,11 +36,12 @@ CREATE TABLE blurb_types (
 
 CREATE TABLE blurbs (
     blurb_id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    priority integer,
+    position integer,
     edition_id uuid,
     approved_at timestamp without time zone,
     title text,
     description text,
+    blurb_type text,
     blurb_type_id uuid
 );
 
