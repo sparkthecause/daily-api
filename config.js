@@ -1,3 +1,5 @@
+const pjson = require('./package.json');
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 if (process.env.NODE_ENV === 'development') {
@@ -11,6 +13,7 @@ if (isCodeship) {
 
 module.exports = {
   env: process.env.NODE_ENV, // test, development, or production
+  version: pjson.version,
   port: process.env.PORT,
   postgres: process.env.DATABASE_URL,
   postmark: process.env.POSTMARK_API_KEY,

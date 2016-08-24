@@ -1,6 +1,7 @@
 const express = require('express');
 const router = new express.Router();
 const EditionHandler = require('../handlers/edition');
+const RootHandler = require('../handlers/root');
 const SubscriberHandler = require('../handlers/subscriber');
 const send = require('../utils/send');
 const cron = require('../utils/cron');
@@ -9,7 +10,11 @@ module.exports = (app) => {
   cron(app);
 
   const editionHandler = new EditionHandler(app);
+  const rootHandler = new RootHandler(app);
   const subscriberHandler = new SubscriberHandler(app);
+
+  router.route('/')
+  .get((req, res) => rootHandler.json(req, res));
 
   router.route('/editions')
   .get((req, res) => {
