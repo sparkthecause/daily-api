@@ -3,10 +3,11 @@ const url = require('url');
 const config = require('../config');
 
 const db = url.parse(config.postgres).path.slice(1);
+const port = url.parse(config.postgres).port || 5432; // default PG port
 const psql = [
-  `psql --command 'DROP DATABASE IF EXISTS ${db}'`,
-  `psql --command 'CREATE DATABASE ${db}'`,
-  `psql --dbname ${db} --file database/database.sql`
+  `psql -p ${port} --command 'DROP DATABASE IF EXISTS ${db}'`,
+  `psql -p ${port} --command 'CREATE DATABASE ${db}'`,
+  `psql -p ${port} --dbname ${db} --file database/database.sql`
 ].join(' && ');
 
 exec(psql, (error, stdout, stderr) => {
