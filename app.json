@@ -1,6 +1,8 @@
 {
   "name": "daily-api",
-  "scripts": {},
+  "scripts": {
+    "postdeploy": "npm run pg-config"
+  },
   "env": {
     "NODE_ENV": {
       "required": true
