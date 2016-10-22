@@ -12,7 +12,7 @@ module.exports = (app) => {
   const subscriberHandler = new SubscriberHandler(app);
 
   return new CronJob({
-    cronTime: '00 30 5 * * 1-5',
+    cronTime: '* * * * * *', // '00 30 5 * * 1-5',
     onTick: () => {
       // Runs every weekday (Monday through Friday) at 5:30:00 AM.
       const date = moment().format('YYYY-MM-DD');
