@@ -1,11 +1,15 @@
-const Promise = require('bluebird');
 const inlineCss = require('inline-css');
+const Promise = require('bluebird');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
 const templates = require('daily-templates');
 
 module.exports = class Email {
 
-  static blurbToHTML (blurb) {
-    return templates(blurb.blurb_type, blurb.data);
+  static blurbToComponent (type, data) {
+    const templateName = Object.keys(templates).find(tpl => tpl.toLowerCase() === type);
+    const Template = templates[templateName];
+    return (Template) ? React.createElement(Template, data) : '';
   }
 
   static htmlForEdition (edition) {
@@ -14,17 +18,20 @@ module.exports = class Email {
     // Sort blurbs based on position
     edition.blurbs.sort((a, b) => a.position - b.position);
 
-    // Convert blurbs to HTML snippets
-    // TODO: Use Promise.join() with a spread operator(?)
-    return Promise.all(edition.blurbs.map(blurb => this.blurbToHTML(blurb)))
+    // Convert blurbs to React components
+    const blurbComponents = edition.blurbs.map(blurb => this.blurbToComponent(blurb.blurb_type, blurb.data));
+    return Promise.join(...blurbComponents)
     .then(blurbs => {
-      // Inject blurb snippets into main email template
-      return templates('body', {
-        css_href: edition.css_href,
-        content: blurbs.join('')
-      })
-      .then(html => inlineCss(html, { url: 'filePath' }));
-    });
+      const emailComponent = React.createElement(templates.Email, {
+        cssHref: edition.css_href,
+        subject: edition.subject
+      }, blurbs);
+
+      const doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+      const staticMarkup = ReactDOMServer.renderToStaticMarkup(emailComponent);
+      return doctype + staticMarkup;
+    })
+    .then(html => inlineCss(html, { url: 'filePath' }));
   }
 
 };
