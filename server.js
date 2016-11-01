@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const restAPI = require('./api/routes');
 // const enforce = require('express-sslify');
 
 const config = require('./config');
@@ -27,6 +28,6 @@ app.set('config', config);
 // if (config.env === production) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.options('*', cors());
-app.use('/', require('./api/routes')(app));
+app.use('/', restAPI(app));
 
 app.listen(config.port);
