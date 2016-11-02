@@ -8,6 +8,22 @@ module.exports = class Edition {
     this.knex = app.get('knex');
   }
 
+  editionForID (id) {
+    return this.knex.select('*').from('editions').where({ edition_id: id })
+    .then(data => {
+      const rawEdtion = data[0];
+      if (!rawEdtion) throw new Error('No edition found for that ID');
+      return {
+        id: rawEdtion.edition_id,
+        publishOn: rawEdtion.publish_on,
+        subject: rawEdtion.subject,
+        css: rawEdtion.css_href,
+        approvedAt: rawEdtion.approved_at
+      };
+    });
+
+  }
+
   editionForDate (publishDate) {
     const editionsSubquery = this.knex.select('edition_id').from('editions').where({ publish_on: publishDate });
 

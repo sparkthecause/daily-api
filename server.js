@@ -30,6 +30,6 @@ app.set('config', config);
 
 app.options('*', cors());
 app.use('/', restAPI(app));
-app.use('/graphql', graphql);
+app.use('/graphql', graphql(app));
 
 app.listen(config.port);

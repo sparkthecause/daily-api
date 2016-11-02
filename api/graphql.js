@@ -1,30 +1,34 @@
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 
-const schema = buildSchema(`
-  type Query {
-    edition(id: ID, publishDate: String): Edition
-  }
+const EditionHandler = require('./handlers/edition');
 
-  type Edition {
-    id: ID
-    publishOn: String
-    isApproved: Boolean
-  }
-`);
+module.exports = (app) => {
 
-const root = {
-  hello: () => 'Hello world!',
-  edition: ({id, publishDate}) => {
-    return {
-    id: 'uuid',
-    publishOn: '2016-12-16',
-    isApproved: false
-  }}
+  const schema = buildSchema(`
+    type Query {
+      edition(id: ID!, publishDate: String): Edition
+    }
+
+    type Edition {
+      id: ID,
+      publishOn: String,
+      subject: String,
+      css: String,
+      approvedAt: String
+    }
+  `);
+
+  const editionHandler = new EditionHandler(app);
+
+  const root = {
+    edition: ({id, publishDate}) => editionHandler.editionForID(id)
+  };
+
+  return graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  });
+
 };
-
-module.exports = graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-});
