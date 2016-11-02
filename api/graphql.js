@@ -5,6 +5,8 @@ const EditionHandler = require('./handlers/edition');
 
 module.exports = (app) => {
 
+  const editionHandler = new EditionHandler(app);
+
   const schema = buildSchema(`
     type Query {
       edition(id: ID!, publishDate: String): Edition
@@ -16,10 +18,16 @@ module.exports = (app) => {
       subject: String,
       css: String,
       approvedAt: String
+      blurbs: [Blurb]
+    }
+
+    type Blurb {
+      id: ID,
+      position: Int,
+      approvedAt: String,
+      type: String
     }
   `);
-
-  const editionHandler = new EditionHandler(app);
 
   const root = {
     edition: ({id, publishDate}) => editionHandler.editionForID(id)
