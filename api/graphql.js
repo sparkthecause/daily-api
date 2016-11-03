@@ -1,13 +1,14 @@
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
+// const graphqlHTTP = require('express-graphql');
+const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const { makeExecutableSchema } = require('graphql-tools');
 
 const EditionHandler = require('./handlers/edition');
 
-module.exports = (app) => {
+exports.server = (app) => {
 
   const editionHandler = new EditionHandler(app);
 
-  const schema = buildSchema(`
+  const schema = `
     type Query {
       edition(id: ID!, publishDate: String): Edition
     }
@@ -27,16 +28,29 @@ module.exports = (app) => {
       approvedAt: String,
       type: String
     }
-  `);
 
-  const root = {
-    edition: ({id, publishDate}) => editionHandler.editionForID(id)
+    schema {
+      query: Query
+    }
+  `;
+
+  const resolvers = {
+    Query: {
+      edition(root, {id, publishDate}, context) {
+        return editionHandler.editionForID(id);
+      }
+    }
   };
 
-  return graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
+  const executableSchema = makeExecutableSchema({
+    typeDefs: schema,
+    resolvers
+  });
+
+  return graphqlExpress({
+    schema: executableSchema
   });
 
 };
+
+exports.graphiql = graphiqlExpress({ endpointURL: '/graphql' });
