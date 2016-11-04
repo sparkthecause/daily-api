@@ -14,19 +14,20 @@ exports.server = (app) => {
     }
 
     type Edition {
-      id: ID,
-      publishOn: String,
-      subject: String,
-      css: String,
+      id: ID
+      publishOn: String
+      subject: String
+      css: String
       approvedAt: String
       blurbs: [Blurb]
     }
 
     type Blurb {
-      id: ID,
-      position: Int,
-      approvedAt: String,
+      id: ID
+      position: Int
+      approvedAt: String
       type: String
+      data: String
     }
 
     schema {
@@ -38,6 +39,11 @@ exports.server = (app) => {
     Query: {
       edition(root, {id, publishDate}, context) {
         return editionHandler.editionForID(id);
+      }
+    },
+    Edition: {
+      blurbs({id}, context) {
+        return editionHandler.blurbsForEditionID(id);
       }
     }
   };
