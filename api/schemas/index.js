@@ -1,9 +1,8 @@
 const merge = require('merge');
+
+const model = require('../models');
 const edition = require('./edition');
 const subscriber = require('./subscriber');
-
-const editionModel = require('../models/edition');
-const subscriberModel = require('../models/subscriber');
 
 const rootSchema = `
   type Query {
@@ -19,10 +18,10 @@ const rootSchema = `
 const rootResolvers = {
   Query: {
     edition(root, {id}, context) {
-      return editionModel.findEdition(id, context);
+      return model.findEdition(id, context);
     },
     subscriber(root, {id, email}, context) {
-      return subscriberModel.findSubscriber({id, email}, context);
+      return model.findSubscriber({id, email}, context);
     }
   }
 };
