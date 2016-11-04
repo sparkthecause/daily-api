@@ -38,6 +38,7 @@
     "graphql-tools": "^0.8.0",
     "inline-css": "^2.2.2",
     "knex": "^0.11.7",
+    "merge": "^1.2.0",
     "moment": "^2.14.1",
     "moment-business": "^3.0.0",
     "pg": "^6.0.2",

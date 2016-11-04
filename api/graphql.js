@@ -1,61 +1,12 @@
 // const graphqlHTTP = require('express-graphql');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
-
-const EditionHandler = require('./handlers/edition');
+const { typeDefs, resolvers } = require('./schemas');
 
 exports.server = (app) => {
 
-  const editionHandler = new EditionHandler(app);
-
-  const schema = `
-    type Query {
-      edition(id: ID!, publishDate: String): Edition
-    }
-
-    type Edition {
-      id: ID
-      publishOn: String
-      subject: String
-      css: String
-      approvedAt: String
-      blurbs: [Blurb]
-    }
-
-    type Blurb {
-      id: ID
-      position: Int
-      approvedAt: String
-      type: String
-      data: String
-    }
-
-    schema {
-      query: Query
-    }
-  `;
-
-  const resolvers = {
-    Query: {
-      edition(root, {id, publishDate}, context) {
-        return editionHandler.editionForID(id);
-      }
-    },
-    Edition: {
-      blurbs({id}, context) {
-        return editionHandler.blurbsForEditionID(id);
-      }
-    }
-  };
-
-  const executableSchema = makeExecutableSchema({
-    typeDefs: schema,
-    resolvers
-  });
-
-  return graphqlExpress({
-    schema: executableSchema
-  });
+  const schema = makeExecutableSchema({ typeDefs, resolvers: resolvers(app) });
+  return graphqlExpress({ schema });
 
 };
 
