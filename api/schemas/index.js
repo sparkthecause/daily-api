@@ -16,7 +16,7 @@ const rootSchema = `
 const rootResolvers = {
   Query: {
     edition(root, {id, publishDate}, context) {
-      return editionModel.editionForID(id, context);
+      return editionModel.findEdition(id, context);
     }
   }
 };

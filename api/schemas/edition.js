@@ -22,7 +22,7 @@ exports.schema = `
 exports.resolvers = {
   Edition: {
     blurbs(root, {}, context) {
-      return editionModel.blurbsForEditionID(root.id, context);
+      return editionModel.findBlurbsForEdition(root.id, context);
     }
   }
 }

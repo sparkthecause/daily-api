@@ -15,14 +15,14 @@ const formatBlurbData = (blurbData) => ({
 });
 
 const editionModel = {
-  editionForID (id, {knex}) {
+  findEdition(id, {knex}) {
     return knex.select('*').from('editions').where({ edition_id: id })
     .then(data => {
       if (!data.length) throw new Error(`No edition found for id: ${id}`);
       return formatEditionData(data[0]);
     });
   },
-  blurbsForEditionID(editionId, {knex}) {
+  findBlurbsForEdition(editionId, {knex}) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
     .then(data => data.map(blurbData => formatBlurbData(blurbData)));
   }
