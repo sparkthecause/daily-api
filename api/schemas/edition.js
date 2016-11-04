@@ -1,4 +1,4 @@
-const EditionHandler = require('../handlers/edition');
+const editionModel = require('../models/edition');
 
 exports.schema = `
   type Edition {
@@ -19,14 +19,10 @@ exports.schema = `
   }
 `;
 
-exports.resolvers = (app) => {
-
-  const editionHandler = new EditionHandler(app);
-  return {
-    Edition: {
-      blurbs({id}, context) {
-        return editionHandler.blurbsForEditionID(id);
-      }
+exports.resolvers = {
+  Edition: {
+    blurbs(root, {}, context) {
+      return editionModel.blurbsForEditionID(root.id, context);
     }
-  };
+  }
 }

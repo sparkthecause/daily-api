@@ -1,6 +1,7 @@
 const merge = require('merge');
 const edition = require('./edition');
-const EditionHandler = require('../handlers/edition');
+
+const editionModel = require('../models/edition');
 
 const rootSchema = `
   type Query {
@@ -12,17 +13,13 @@ const rootSchema = `
   }
 `;
 
-const rootResolvers = (app) => {
-
-  const editionHandler = new EditionHandler(app);
-  return {
-    Query: {
-      edition(root, {id, publishDate}, context) {
-        return editionHandler.editionForID(id);
-      }
+const rootResolvers = {
+  Query: {
+    edition(root, {id, publishDate}, context) {
+      return editionModel.editionForID(id, context);
     }
-  };
+  }
 };
 
 exports.typeDefs = [rootSchema, edition.schema];
-exports.resolvers = (app) => merge.recursive(true, rootResolvers(app), edition.resolvers(app));
+exports.resolvers = merge.recursive(true, rootResolvers, edition.resolvers);
