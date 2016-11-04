@@ -2,7 +2,7 @@ const editionModel = require('../models/edition');
 
 exports.schema = `
   type Edition {
-    id: ID
+    id: ID!
     publishOn: String
     subject: String
     css: String
@@ -11,7 +11,7 @@ exports.schema = `
   }
 
   type Blurb {
-    id: ID
+    id: ID!
     position: Int
     approvedAt: String
     type: String
@@ -25,4 +25,4 @@ exports.resolvers = {
       return editionModel.findBlurbsForEdition(root.id, context);
     }
   }
-}
+};
