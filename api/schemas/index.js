@@ -4,10 +4,13 @@ const model = require('../models');
 const edition = require('./edition');
 const subscriber = require('./subscriber');
 
+// TODO: Add scalar types for date and email
+
 const rootSchema = `
   type Query {
     edition(id: ID!): Edition
     subscriber(id: ID, email: String): Subscriber
+    subscribers(ids: [ID], isActive: Boolean, emails: [String]): [Subscriber]
   }
 
   schema {
@@ -22,6 +25,9 @@ const rootResolvers = {
     },
     subscriber(root, {id, email}, context) {
       return model.findSubscriber({id, email}, context);
+    },
+    subscribers(root, {ids, isActive, emails}, context) {
+      return model.findSubscribers({isActive, ids, emails}, context);
     }
   }
 };
