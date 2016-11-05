@@ -1,7 +1,5 @@
 const express = require('express');
 const router = new express.Router();
-const EditionHandler = require('../handlers/edition');
-const RootHandler = require('../handlers/root');
 const SubscriberHandler = require('../handlers/subscriber');
 const send = require('../utils/send');
 const cron = require('../utils/cron');
@@ -9,24 +7,7 @@ const cron = require('../utils/cron');
 module.exports = (app) => {
   cron(app);
 
-  const editionHandler = new EditionHandler(app);
-  const rootHandler = new RootHandler(app);
   const subscriberHandler = new SubscriberHandler(app);
-
-  router.route('/')
-  .get((req, res) => rootHandler.json(req, res));
-
-  router.route('/editions')
-  .get((req, res) => {
-    // date: STRING '2016-02-01'
-
-    editionHandler.editionForDate(req.query.date)
-    .then(result => res.json(result)) // res.set('Content-Type', 'text/html').send(result))
-    .catch(error => {
-      if (error.message === '404') return res.status(404).send('No edition found for that date.');
-      return res.status(500).send(error);
-    });
-  });
 
   router.route('/send')
   .post((req, res) => {

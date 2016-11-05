@@ -3,7 +3,7 @@ const subscriberModel = require('../models/subscriber');
 exports.schema = `
   type Subscriber {
     id: ID!
-    emailAddress: String!
+    email: String!
     createdAt: String!
     unsubscribedAt: String
   }
