@@ -1,5 +1,4 @@
 const inlineCss = require('inline-css');
-const Promise = require('bluebird');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const templates = require('daily-templates');
@@ -8,23 +7,6 @@ const blurbToComponent = (type, data) => {
   const templateName = Object.keys(templates).find(tpl => tpl.toLowerCase() === type);
   const Template = templates[templateName];
   return (Template) ? React.createElement(Template, data) : '';
-}
-
-const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
-  if (!blurbs) throw new Error(`Could not render edition with id: ${id} - it has no blurbs`);
-
-  // Sort blurbs based on position
-  blurbs.sort((a, b) => a.position - b.position);
-
-  // Convert blurbs to React components
-  const blurbComponents = blurbs.map(blurb => blurbToComponent(blurb.type, JSON.parse(blurb.data)));
-  return Promise.join(...blurbComponents)
-  .then(components => {
-    const emailComponent = React.createElement(templates.Email, { cssHref, subject }, components);
-    const doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-    const staticMarkup = ReactDOMServer.renderToStaticMarkup(emailComponent);
-    return doctype + staticMarkup;
-  });
 }
 
 const formatEditionData = (editionData) => ({
@@ -42,6 +24,25 @@ const formatBlurbData = (blurbData) => ({
   type: blurbData.blurb_type,
   data: JSON.stringify(blurbData.data)
 });
+
+const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
+  if (!blurbs) throw new Error(`Could not render edition with id: ${id} - it has no blurbs`);
+
+  // Sort blurbs based on position
+  blurbs.sort((a, b) => a.position - b.position);
+
+  // Convert blurbs to React components
+  const blurbComponents = blurbs.map(blurb => blurbToComponent(blurb.type, JSON.parse(blurb.data)));
+
+  // Stuff components in email shell component and add DOCTYPE
+  return Promise.all(blurbComponents)
+  .then(components => {
+    const emailComponent = React.createElement(templates.Email, { cssHref, subject }, components);
+    const doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+    const staticMarkup = ReactDOMServer.renderToStaticMarkup(emailComponent);
+    return doctype + staticMarkup;
+  });
+}
 
 const editionModel = {
   findEdition(id, {knex}) {
