@@ -9,13 +9,18 @@ const subscriber = require('./subscriber');
 
 const rootSchema = `
   type Query {
-    edition(id: ID!): Edition
-    subscriber(id: ID, email: String): Subscriber
-    subscribers(ids: [ID], isActive: Boolean, emails: [String]): [Subscriber]
+    edition( id: ID! ): Edition
+    subscriber( id: ID, email: String ): Subscriber
+    subscribers( emails: [String], isActive: Boolean, ids: [ID] ): [Subscriber]
+  }
+
+  type Mutation {
+    unsubscribe( id: ID! ): Subscriber
   }
 
   schema {
     query: Query
+    mutation: Mutation
   }
 `;
 
@@ -29,6 +34,11 @@ const rootResolvers = {
     },
     subscribers(root, {ids, isActive, emails}, context) {
       return model.findSubscribers({isActive, ids, emails}, context);
+    }
+  },
+  Mutation: {
+    unsubscribe(root, {id}, context) {
+      return model.unsubscribe(id, context);
     }
   }
 };
