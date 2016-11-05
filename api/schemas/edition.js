@@ -6,6 +6,7 @@ exports.schema = `
     publishOn: String
     subject: String
     css: String
+    cssHref: String
     approvedAt: String
     blurbs: [Blurb]
   }

@@ -2,7 +2,7 @@ const formatEditionData = (editionData) => ({
   id: editionData.edition_id,
   publishOn: editionData.publish_on,
   subject: editionData.subject,
-  css: editionData.css_href,
+  cssHref: editionData.css_href,
   approvedAt: editionData.approved_at
 });
 
