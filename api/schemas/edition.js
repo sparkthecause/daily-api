@@ -3,10 +3,10 @@ const editionModel = require('../models/edition');
 exports.schema = `
   type Edition {
     id: ID!
-    publishOn: String
+    publishOn: Date
     subject: String
     cssHref: String
-    approvedAt: String
+    approvedAt: Timestamp
     blurbs: [Blurb]
     renderedHTML: String
   }
@@ -14,9 +14,9 @@ exports.schema = `
   type Blurb {
     id: ID!
     position: Int
-    approvedAt: String
+    approvedAt: Timestamp
     type: String
-    data: String
+    data: JSON
   }
 `;
 

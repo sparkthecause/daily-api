@@ -22,7 +22,7 @@ const formatBlurbData = (blurbData) => ({
   position: blurbData.position,
   approvedAt: blurbData.approved_at,
   type: blurbData.blurb_type,
-  data: JSON.stringify(blurbData.data)
+  data: blurbData.data
 });
 
 const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
@@ -32,7 +32,7 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
   blurbs.sort((a, b) => a.position - b.position);
 
   // Convert blurbs to React components
-  const blurbComponents = blurbs.map(blurb => blurbToComponent(blurb.type, JSON.parse(blurb.data)));
+  const blurbComponents = blurbs.map(blurb => blurbToComponent(blurb.type, blurb.data));
 
   // Stuff components in email shell component and add DOCTYPE
   return Promise.all(blurbComponents)

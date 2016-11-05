@@ -4,8 +4,8 @@ exports.schema = `
   type Subscriber {
     id: ID!
     email: String!
-    createdAt: String!
-    unsubscribedAt: String
+    createdAt: Timestamp!
+    unsubscribedAt: Timestamp
   }
 `;
 

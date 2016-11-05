@@ -2,6 +2,7 @@ const merge = require('merge');
 
 const model = require('../models');
 const edition = require('./edition');
+const scalar = require('./scalar');
 const subscriber = require('./subscriber');
 
 // TODO: Add scalar types for date and email
@@ -35,10 +36,12 @@ const rootResolvers = {
 exports.typeDefs = [
   rootSchema,
   edition.schema,
+  scalar.schema,
   subscriber.schema
 ];
 
 exports.resolvers = merge.recursive(true,
   rootResolvers,
-  edition.resolvers
+  edition.resolvers,
+  scalar.resolvers
 );
