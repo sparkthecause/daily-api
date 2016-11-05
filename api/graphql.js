@@ -7,7 +7,10 @@ exports.server = (app) => {
   const schema = makeExecutableSchema({ typeDefs, resolvers });
   return graphqlExpress({
     schema,
-    context: { knex: app.get('knex') }
+    context: {
+      config: app.get('config'),
+      knex: app.get('knex')
+    }
   });
 
 };
