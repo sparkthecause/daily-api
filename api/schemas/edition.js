@@ -5,10 +5,10 @@ exports.schema = `
     id: ID!
     publishOn: String
     subject: String
-    css: String
     cssHref: String
     approvedAt: String
     blurbs: [Blurb]
+    renderedHTML: String
   }
 
   type Blurb {
@@ -24,6 +24,9 @@ exports.resolvers = {
   Edition: {
     blurbs(root, {}, context) {
       return editionModel.findBlurbsForEdition(root.id, context);
+    },
+    renderedHTML(root, {}, context) {
+      return editionModel.renderHTMLForEdition(root, context);
     }
   }
 };
