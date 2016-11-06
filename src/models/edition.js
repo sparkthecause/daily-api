@@ -7,7 +7,7 @@ const blurbToComponent = (type, data) => {
   const templateName = Object.keys(templates).find(tpl => tpl.toLowerCase() === type);
   const Template = templates[templateName];
   return (Template) ? React.createElement(Template, data) : '';
-}
+};
 
 const formatEditionData = (editionData) => ({
   id: editionData.edition_id,
@@ -42,23 +42,23 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
     const staticMarkup = ReactDOMServer.renderToStaticMarkup(emailComponent);
     return doctype + staticMarkup;
   });
-}
+};
 
 const editionModel = {
-  findEdition({id, publishDate}, {knex}) {
+  findEdition ({id, publishDate}, {knex}) {
     if (!Boolean(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
     const where = id ? { edition_id: id } : { publish_on: publishDate };
     return knex.select('*').from('editions').where(where)
     .then(editionData => {
-      if (!editionData.length) throw new Error(`No edition found for ${id ? 'id: ' + id : 'publishDate: ' + publishDate }`);
+      if (!editionData.length) throw new Error(`No edition found for ${id ? 'id: ' + id : 'publishDate: ' + publishDate}`);
       return formatEditionData(editionData[0]);
     });
   },
-  findBlurbsForEdition(editionId, {knex}) {
+  findBlurbsForEdition (editionId, {knex}) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
     .then(blurbsData => blurbsData.map(blurbData => formatBlurbData(blurbData)));
   },
-  renderHTMLForEdition(edition, {knex}) {
+  renderHTMLForEdition (edition, {knex}) {
     return this.findBlurbsForEdition(edition.id, {knex})
     .then(blurbs => htmlForEdition(edition, blurbs))
     .then(html => inlineCss(html, { url: 'filePath' }));

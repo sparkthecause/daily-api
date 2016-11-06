@@ -14,7 +14,7 @@ const parseDatetimeLiteral = (ast) => {
     case Kind.STRING:
       return ast.value;
     default:
-     return null;
+      return null;
   }
 };
 

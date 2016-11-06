@@ -2,17 +2,17 @@
   "name": "daily-api",
   "version": "0.2.0",
   "description": "API for Spark Daily",
-  "main": "server.js",
+  "main": "src/start.js",
   "engines": {
     "node": "6.3.0",
     "npm": "3.10.5"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/index.js",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test PORT=3001 DATABASE_URL=postgresql://localhost:5432/test",
     "lint": "semistandard --fix --verbose | snazzy",
-    "debug": "DEBUG=1 nodemon server.js",
+    "debug": "DEBUG=1 nodemon src/index.js",
     "pg-config": "node database/config.js"
   },
   "repository": {

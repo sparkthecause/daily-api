@@ -1,4 +1,4 @@
-const pjson = require('./package.json');
+const pjson = require('../package.json');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
