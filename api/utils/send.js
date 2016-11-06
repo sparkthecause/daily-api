@@ -1,4 +1,3 @@
-const Promise = require('bluebird');
 const postmark = require('postmark');
 
 module.exports = (app, options) => {

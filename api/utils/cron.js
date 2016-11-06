@@ -1,4 +1,3 @@
-const Promise = require('bluebird');
 const CronJob = require('cron').CronJob;
 const moment = require('moment');
 
@@ -19,16 +18,15 @@ module.exports = (app) => {
       const htmlPromise = editionPromise.then(edition => model.renderHTMLForEdition(edition, context));
       const subcribersPromise = model.findSubscribers({isActive: true}, context);
 
-      Promise.join(editionPromise, htmlPromise, subcribersPromise, (edition, html, subscribers) => {
+      Promise.all([editionPromise, htmlPromise, subcribersPromise])
+      .then(([edition, html, subscribers]) => {
         return send(app, {
           to: subscribers.map(subscriber => subscriber.email),
           subject: edition.subject,
           html
         });
-      })
-      .catch(error => {
-        throw error;
       });
+
     },
     start: true, // Start the job right now
     timeZone: 'America/New_York' // Time zone of this job.
