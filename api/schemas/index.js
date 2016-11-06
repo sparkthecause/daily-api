@@ -5,8 +5,6 @@ const edition = require('./edition');
 const scalar = require('./scalar');
 const subscriber = require('./subscriber');
 
-// TODO: Add scalar types for date and email
-
 const rootSchema = `
   type Query {
     edition( id: ID, publishDate: Date ): Edition
@@ -27,21 +25,21 @@ const rootSchema = `
 
 const rootResolvers = {
   Query: {
-    edition(root, {id, publishDate}, context) {
-      return model.findEdition({id, publishDate}, context);
+    edition(root, { id, publishDate }, context) {
+      return model.findEdition({ id, publishDate }, context);
     },
-    subscriber(root, {id, email}, context) {
-      return model.findSubscriber({id, email}, context);
+    subscriber(root, { id, email }, context) {
+      return model.findSubscriber({ id, email }, context);
     },
-    subscribers(root, {ids, isActive, emails}, context) {
-      return model.findSubscribers({isActive, ids, emails}, context);
+    subscribers(root, { ids, isActive, emails }, context) {
+      return model.findSubscribers({ isActive, ids, emails }, context);
     }
   },
   Mutation: {
-    subscribe(root, {email}, context) {
+    subscribe(root, { email }, context) {
       return model.subscribe(email, context);
     },
-    unsubscribe(root, {id}, context) {
+    unsubscribe(root, { id }, context) {
       return model.unsubscribe(id, context);
     }
   }
@@ -57,5 +55,6 @@ exports.typeDefs = [
 exports.resolvers = merge.recursive(true,
   rootResolvers,
   edition.resolvers,
-  scalar.resolvers
+  scalar.resolvers,
+  subscriber.resolvers
 );

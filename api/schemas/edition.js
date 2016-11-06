@@ -22,10 +22,10 @@ exports.schema = `
 
 exports.resolvers = {
   Edition: {
-    blurbs(root, {}, context) {
+    blurbs(root, args, context) {
       return editionModel.findBlurbsForEdition(root.id, context);
     },
-    renderedHTML(root, {}, context) {
+    renderedHTML(root, args, context) {
       return editionModel.renderHTMLForEdition(root, context);
     }
   }
