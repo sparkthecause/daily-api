@@ -9,7 +9,7 @@ const formatSubscriberData = (subscriberData) => ({
 
 const subscriberModel = {
   findSubscriber ({id, email}, {knex}) {
-    if (!Boolean(id || email)) throw new Error('A valid id or email is required to find a subscriber');
+    if (!(id || email)) throw new Error('A valid id or email is required to find a subscriber');
     const where = id ? { subscriber_id: id } : { email_address: email };
     return knex.select('*').from('subscribers').where(where)
     .then(subscriberData => {

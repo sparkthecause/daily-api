@@ -5,7 +5,10 @@ const model = require('../models');
 const send = require('./send');
 
 module.exports = (app) => {
-  const context = { knex: app.get('knex') };
+  const context = {
+    config: app.get('config'),
+    knex: app.get('knex')
+  };
 
   return new CronJob({
     cronTime: '00 30 5 * * 1-5',
@@ -17,7 +20,7 @@ module.exports = (app) => {
       const subcribersPromise = model.findSubscribers({ isActive: true }, context);
 
       Promise.all([ editionPromise, htmlPromise, subcribersPromise ])
-      .then(([ edition, html, subscribers ]) => send.sendEmails(config, {
+      .then(([ edition, html, subscribers ]) => send.sendEmails(context.config, {
         to: subscribers.map(subscriber => subscriber.email),
         subject: edition.subject,
         html

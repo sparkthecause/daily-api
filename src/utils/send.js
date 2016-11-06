@@ -1,6 +1,6 @@
 const postmark = require('postmark');
 
-exports.sendEmails = (config, { html, subject, text, to}) => {
+exports.sendEmails = (config, { html, subject, text, to }) => {
   const client = new postmark.Client(config.postmark);
 
   const messages = [];

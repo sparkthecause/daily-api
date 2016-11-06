@@ -1,4 +1,4 @@
-const subscriberModel = require('../models/subscriber');
+// const subscriberModel = require('../models/subscriber');
 
 exports.schema = `
   type Subscriber {

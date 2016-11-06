@@ -43,6 +43,8 @@
     "pg": "^6.0.2",
     "postmark": "^1.2.1",
     "react-dom": "^15.3.2",
+    "semistandard": "^9.1.0",
+    "snazzy": "^5.0.0",
     "validator": "^5.4.0"
   },
   "devDependencies": {

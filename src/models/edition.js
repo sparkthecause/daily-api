@@ -46,7 +46,7 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
 
 const editionModel = {
   findEdition ({id, publishDate}, {knex}) {
-    if (!Boolean(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
+    if (!(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
     const where = id ? { edition_id: id } : { publish_on: publishDate };
     return knex.select('*').from('editions').where(where)
     .then(editionData => {
