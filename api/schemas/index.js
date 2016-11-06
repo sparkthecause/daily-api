@@ -15,7 +15,8 @@ const rootSchema = `
   }
 
   type Mutation {
-    unsubscribe( id: ID! ): Subscriber
+    subscribe( email: String! ): Subscriber!
+    unsubscribe( id: ID! ): Subscriber!
   }
 
   schema {
@@ -37,6 +38,9 @@ const rootResolvers = {
     }
   },
   Mutation: {
+    subscribe(root, {email}, context) {
+      return model.subscribe(email, context);
+    },
     unsubscribe(root, {id}, context) {
       return model.unsubscribe(id, context);
     }

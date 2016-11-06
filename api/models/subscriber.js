@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const formatSubscriberData = (subscriberData) => ({
   id: subscriberData.subscriber_id,
   email: subscriberData.email_address,
@@ -23,7 +25,18 @@ const subscriberModel = {
     })
     .then(subscribersData => {
       if (!subscribersData.length) throw new Error(`No ${isActive ? 'active' : 'matching'} subscribers found ${ids ? 'with ids: ' + ids : ''} ${emails ? 'with emails: ' + emails : ''}`);
-      return data.map(subscriberData => formatSubscriberData(subscriberData));
+      return subscribersData.map(subscriberData => formatSubscriberData(subscriberData));
+    });
+  },
+  subscribe(email, {knex}) {
+    if (!validator.isEmail(email)) throw new Error(`Cannot create subscriber with invalid email address: ${email}`);
+    return knex.insert({ email_address: email }).into('subscribers').returning('*')
+    .then(subscriberData => formatSubscriberData(subscriberData[0]))
+    .catch(error => {
+      // if the email is already in the db, throw an error
+      if (error.constraint === 'subscribers_email_address_key') throw new Error(`Subscriber already exists with email: ${email}`);
+      // if all else fails, throw the raw error
+      throw error;
     });
   },
   unsubscribe(id, {knex}) {
