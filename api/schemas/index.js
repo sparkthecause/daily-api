@@ -9,7 +9,7 @@ const subscriber = require('./subscriber');
 
 const rootSchema = `
   type Query {
-    edition( id: ID! ): Edition
+    edition( id: ID, publishDate: Date ): Edition
     subscriber( id: ID, email: String ): Subscriber
     subscribers( emails: [String], isActive: Boolean, ids: [ID] ): [Subscriber]
   }
@@ -27,8 +27,8 @@ const rootSchema = `
 
 const rootResolvers = {
   Query: {
-    edition(root, {id}, context) {
-      return model.findEdition(id, context);
+    edition(root, {id, publishDate}, context) {
+      return model.findEdition({id, publishDate}, context);
     },
     subscriber(root, {id, email}, context) {
       return model.findSubscriber({id, email}, context);

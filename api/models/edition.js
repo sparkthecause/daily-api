@@ -45,16 +45,18 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
 }
 
 const editionModel = {
-  findEdition(id, {knex}) {
-    return knex.select('*').from('editions').where({ edition_id: id })
-    .then(data => {
-      if (!data.length) throw new Error(`No edition found for id: ${id}`);
-      return formatEditionData(data[0]);
+  findEdition({id, publishDate}, {knex}) {
+    if (!Boolean(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
+    const where = id ? { edition_id: id } : { publish_on: publishDate };
+    return knex.select('*').from('editions').where(where)
+    .then(editionData => {
+      if (!editionData.length) throw new Error(`No edition found for ${id ? 'id: ' + id : 'publishDate: ' + publishDate }`);
+      return formatEditionData(editionData[0]);
     });
   },
   findBlurbsForEdition(editionId, {knex}) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
-    .then(data => data.map(blurbData => formatBlurbData(blurbData)));
+    .then(blurbsData => blurbsData.map(blurbData => formatBlurbData(blurbData)));
   },
   renderHTMLForEdition(edition, {knex}) {
     return this.findBlurbsForEdition(edition.id, {knex})
