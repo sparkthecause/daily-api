@@ -45,7 +45,17 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
 };
 
 const editionModel = {
-  findEdition ({id, publishDate}, {knex}) {
+  createEdition ({ id, approvedAt, cssHref, publishDate, subject }, { knex }) {
+    return knex.insert({
+      edition_id: id,
+      approved_at: approvedAt,
+      css_href: cssHref,
+      publish_on: publishDate,
+      subject
+    }).into('editions').returning('*')
+    .then(editionData => formatEditionData(editionData[0]));
+  },
+  findEdition ({ id, publishDate }, { knex }) {
     if (!(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
     const where = id ? { edition_id: id } : { publish_on: publishDate };
     return knex.select('*').from('editions').where(where)
@@ -54,11 +64,11 @@ const editionModel = {
       return formatEditionData(editionData[0]);
     });
   },
-  findBlurbsForEdition (editionId, {knex}) {
+  findBlurbsForEdition (editionId, { knex }) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
     .then(blurbsData => blurbsData.map(blurbData => formatBlurbData(blurbData)));
   },
-  renderHTMLForEdition (edition, {knex}) {
+  renderHTMLForEdition (edition, { knex }) {
     return this.findBlurbsForEdition(edition.id, {knex})
     .then(blurbs => htmlForEdition(edition, blurbs))
     .then(html => inlineCss(html, { url: 'filePath' }));
