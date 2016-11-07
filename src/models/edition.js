@@ -53,7 +53,11 @@ const editionModel = {
       publish_on: publishDate,
       subject
     }).into('editions').returning('*')
-    .then(editionData => formatEditionData(editionData[0]));
+    .then(editionData => formatEditionData(editionData[0]))
+    .catch(error => {
+      if (error.constraint === 'editions_pkey') throw new Error(`Edition already exists with id: ${id}`);
+      throw error;
+    });
   },
   findEdition ({ id, publishDate }, { knex }) {
     if (!(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');

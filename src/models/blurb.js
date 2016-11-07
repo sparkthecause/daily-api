@@ -15,7 +15,10 @@ const blurbModel = {
       position,
       data
     }).into('blurbs').returning('*')
-    .then(blurbData => formatBlurbData(blurbData[0]));
+    .then(blurbData => formatBlurbData(blurbData[0]))
+    .catch(error => {
+      if (error.constraint === 'blurbs_pkey') throw new Error(`Blurb already exists with id: ${id}`);
+    });
   }
 };
 
