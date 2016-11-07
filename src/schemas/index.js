@@ -93,10 +93,10 @@ const rootResolvers = {
     }
   },
   Mutation: {
-    approveBlurb(root, { id }, context) {
+    approveBlurb (root, { id }, context) {
       return models.approveBlurb(id, context);
     },
-    approveEdition(root, { id }, context) {
+    approveEdition (root, { id }, context) {
       return models.approveEdition(id, context);
     },
     createBlurb (root, args, context) {

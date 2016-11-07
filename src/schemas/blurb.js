@@ -1,4 +1,4 @@
-const editionModel = require('../models/edition');
+// const blurbModel = require('../models/blurb');
 
 exports.schema = `
   type Blurb {

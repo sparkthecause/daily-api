@@ -45,7 +45,7 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
 };
 
 const editionModel = {
-  approveEdition(id, { knex }) {
+  approveEdition (id, { knex }) {
     return knex('editions').update({ approved_at: knex.fn.now() }).where({ edition_id: id }).returning('*')
     .then(editionData => formatEditionData(editionData[0]));
   },

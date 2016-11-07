@@ -7,7 +7,7 @@ const formatBlurbData = (blurbData) => ({
 });
 
 const blurbModel = {
-  approveBlurb(id, { knex }) {
+  approveBlurb (id, { knex }) {
     return knex('blurbs').update({ approved_at: knex.fn.now() }).where({ blurb_id: id }).returning('*')
     .then(blurbData => formatBlurbData(blurbData[0]));
   },
