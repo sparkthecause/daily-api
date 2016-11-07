@@ -13,9 +13,10 @@ const rootSchema = `
   }
 
   type Mutation {
-    createEdition( id: ID, approvedAt: Timestamp, cssHref: String, publishDate: Date, subject: String): Edition
+    createEdition( id: ID, approvedAt: Timestamp, cssHref: String, publishDate: Date, subject: String): Edition!
     subscribe( email: String! ): Subscriber!
     unsubscribe( id: ID! ): Subscriber!
+    updateEdition( id: ID!, approvedAt: Timestamp, cssHref: String, publishDate: Date, subject: String): Edition!
   }
 
   schema {
@@ -45,6 +46,9 @@ const rootResolvers = {
     },
     unsubscribe (root, { id }, context) {
       return models.unsubscribe(id, context);
+    },
+    updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
+      return models.updateEdition(id, { approvedAt, cssHref, publishDate, subject }, context);
     }
   }
 };

@@ -72,7 +72,16 @@ const editionModel = {
     return this.findBlurbsForEdition(edition.id, {knex})
     .then(blurbs => htmlForEdition(edition, blurbs))
     .then(html => inlineCss(html, { url: 'filePath' }));
-  }
+  },
+  updateEdition (id, { approvedAt, cssHref, publishDate, subject }, { knex }) {
+    return knex('editions').update({
+      approved_at: approvedAt,
+      css_href: cssHref,
+      publish_on: publishDate,
+      subject
+    }).where({ edition_id: id }).returning('*')
+    .then(editionData => formatEditionData(editionData[0]));
+  },
 };
 
 module.exports = editionModel;
