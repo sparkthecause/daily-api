@@ -50,6 +50,13 @@ const rootSchema = `
       id: ID!
     ): Subscriber!
 
+    updateBlurb(
+      id: ID!
+      position: Int
+      approvedAt: Timestamp
+      data: JSON
+    ): Edition!
+
     updateEdition(
       id: ID!
       approvedAt: Timestamp
@@ -89,6 +96,9 @@ const rootResolvers = {
     },
     unsubscribe (root, { id }, context) {
       return models.unsubscribe(id, context);
+    },
+    updateBlurb (root, { id, approvedAt, data, position }, context) {
+      return models.updateEdition(id, { approvedAt, data, position }, context);
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
       return models.updateEdition(id, { approvedAt, cssHref, publishDate, subject }, context);

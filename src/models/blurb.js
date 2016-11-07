@@ -18,7 +18,16 @@ const blurbModel = {
     .then(blurbData => formatBlurbData(blurbData[0]))
     .catch(error => {
       if (error.constraint === 'blurbs_pkey') throw new Error(`Blurb already exists with id: ${id}`);
+      throw error;
     });
+  },
+  updateBlurb (id, { approvedAt, data, position }, { knex }) {
+    return knex('editions').update({
+      approved_at: approvedAt,
+      position,
+      data
+    }).where({ blurb_id: id }).returning('*')
+    .then(blurbData => formatBlurbData(blurbData[0]))
   }
 };
 

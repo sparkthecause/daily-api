@@ -85,7 +85,7 @@ const editionModel = {
       subject
     }).where({ edition_id: id }).returning('*')
     .then(editionData => formatEditionData(editionData[0]));
-  },
+  }
 };
 
 module.exports = editionModel;
