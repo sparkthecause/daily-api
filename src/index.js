@@ -30,7 +30,9 @@ app.set('config', config);
 
 app.options('*', cors());
 app.use('/graphql', bodyParser.json(), graphql.server(app));
-app.use('/graphiql', graphql.graphiql);
+if (config.env === 'development') {
+  app.use('/graphiql', graphql.graphiql);
+}
 
 cron(app);
 
