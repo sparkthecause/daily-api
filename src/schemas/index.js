@@ -26,6 +26,14 @@ const rootSchema = `
   }
 
   type Mutation {
+    approveBlurb(
+      id: ID!
+    ): Blurb
+
+    approveEdition(
+      id: ID!
+    ): Edition
+
     createBlurb(
       id: ID
       position: Int
@@ -85,6 +93,12 @@ const rootResolvers = {
     }
   },
   Mutation: {
+    approveBlurb(root, { id }, context) {
+      return models.approveBlurb(id, context);
+    },
+    approveEdition(root, { id }, context) {
+      return models.approveEdition(id, context);
+    },
     createBlurb (root, args, context) {
       return models.createBlurb(args, context);
     },
@@ -98,10 +112,10 @@ const rootResolvers = {
       return models.unsubscribe(id, context);
     },
     updateBlurb (root, { id, approvedAt, data, position }, context) {
-      return models.updateEdition(id, { approvedAt, data, position }, context);
+      return models.updateEdition(id, { data, position }, context);
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
-      return models.updateEdition(id, { approvedAt, cssHref, publishDate, subject }, context);
+      return models.updateEdition(id, { cssHref, publishDate, subject }, context);
     }
   }
 };

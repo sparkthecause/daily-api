@@ -45,10 +45,13 @@ const htmlForEdition = ({id, cssHref, subject}, blurbs) => {
 };
 
 const editionModel = {
-  createEdition ({ id, approvedAt, cssHref, publishDate, subject }, { knex }) {
+  approveEdition(id, { knex }) {
+    return knex('editions').update({ approved_at: knex.fn.now() }).where({ edition_id: id }).returning('*')
+    .then(editionData => formatEditionData(editionData[0]));
+  },
+  createEdition ({ id, cssHref, publishDate, subject }, { knex }) {
     return knex.insert({
       edition_id: id,
-      approved_at: approvedAt,
       css_href: cssHref,
       publish_on: publishDate,
       subject
@@ -77,9 +80,8 @@ const editionModel = {
     .then(blurbs => htmlForEdition(edition, blurbs))
     .then(html => inlineCss(html, { url: 'filePath' }));
   },
-  updateEdition (id, { approvedAt, cssHref, publishDate, subject }, { knex }) {
+  updateEdition (id, { cssHref, publishDate, subject }, { knex }) {
     return knex('editions').update({
-      approved_at: approvedAt,
       css_href: cssHref,
       publish_on: publishDate,
       subject

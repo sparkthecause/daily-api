@@ -7,10 +7,13 @@ const formatBlurbData = (blurbData) => ({
 });
 
 const blurbModel = {
-  createBlurb ({ id, approvedAt, data, position, type }, { knex }) {
+  approveBlurb(id, { knex }) {
+    return knex('blurbs').update({ approved_at: knex.fn.now() }).where({ blurb_id: id }).returning('*')
+    .then(blurbData => formatBlurbData(blurbData[0]));
+  },
+  createBlurb ({ id, data, position, type }, { knex }) {
     return knex.insert({
       blurb_id: id,
-      approved_at: approvedAt,
       blurb_type: type,
       position,
       data
@@ -21,13 +24,9 @@ const blurbModel = {
       throw error;
     });
   },
-  updateBlurb (id, { approvedAt, data, position }, { knex }) {
-    return knex('editions').update({
-      approved_at: approvedAt,
-      position,
-      data
-    }).where({ blurb_id: id }).returning('*')
-    .then(blurbData => formatBlurbData(blurbData[0]))
+  updateBlurb (id, { data, position }, { knex }) {
+    return knex('blurbs').update({ position, data }).where({ blurb_id: id }).returning('*')
+    .then(blurbData => formatBlurbData(blurbData[0]));
   }
 };
 
