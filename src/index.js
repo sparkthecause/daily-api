@@ -34,6 +34,11 @@ if (config.env === 'development') {
   app.use('/graphiql', graphql.graphiql);
 }
 
+app.get('/', (req, res) => res.json({
+  env: config.env,
+  version: config.version
+}));
+
 cron(app);
 
 app.listen(config.port);
