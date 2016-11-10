@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const graphql = require('./graphql');
 // const enforce = require('express-sslify');
+const cron = require('./utils/cron');
 
 const config = require('./config');
 
@@ -27,6 +29,11 @@ app.set('config', config);
 // if (config.env === production) app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.options('*', cors());
-app.use('/', require('./api/routes')(app));
+app.use('/graphql', bodyParser.json(), graphql.server(app));
+if (config.env === 'development') {
+  app.use('/graphiql', graphql.graphiql);
+}
+
+cron(app);
 
 app.listen(config.port);

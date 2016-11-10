@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const url = require('url');
-const config = require('../config');
+const config = require('../src/config');
 
 const db = url.parse(config.postgres).path.slice(1);
 const port = url.parse(config.postgres).port || 5432; // default PG port

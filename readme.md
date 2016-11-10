@@ -21,6 +21,8 @@
 
 If you'd like to enable debugging, use `npm run debug` and set the environment variable `ENV=local`.
 
+Navigate to `http://localhost:{ PORT }/graphiql` to browse the graph interactively using [graphiql](https://github.com/graphql/graphiql).
+
 ### Production
 
 `npm start` will run the API and UI on port set via the environment variable `PORT` and connect to PostgreSQL instance at the url set via the environment variable `DATABASE_URL`.
