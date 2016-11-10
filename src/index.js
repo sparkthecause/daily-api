@@ -37,7 +37,7 @@ if (config.env === 'development') {
 app.get('/', (req, res) => res.json({
   env: config.env,
   version: config.version
-});
+}));
 
 cron(app);
 
