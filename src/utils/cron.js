@@ -20,11 +20,15 @@ module.exports = (app) => {
       const subcribersPromise = model.findSubscribers({ isActive: true }, context);
 
       Promise.all([ editionPromise, htmlPromise, subcribersPromise ])
-      .then(([ edition, html, subscribers ]) => send.sendEmails(context.config, {
-        to: subscribers.map(subscriber => subscriber.email),
+      .then(([ edition, html, subscribers ]) => send.sendEmails({
+        html,
+        mergeVars: {},
         subject: edition.subject,
-        html
-      }));
+        to: subscribers.map(subscriber => ({
+          email: subscriber.email,
+          mergeVars: { subscriber_id: subscriber.id }
+        }))
+      }, context));
     },
     start: true, // Start the job right now
     timeZone: 'America/New_York' // Time zone of this job.
