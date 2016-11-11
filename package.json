@@ -40,6 +40,7 @@
     "merge": "^1.2.0",
     "moment": "^2.14.1",
     "moment-business": "^3.0.0",
+    "mustache": "^2.3.0",
     "pg": "^6.0.2",
     "postmark": "^1.2.1",
     "react-dom": "^15.3.2",
