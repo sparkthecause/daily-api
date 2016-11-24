@@ -13,6 +13,13 @@ const rootSchema = `
       publishDate: Date
     ): Edition
 
+    editions(
+      ids: [ID]
+      publishOnOrAfter: Date
+      publishOnOrBefore: Date
+      isApproved: Boolean
+    ): [Edition]
+
     subscriber(
       id: ID
       email: String
@@ -84,6 +91,9 @@ const rootResolvers = {
   Query: {
     edition (root, { id, publishDate }, context) {
       return models.findEdition({ id, publishDate }, context);
+    },
+    editions (root, { ids, publishOnOrAfter, publishOnOrBefore, isApproved }, context) {
+      return models.findEditions({ ids, publishOnOrAfter, publishOnOrBefore, isApproved }, context);
     },
     subscriber (root, { id, email }, context) {
       return models.findSubscriber({ id, email }, context);
