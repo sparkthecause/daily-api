@@ -12,10 +12,7 @@ const subscriberModel = {
     if (!(id || email)) throw new Error('A valid id or email is required to find a subscriber');
     const where = id ? { subscriber_id: id } : { email_address: email };
     return knex.select('*').from('subscribers').where(where)
-    .then(subscriberData => {
-      if (!subscriberData.length) throw new Error(`No subscriber found for ${id ? 'id: ' + id : 'email: ' + email}`);
-      return formatSubscriberData(subscriberData[0]);
-    });
+    .then(subscriberData => (subscriberData.length) ? formatSubscriberData(subscriberData[0]) : null);
   },
   findSubscribers ({ids, isActive, emails}, {knex}) {
     return knex.select('*').from('subscribers').modify(queryBuilder => {
@@ -23,10 +20,7 @@ const subscriberModel = {
       if (isActive !== undefined) isActive ? queryBuilder.whereNull('unsubscribed_at') : queryBuilder.whereNotNull('unsubscribed_at');
       if (emails) queryBuilder.whereIn('email_address', emails);
     })
-    .then(subscribersData => {
-      if (!subscribersData.length) throw new Error(`No ${isActive ? 'active' : 'matching'} subscribers found ${ids ? 'with ids: ' + ids : ''} ${emails ? 'with emails: ' + emails : ''}`);
-      return subscribersData.map(subscriberData => formatSubscriberData(subscriberData));
-    });
+    .then(subscribersData => subscribersData.map(subscriberData => formatSubscriberData(subscriberData)));
   },
   subscribe (email, {knex}) {
     if (!validator.isEmail(email)) throw new Error(`Cannot create subscriber with invalid email address: ${email}`);
