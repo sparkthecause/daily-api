@@ -45,9 +45,10 @@ const rootSchema = `
       id: ID
       position: Int
       approvedAt: Timestamp
+      editionId: ID
       type: String!
       data: JSON
-    ): Edition!
+    ): Blurb!
 
     createEdition(
       id: ID
@@ -70,7 +71,7 @@ const rootSchema = `
       position: Int
       approvedAt: Timestamp
       data: JSON
-    ): Edition!
+    ): Blurb!
 
     updateEdition(
       id: ID!
