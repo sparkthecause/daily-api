@@ -66,10 +66,7 @@ const editionModel = {
     if (!(id || publishDate)) throw new Error('A valid id or publishDate is required to find an edition');
     const where = id ? { edition_id: id } : { publish_on: publishDate };
     return knex.select('*').from('editions').where(where)
-    .then(editionData => {
-      if (!editionData.length) throw new Error(`No edition found for ${id ? 'id: ' + id : 'publishDate: ' + publishDate}`);
-      return formatEditionData(editionData[0]);
-    });
+    .then(editionData => (editionData.length) ? formatEditionData(editionData[0]) : null);
   },
   findEditions ({ ids, publishOnOrAfter, publishOnOrBefore, isApproved }, { knex }) {
     return knex.select('*').from('editions').modify(queryBuilder => {
@@ -78,10 +75,7 @@ const editionModel = {
       if (publishOnOrAfter) queryBuilder.where('publish_on', '>=', publishOnOrAfter);
       if (publishOnOrBefore) queryBuilder.where('publish_on', '<=', publishOnOrBefore);
     })
-    .then(editionsData => {
-      if (!editionsData.length) throw new Error(`No ${isApproved ? 'approved' : 'matching'} editions found for that query`);
-      return editionsData.map(editionData => formatEditionData(editionData));
-    });
+    .then(editionsData => editionsData.map(editionData => formatEditionData(editionData)));
   },
   findBlurbsForEdition (editionId, { knex }) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
