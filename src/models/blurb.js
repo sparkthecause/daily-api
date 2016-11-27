@@ -11,10 +11,11 @@ const blurbModel = {
     return knex('blurbs').update({ approved_at: knex.fn.now() }).where({ blurb_id: id }).returning('*')
     .then(blurbData => formatBlurbData(blurbData[0]));
   },
-  createBlurb ({ id, data, position, type }, { knex }) {
+  createBlurb ({ id, data, editionId, position, type }, { knex }) {
     return knex.insert({
       blurb_id: id,
       blurb_type: type,
+      edition_id: editionId,
       position,
       data
     }).into('blurbs').returning('*')
