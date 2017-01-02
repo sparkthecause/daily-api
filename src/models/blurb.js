@@ -25,6 +25,16 @@ const blurbModel = {
       throw error;
     });
   },
+  removeBlurbFromEdition (id, { knex }) {
+    return knex('blurbs').update({ edition_id: null }).where({ blurb_id: id }).returning('*')
+    .then(blurbData => formatBlurbData(blurbData[0]));
+  },
+  repositionBlurbs (blurbPositions, { knex }) {
+    return blurbPositions.map(({ id, position }) => knex('blurbs')
+      .update({ position }).where({ blurb_id: id }).returning('*')
+      .then(blurbData => formatBlurbData(blurbData[0]))
+    );
+  },
   updateBlurb (id, { data, position }, { knex }) {
     return knex('blurbs').update({ position, data }).where({ blurb_id: id }).returning('*')
     .then(blurbData => formatBlurbData(blurbData[0]));

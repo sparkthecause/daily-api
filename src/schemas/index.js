@@ -58,6 +58,14 @@ const rootSchema = `
       subject: String
     ): Edition!
 
+    removeBlurbFromEdition(
+      id: ID!
+    ): Blurb
+
+    repositionBlurbs(
+      blurbPositions: [BlurbPositionInput]
+    ): [Blurb]
+
     subscribe(
       email: String!
     ): Subscriber!
@@ -115,6 +123,12 @@ const rootResolvers = {
     },
     createEdition (root, args, context) {
       return models.createEdition(args, context);
+    },
+    removeBlurbFromEdition (root, { id }, context) {
+      return models.removeBlurbFromEdition(id, context);
+    },
+    repositionBlurbs (root, { blurbPositions }, context) {
+      return models.repositionBlurbs(blurbPositions, context);
     },
     subscribe (root, { email }, context) {
       return models.subscribe(email, context);

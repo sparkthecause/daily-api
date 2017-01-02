@@ -9,6 +9,15 @@ exports.schema = `
     type: String!
     data: JSON
   }
+
+  input BlurbInput {
+    data: JSON
+  }
+
+  input BlurbPositionInput {
+    id: ID!
+    position: Int
+  }
 `;
 
 exports.resolvers = {
