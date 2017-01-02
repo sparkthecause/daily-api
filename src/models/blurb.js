@@ -25,10 +25,6 @@ const blurbModel = {
       throw error;
     });
   },
-  removeBlurbFromEdition (id, { knex }) {
-    return knex('blurbs').update({ edition_id: null }).where({ blurb_id: id }).returning('*')
-    .then(blurbData => formatBlurbData(blurbData[0]));
-  },
   repositionBlurbs (blurbPositions, { knex }) {
     return blurbPositions.map(({ id, position }) => knex('blurbs')
       .update({ position }).where({ blurb_id: id }).returning('*')
