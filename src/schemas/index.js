@@ -62,6 +62,10 @@ const rootSchema = `
       id: ID!
     ): Blurb
 
+    repositionBlurbs(
+      blurbPositions: [BlurbPositionInput]
+    ): [Blurb]
+
     subscribe(
       email: String!
     ): Subscriber!
@@ -122,6 +126,9 @@ const rootResolvers = {
     },
     removeBlurbFromEdition (root, { id }, context) {
       return models.removeBlurbFromEdition(id, context);
+    },
+    repositionBlurbs (root, { blurbPositions }, context) {
+      return models.repositionBlurbs(blurbPositions, context);
     },
     subscribe (root, { email }, context) {
       return models.subscribe(email, context);

@@ -13,6 +13,11 @@ exports.schema = `
   input BlurbInput {
     data: JSON
   }
+
+  input BlurbPositionInput {
+    id: ID!
+    position: Int
+  }
 `;
 
 exports.resolvers = {
