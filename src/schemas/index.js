@@ -138,7 +138,7 @@ const rootResolvers = {
       return models.unsubscribe(id, context);
     },
     updateBlurb (root, { id, approvedAt, data, position }, context) {
-      return models.updateEdition(id, { data, position }, context);
+      return models.updateBlurb(id, { data, position }, context);
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
       return models.updateEdition(id, { cssHref, publishDate, subject }, context);
