@@ -2,6 +2,7 @@ const inlineCss = require('inline-css');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const templates = require('daily-templates');
+const blurbModel = require('./blurb');
 
 const blurbToComponent = (type, data) => {
   const templateName = Object.keys(templates).find(tpl => tpl.toLowerCase() === type);
@@ -80,6 +81,14 @@ const editionModel = {
   findBlurbsForEdition (editionId, { knex }) {
     return knex.select('*').from('blurbs').where({ edition_id: editionId }).orderBy('position', 'asc')
     .then(blurbsData => blurbsData.map(blurbData => formatBlurbData(blurbData)));
+  },
+  removeBlurbFromEdition (blurbId, editionId, { knex }) {
+    return knex('blurbs').update({ edition_id: null }).where({ blurb_id: blurbId })
+    .then(() => this.findBlurbsForEdition(editionId, { knex }))
+    .then(blurbs => {
+      const blurbPositions = blurbs.map(({ id }, index) => ({ id, position: index }));
+      return blurbModel.repositionBlurbs(blurbPositions, { knex });
+    });
   },
   renderHTMLForEdition (edition, { knex }) {
     return this.findBlurbsForEdition(edition.id, {knex})

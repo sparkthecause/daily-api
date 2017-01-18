@@ -59,8 +59,9 @@ const rootSchema = `
     ): Edition!
 
     removeBlurbFromEdition(
-      id: ID!
-    ): Blurb
+      blurbId: ID!
+      editionId: ID!
+    ): [Blurb]
 
     repositionBlurbs(
       blurbPositions: [BlurbPositionInput]
@@ -124,8 +125,8 @@ const rootResolvers = {
     createEdition (root, args, context) {
       return models.createEdition(args, context);
     },
-    removeBlurbFromEdition (root, { id }, context) {
-      return models.removeBlurbFromEdition(id, context);
+    removeBlurbFromEdition (root, { blurbId, editionId }, context) {
+      return models.removeBlurbFromEdition(blurbId, editionId, context);
     },
     repositionBlurbs (root, { blurbPositions }, context) {
       return models.repositionBlurbs(blurbPositions, context);
@@ -137,7 +138,7 @@ const rootResolvers = {
       return models.unsubscribe(id, context);
     },
     updateBlurb (root, { id, approvedAt, data, position }, context) {
-      return models.updateEdition(id, { data, position }, context);
+      return models.updateBlurb(id, { data, position }, context);
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
       return models.updateEdition(id, { cssHref, publishDate, subject }, context);

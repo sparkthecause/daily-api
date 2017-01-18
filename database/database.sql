@@ -44,7 +44,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE blurbs (
@@ -58,7 +58,7 @@ CREATE TABLE blurbs (
 
 
 --
--- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE editions (
@@ -71,7 +71,7 @@ CREATE TABLE editions (
 
 
 --
--- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE subscribers (
@@ -87,11 +87,6 @@ CREATE TABLE subscribers (
 --
 
 COPY blurbs (blurb_id, "position", edition_id, approved_at, blurb_type, data) FROM stdin;
-e417eb5b-3080-433c-8c26-38d620428189	2	346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016-01-30 17:29:01.090327	title	{"text": "Well hello there!"}
-bf93e88e-0f70-4f44-bcb9-590239378171	1	346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016-01-30 00:00:00	text	{"text": "Text about pandas..."}
-2ffbde71-ffb1-4935-a104-ec005bd5ea71	0	346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016-04-30 19:39:59.360605	header	{"img_src": "https://cdn.sparkthecause.com/daily/images/email_header_white.png"}
-65b5f800-e43c-47b9-bc21-d376c6fc583b	4	346401bd-9957-4ee5-9bfc-f8f1b80cd767	\N	unsubscribe	{"href": "https://daily.sparkthecause.com/unsubscribe?id={{subscriber_id}}"}
-21b7d16c-abb6-4d2b-ad52-281ec3d9f947	3	346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016-04-30 20:04:01.161657	share	{"text_img_src": "https://cdn.sparkthecause.com/daily/images/share_text.png", "email_img_src": "https://cdn.sparkthecause.com/daily/images/share_email.png"}
 \.
 
 
@@ -100,7 +95,6 @@ bf93e88e-0f70-4f44-bcb9-590239378171	1	346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016
 --
 
 COPY editions (edition_id, publish_on, subject, approved_at, css_href) FROM stdin;
-346401bd-9957-4ee5-9bfc-f8f1b80cd767	2016-08-13	My Second Edition!	2016-01-29 00:00:00	https://cdn.sparkthecause.com/daily/styles/style.css
 \.
 
 
@@ -109,12 +103,11 @@ COPY editions (edition_id, publish_on, subject, approved_at, css_href) FROM stdi
 --
 
 COPY subscribers (email_address, created_at, unsubscribed_at, subscriber_id) FROM stdin;
-charles@sparkthecause.com	2016-01-30 17:25:58.657227	\N	12488c27-6729-4f2b-b5d0-998781ab7309
 \.
 
 
 --
--- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY blurbs
@@ -122,7 +115,7 @@ ALTER TABLE ONLY blurbs
 
 
 --
--- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY editions
@@ -130,7 +123,7 @@ ALTER TABLE ONLY editions
 
 
 --
--- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY subscribers
@@ -138,7 +131,7 @@ ALTER TABLE ONLY subscribers
 
 
 --
--- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY subscribers
@@ -156,4 +149,3 @@ ALTER TABLE ONLY blurbs
 --
 -- PostgreSQL database dump complete
 --
-
