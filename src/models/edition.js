@@ -72,7 +72,7 @@ const editionModel = {
   findEditions ({ ids, publishOnOrAfter, publishOnOrBefore, isApproved }, { knex }) {
     return knex.select('*').from('editions').modify(queryBuilder => {
       if (ids) queryBuilder.whereIn('edition_id', ids);
-      if (isApproved !== undefined) isApproved? queryBuilder.whereNull('approved_at') : queryBuilder.whereNotNull('approved_at');
+      if (isApproved !== undefined) isApproved ? queryBuilder.whereNull('approved_at') : queryBuilder.whereNotNull('approved_at');
       if (publishOnOrAfter) queryBuilder.where('publish_on', '>=', publishOnOrAfter);
       if (publishOnOrBefore) queryBuilder.where('publish_on', '<=', publishOnOrBefore);
     })
