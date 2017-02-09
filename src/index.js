@@ -39,6 +39,11 @@ app.get('/', (req, res) => res.json({
   version: config.version
 }));
 
+// Return the Let's Encrypt certbot response:
+app.get('/.well-known/acme-challenge/:content', (req, res) => {
+  this.body = process.env.CERTBOT_RESPONSE;
+});
+
 cron(app);
 
 app.listen(config.port);
