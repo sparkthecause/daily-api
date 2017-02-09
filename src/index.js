@@ -40,9 +40,7 @@ app.get('/', (req, res) => res.json({
 }));
 
 // Return the Let's Encrypt certbot response:
-app.get('/.well-known/acme-challenge/:content', (req, res) => {
-  this.body = process.env.CERTBOT_RESPONSE;
-});
+app.get('/.well-known/acme-challenge/:content', (req, res) => res.send(process.env.CERTBOT_RESPONSE));
 
 cron(app);
 
