@@ -7,7 +7,7 @@ const blurbModel = require('./blurb');
 const blurbToComponent = (type, data) => {
   const templateName = Object.keys(templates).find(tpl => tpl.toLowerCase() === type);
   const Template = templates[templateName];
-  return (Template) ? React.createElement(Template, data) : '';
+  return (Template) ? React.createElement(Template, { data }) : '';
 };
 
 const formatEditionData = (editionData) => ({
