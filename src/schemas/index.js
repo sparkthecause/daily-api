@@ -89,6 +89,12 @@ const rootSchema = `
       publishDate: Date
       subject: String
     ): Edition!
+
+    uploadImageForBlurb(
+      id: ID!
+      data: String!
+      extension: String!
+    ): String
   }
 
   schema {
@@ -142,6 +148,9 @@ const rootResolvers = {
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
       return models.updateEdition(id, { cssHref, publishDate, subject }, context);
+    },
+    uploadImageForBlurb (root, { id, data, extension }, context) {
+      return models.uploadImageForBlurb(id, data, extension, context);
     }
   }
 };

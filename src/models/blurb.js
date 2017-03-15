@@ -34,6 +34,11 @@ const blurbModel = {
   updateBlurb (id, { data, position }, { knex }) {
     return knex('blurbs').update({ position, data }).where({ blurb_id: id }).returning('*')
     .then(blurbData => formatBlurbData(blurbData[0]));
+  },
+  uploadImageForBlurb (id, data, extension, { s3, config })  {
+    const fileName = `${id}.${extension}`;
+    return s3.upload(`blurbs/${fileName}`, data)
+    .then(({ ETag }) => ETag && `${config.cdn}/blurbs/${fileName}`);
   }
 };
 
