@@ -138,7 +138,7 @@ const rootResolvers = {
       return models.removeBlurbFromEdition(blurbId, editionId, context);
     },
     repositionBlurb (root, { id, position }, context) {
-      return models.updateBlurb(id, { data, position }, context);
+      return models.updateBlurb(id, { position }, context);
     },
     repositionBlurbs (root, { blurbPositions }, context) {
       return models.repositionBlurbs(blurbPositions, context);
