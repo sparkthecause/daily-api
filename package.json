@@ -26,10 +26,11 @@
   },
   "homepage": "https://github.com/sparkthecause/daily-api",
   "dependencies": {
+    "aws-sdk": "^2.28.0",
     "body-parser": "^1.15.2",
     "cors": "^2.7.1",
     "cron": "^1.1.0",
-    "daily-templates": "^0.6.1",
+    "daily-templates": "^0.7.0",
     "express": "^4.14.0",
     "express-sslify": "^1.1.0",
     "graphql": "^0.7.2",

@@ -17,7 +17,7 @@ const pg = require('knex')({
 app.disable('x-powered-by');
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({
   extended: true
 }));

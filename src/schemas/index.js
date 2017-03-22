@@ -63,6 +63,11 @@ const rootSchema = `
       editionId: ID!
     ): [Blurb]
 
+    repositionBlurb(
+      id: ID!
+      position: Int
+    ): Blurb!
+
     repositionBlurbs(
       blurbPositions: [BlurbPositionInput]
     ): [Blurb]
@@ -75,10 +80,8 @@ const rootSchema = `
       id: ID!
     ): Subscriber!
 
-    updateBlurb(
+    updateBlurbData(
       id: ID!
-      position: Int
-      approvedAt: Timestamp
       data: JSON
     ): Blurb!
 
@@ -89,6 +92,12 @@ const rootSchema = `
       publishDate: Date
       subject: String
     ): Edition!
+
+    uploadImageForBlurb(
+      id: ID!
+      data: String!
+      extension: String!
+    ): String
   }
 
   schema {
@@ -128,6 +137,9 @@ const rootResolvers = {
     removeBlurbFromEdition (root, { blurbId, editionId }, context) {
       return models.removeBlurbFromEdition(blurbId, editionId, context);
     },
+    repositionBlurb (root, { id, position }, context) {
+      return models.updateBlurb(id, { position }, context);
+    },
     repositionBlurbs (root, { blurbPositions }, context) {
       return models.repositionBlurbs(blurbPositions, context);
     },
@@ -137,11 +149,14 @@ const rootResolvers = {
     unsubscribe (root, { id }, context) {
       return models.unsubscribe(id, context);
     },
-    updateBlurb (root, { id, approvedAt, data, position }, context) {
-      return models.updateBlurb(id, { data, position }, context);
+    updateBlurbData (root, { id, data }, context) {
+      return models.updateBlurbData(id, { data }, context);
     },
     updateEdition (root, { id, approvedAt, cssHref, publishDate, subject }, context) {
       return models.updateEdition(id, { cssHref, publishDate, subject }, context);
+    },
+    uploadImageForBlurb (root, { id, data, extension }, context) {
+      return models.uploadImageForBlurb(id, data, extension, context);
     }
   }
 };
