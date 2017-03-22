@@ -6,6 +6,32 @@ const formatBlurbData = (blurbData) => ({
   data: blurbData.data
 });
 
+const uploadImageForBlurb = (id, data, extension, { config, s3 }) => {
+  const fileName = `${id}.${extension}`;
+  return s3.upload(`blurbs/${fileName}`, data)
+  .then(({ ETag }) => ETag && `${config.cdn}/blurbs/${fileName}`);
+};
+
+const extensionFromDataURI = (dataURI) => {
+  const extRegex = /[^data:image/]\w+[\w\W]+?(?=;)/;
+  const matches = extRegex.exec(dataURI);
+  return (matches) ? matches[0] : null;
+}
+
+const CDNifySrcData = (id, data, { config, s3 }) => {
+  if ( data.hasOwnProperty('srcData') ) {
+    const fileData = Buffer.from(data.srcData.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+    const extension = extensionFromDataURI(data.srcData);
+    return uploadImageForBlurb(id, fileData, extension, { s3, config })
+    .then(url => {
+      const dataWithUrls = Object.assign({ src: url }, data);
+      delete dataWithUrls['srcData'];
+      return dataWithUrls;
+    });
+  }
+  return Promise.resolve(data);
+};
+
 const blurbModel = {
   approveBlurb (id, { knex }) {
     return knex('blurbs').update({ approved_at: knex.fn.now() }).where({ blurb_id: id }).returning('*')
@@ -35,15 +61,12 @@ const blurbModel = {
       .then(blurbData => formatBlurbData(blurbData[0]))
     );
   },
-  updateBlurbData (id, { data }, { knex }) {
-    return knex('blurbs').update({ data }).where({ blurb_id: id }).returning('*')
+  updateBlurbData (id, { data }, { config, knex, s3 }) {
+    return CDNifySrcData(id, data, { config, s3 })
+    .then(uploadedData => knex('blurbs').update({ data: uploadedData }).where({ blurb_id: id }).returning('*'))
     .then(blurbData => formatBlurbData(blurbData[0]));
   },
-  uploadImageForBlurb (id, data, extension, { s3, config })  {
-    const fileName = `${id}.${extension}`;
-    return s3.upload(`blurbs/${fileName}`, data)
-    .then(({ ETag }) => ETag && `${config.cdn}/blurbs/${fileName}`);
-  }
+  uploadImageForBlurb
 };
 
 module.exports = blurbModel;
