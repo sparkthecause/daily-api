@@ -4,7 +4,7 @@
   "description": "API for Spark Daily",
   "main": "src/start.js",
   "engines": {
-    "node": "6.3.0",
+    "node": "6.10.1",
     "npm": "3.10.5"
   },
   "scripts": {
