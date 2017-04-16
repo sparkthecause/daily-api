@@ -40,6 +40,11 @@ const messageModel = {
     });
   },
 
+  messageBounced(id, bouncedAt, bounceTypeId, { knex }) {
+    console.log(id, bouncedAt, bounceTypeId);
+    return knex('messages').update({ bounced_at: bouncedAt, bounceType_id: bounceTypeId }).where({ message_id: id }).returning('*');
+  },
+
   messageDelivered(id, deliveredAt, { knex }) {
     return knex('messages').update({ delivered_at: deliveredAt }).where({ message_id: id }).returning('*');
   }

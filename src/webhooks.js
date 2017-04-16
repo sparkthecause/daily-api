@@ -2,30 +2,11 @@ const express = require('express');
 const router = express.Router();
 const model = require('./models');
 
-// {
-//   "ID": 42,
-//   "Type": "HardBounce",
-//   "TypeCode": 1,
-//   "Name": "Hard bounce",
-//   "Tag": "Test",
-//   "MessageID": "883953f4-6105-42a2-a16a-77a8eac79483",
-//   "ServerId": 23,
-//   "Description": "The server was unable to deliver your message (ex: unknown user, mailbox not found).",
-//   "Details": "Test bounce details",
-//   "Email": "john@example.com",
-//   "From": "sender@example.com",
-//   "BouncedAt": "2014-08-01T13:28:10.2735393-04:00",
-//   "DumpAvailable": true,
-//   "Inactive": true,
-//   "CanActivate": true,
-//   "Subject": "Test subject"
-// }
-
-// router.post('/postmark/bounced', (req, res) => {
-//   const context = req.app.get('context');
-//   const { DeliveredAt: deliveredAt, Type: bounceTypeId } = req.body;
-//   model.messageBounced(id, deliveredAt, context).then(res.sendStatus(200));
-// });
+router.post('/postmark/bounced', (req, res) => {
+  const context = req.app.get('context');
+  const { BouncedAt: bouncedAt, MessageID: id, TypeCode: bounceTypeId } = req.body;
+  model.messageBounced(id, bouncedAt, bounceTypeId, context).then(res.sendStatus(200));
+});
 
 router.post('/postmark/delivered', (req, res) => {
   const context = req.app.get('context');
