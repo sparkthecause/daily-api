@@ -16,7 +16,7 @@ module.exports = (app) => {
 
       Promise.all([ editionPromise, htmlPromise, subcribersPromise ])
       .then(([ edition, html, subscribers ]) => subscribers.map(subscriber => model.sendMessage(
-          Object.assign(edition, renderedHTML: html),
+          Object.assign(edition, { renderedHTML: html }),
           { subscriber_id: subscriber.id },
           subscriber,
           context

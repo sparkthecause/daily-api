@@ -7,7 +7,7 @@ const enforce = require('express-sslify');
 const config = require('./config');
 const cron = require('./utils/cron');
 const s3 = require('./connectors/s3');
-const webhooks = require('webhooks');
+const webhooks = require('./webhooks');
 
 const app = express();
 const pg = require('knex')({
@@ -32,7 +32,7 @@ app.set('context', {
 });
 
 // Redirect non-HTTPS traffic in production
-if (config.env === production) app.use(enforce.HTTPS({ trustProtoHeader: true }));
+if (config.env === 'production') app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // CORS becuase the web is a silly place
 app.options('*', cors());
