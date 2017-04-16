@@ -14,7 +14,7 @@ const messageModel = {
     };
 
     return new Promise((resolve, reject) => {
-      client.sendEmail(message, (error, success) => (error ? reject(error) : resolve(success));
+      postmark.sendEmail(message, (error, success) => (error ? reject(error) : resolve(success));
     })
     .then(response => {
       return knex.insert({
@@ -26,7 +26,7 @@ const messageModel = {
   },
 
   messageDelivered(id, deliveredAt, { knex }) => {
-    return knex('messages').update({ deliveredAt }).where({ id }).returning('*');
+    return knex('messages').update({ delivered_at: deliveredAt }).where({ message_id: id }).returning('*');
   }
 
 };
