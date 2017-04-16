@@ -7,6 +7,7 @@ const enforce = require('express-sslify');
 const config = require('./config');
 const cron = require('./utils/cron');
 const s3 = require('./connectors/s3');
+const webhooks = require('webhooks');
 
 const app = express();
 const pg = require('knex')({
@@ -47,6 +48,9 @@ app.use('/graphql', bodyParser.json(), graphql.server(app));
 if (config.env === 'development') {
   app.use('/graphiql', graphql.graphiql);
 }
+
+// Webhooks for things we want to know but don't control
+app.use('/webhooks', webhooks);
 
 // A challenge, if you want to return the Let's Encrypt certbot response
 app.get('/.well-known/acme-challenge/:content', (req, res) => res.send(process.env.CERTBOT_RESPONSE));
