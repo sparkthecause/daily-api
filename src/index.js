@@ -59,3 +59,4 @@ app.get('/.well-known/acme-challenge/:content', (req, res) => res.send(process.e
 cron(app);
 
 app.listen(config.port);
+console.log(`Worker listening on :${config.port}`);
