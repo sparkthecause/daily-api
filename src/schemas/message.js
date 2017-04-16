@@ -6,7 +6,7 @@ exports.schema = `
     id: ID!
     editionID: ID!
     subscriberID: ID!
-    sentAt (format: String): Timestamp
+    deliveredAt (format: String): Timestamp
     openedAt (format: String): Timestamp
     bouncedAt (format: String): Timestamp
     bounceType: BounceType
@@ -22,8 +22,8 @@ exports.schema = `
 
 exports.resolvers = {
   Message: {
-    sentAt (root, { format }, context) {
-      return (format) ? moment(root.sentAt).format(format) : root.sentAt;
+    deliveredAt (root, { format }, context) {
+      return (format) ? moment(root.deliveredAt).format(format) : root.deliveredAt;
     },
     openedAt (root, { format }, context) {
       return (format) ? moment(root.openedAt).format(format) : root.openedAt;
