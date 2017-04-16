@@ -5,10 +5,7 @@ const model = require('../models');
 const send = require('./send');
 
 module.exports = (app) => {
-  const context = {
-    config: app.get('config'),
-    knex: app.get('knex')
-  };
+  const context = app.get('context');
 
   return new CronJob({
     cronTime: '00 30 5 * * 1-5',
