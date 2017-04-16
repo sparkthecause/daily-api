@@ -1,8 +1,6 @@
 const CronJob = require('cron').CronJob;
 const moment = require('moment');
-
 const model = require('../models');
-const send = require('./send');
 
 module.exports = (app) => {
   const context = app.get('context');
@@ -17,15 +15,12 @@ module.exports = (app) => {
       const subcribersPromise = model.findSubscribers({ isActive: true }, context);
 
       Promise.all([ editionPromise, htmlPromise, subcribersPromise ])
-      .then(([ edition, html, subscribers ]) => send.sendEmails({
-        html,
-        mergeVars: {},
-        subject: edition.subject,
-        to: subscribers.map(subscriber => ({
-          email: subscriber.email,
-          mergeVars: { subscriber_id: subscriber.id }
-        }))
-      }, context));
+      .then(([ edition, html, subscribers ]) => subscribers.map(subscriber => model.sendMessage(
+          Object.assign(edition, renderedHTML: html),
+          { subscriber_id: subscriber.id },
+          subscriber,
+          context
+      )));
     },
     start: true, // Start the job right now
     timeZone: 'America/New_York' // Time zone of this job.
