@@ -10,15 +10,16 @@ module.exports = (app) => {
     onTick: () => {
       // Runs every weekday (Monday through Friday) at 5:30:00 AM.
       const today = moment().format('YYYY-MM-DD');
-      const editionPromise = model.findEdition({ publishDate: today }, context);
-      const htmlPromise = editionPromise.then(edition => model.renderHTMLForEdition(edition, context));
+      const editionPromise = model.findEdition({ publishDate: today }, context)
+      .then(editionData => model.renderHTMLForEdition(editionData, context)
+      .then(renderedHTML => Object.assign(editionData, { renderedHTML })));
       const subcribersPromise = model.findSubscribers({ isActive: true }, context);
 
-      Promise.all([ editionPromise, htmlPromise, subcribersPromise ])
-      .then(([ edition, html, subscribers ]) => subscribers.map(subscriber => model.sendMessage(
-          Object.assign(edition, { renderedHTML: html }),
-          { subscriber_id: subscriber.id },
+      Promise.all([ editionPromise, subcribersPromise ])
+      .then(([ edition, subscribers ]) => subscribers.map(subscriber => model.sendMessage(
+          edition,
           subscriber,
+          subscriber, // mergeVars
           context
       )));
     },
