@@ -31,7 +31,6 @@ const messageModel = {
       postmark.sendEmail(message, (error, success) => (error ? reject(error) : resolve(success)));
     })
     .then(response => {
-      console.log(response, subscriber, edition)
       return knex.insert({
         message_id: response.MessageID,
         subscriber_id: subscriber.id,
@@ -41,12 +40,16 @@ const messageModel = {
   },
 
   messageBounced(id, bouncedAt, bounceTypeId, { knex }) {
-    console.log(id, bouncedAt, bounceTypeId);
     return knex('messages').update({ bounced_at: bouncedAt, bounceType_id: bounceTypeId }).where({ message_id: id }).returning('*');
   },
 
   messageDelivered(id, deliveredAt, { knex }) {
     return knex('messages').update({ delivered_at: deliveredAt }).where({ message_id: id }).returning('*');
+  },
+
+  messageOpened(messageId, openedAt, metadata, { knex }) {
+    const data = Object.assign({ messageId, openedAt }, metadata);
+    return knex.insert(data).into('opens').returning('*')
   }
 
 };
