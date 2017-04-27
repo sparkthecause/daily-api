@@ -30,7 +30,7 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "cron": "^1.1.0",
-    "daily-templates": "^0.7.1",
+    "daily-templates": "^0.8.0",
     "express": "^4.15.2",
     "express-sslify": "^1.1.0",
     "graphql": "^0.9.2",
