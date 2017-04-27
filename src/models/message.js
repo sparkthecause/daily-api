@@ -2,18 +2,17 @@ const { render } = require('mustache');
 
 const messageModel = {
 
-  findMessage (id, { knex }) {
-    return knex.select('*').from('messages').where({ message_id: id })
+  findMessage (messageId, { knex }) {
+    return knex.select('*').from('messages').where({ messageId })
     .then(messageData => (message.length) ? messageData[0] : null);
   },
 
-  findMessages ({ ids, editionId, subscriberId }, { knex }) {
+  findMessages ({ messageIds, editionId, subscriberId }, { knex }) {
     return knex.select('*').from('messages').modify(queryBuilder => {
-      if (ids) queryBuilder.whereIn('message_id', ids);
-      if (editionId) queryBuilder.where({ edition_id: editionId });
-      if (subscriberId) queryBuilder.where({ subscriber_id: subscriberId });
+      if (ids) queryBuilder.whereIn('messageId', messageIds);
+      if (editionId) queryBuilder.where({ editionId });
+      if (subscriberId) queryBuilder.where({ subscriberId });
     });
-    // .then(messageData => messagesData.map(messageData => formatMessageData(editionData)));
   },
 
   sendMessage (edition, subscriber, mergeVars, { config, knex, postmark }) {
@@ -30,21 +29,19 @@ const messageModel = {
     return new Promise((resolve, reject) => {
       postmark.sendEmail(message, (error, success) => (error ? reject(error) : resolve(success)));
     })
-    .then(response => {
-      return knex.insert({
-        message_id: response.MessageID,
-        subscriber_id: subscriber.id,
-        edition_id: edition.id
-      }).into('messages').returning('*')
-    });
+    .then(response => knex.insert({
+      messageId: response.MessageID,
+      subscriberId: subscriber.id,
+      editionId: edition.id
+    }).into('messages').returning('*'));
   },
 
-  messageBounced(id, bouncedAt, bounceTypeId, { knex }) {
-    return knex('messages').update({ bounced_at: bouncedAt, bounceType_id: bounceTypeId }).where({ message_id: id }).returning('*');
+  messageBounced(messageId, bouncedAt, bounceTypeId, { knex }) {
+    return knex('messages').update({ bouncedAt, bounceTypeId }).where({ messageId }).returning('*');
   },
 
-  messageDelivered(id, deliveredAt, { knex }) {
-    return knex('messages').update({ delivered_at: deliveredAt }).where({ message_id: id }).returning('*');
+  messageDelivered(messageId, deliveredAt, { knex }) {
+    return knex('messages').update({ deliveredAt }).where({ messageId }).returning('*');
   },
 
   messageOpened(messageId, openedAt, metadata, { knex }) {

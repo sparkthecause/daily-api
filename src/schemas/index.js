@@ -21,15 +21,15 @@ const rootSchema = `
       isApproved: Boolean
     ): [Edition]
 
-    messages(
-      ids: [ID]
-      senderId: ID
-      editionId: ID
-    ): [Message]
-
     message(
       id: ID
     ): Message
+
+    messages(
+      messageIds: [ID]
+      senderId: ID
+      editionId: ID
+    ): [Message]
 
     subscriber(
       id: ID
@@ -133,8 +133,8 @@ const rootResolvers = {
     message (root, { id }, context) {
       return models.findMessage( id, context );
     },
-    messages (root, { ids, editionId, subscriberId }, context) {
-      return models.findMessages( { ids, editionId, subscriberId }, context );
+    messages (root, { messageIds, editionId, subscriberId }, context) {
+      return models.findMessages( { messageIds: ids, editionId, subscriberId }, context );
     },
     subscriber (root, { id, email }, context) {
       return models.findSubscriber({ id, email }, context);
