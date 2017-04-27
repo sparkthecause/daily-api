@@ -1,5 +1,5 @@
 const moment = require('moment');
-const messageModel = require('../models/message');
+// const messageModel = require('../models/message');
 
 exports.schema = `
   type Message {

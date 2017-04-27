@@ -4,12 +4,12 @@ const messageModel = {
 
   findMessage (messageId, { knex }) {
     return knex.select('*').from('messages').where({ messageId })
-    .then(messageData => (message.length) ? messageData[0] : null);
+    .then(messageData => (messageData.length) ? messageData[0] : null);
   },
 
   findMessages ({ messageIds, editionId, subscriberId }, { knex }) {
     return knex.select('*').from('messages').modify(queryBuilder => {
-      if (ids) queryBuilder.whereIn('messageId', messageIds);
+      if (messageIds) queryBuilder.whereIn('messageId', messageIds);
       if (editionId) queryBuilder.where({ editionId });
       if (subscriberId) queryBuilder.where({ subscriberId });
     });

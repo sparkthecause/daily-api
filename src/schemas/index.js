@@ -26,7 +26,7 @@ const rootSchema = `
     ): Message
 
     messages(
-      messageIds: [ID]
+      ids: [ID]
       senderId: ID
       editionId: ID
     ): [Message]
@@ -133,7 +133,7 @@ const rootResolvers = {
     message (root, { id }, context) {
       return models.findMessage( id, context );
     },
-    messages (root, { messageIds, editionId, subscriberId }, context) {
+    messages (root, { ids, editionId, subscriberId }, context) {
       return models.findMessages( { messageIds: ids, editionId, subscriberId }, context );
     },
     subscriber (root, { id, email }, context) {
