@@ -1,6 +1,6 @@
 {
   "name": "daily-api",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "API for Spark Daily",
   "main": "src/start.js",
   "engines": {

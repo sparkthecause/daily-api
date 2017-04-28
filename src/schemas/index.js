@@ -2,6 +2,7 @@ const merge = require('merge');
 
 const blurb = require('./blurb');
 const edition = require('./edition');
+const message = require('./message');
 const models = require('../models');
 const scalar = require('./scalar');
 const subscriber = require('./subscriber');
@@ -19,6 +20,16 @@ const rootSchema = `
       publishOnOrBefore: Date
       isApproved: Boolean
     ): [Edition]
+
+    message(
+      id: ID
+    ): Message
+
+    messages(
+      ids: [ID]
+      senderId: ID
+      editionId: ID
+    ): [Message]
 
     subscriber(
       id: ID
@@ -72,6 +83,11 @@ const rootSchema = `
       blurbPositions: [BlurbPositionInput]
     ): [Blurb]
 
+    sendMessage(
+      editionId: ID!
+      subscriberId: ID!
+    ): Message
+
     subscribe(
       email: String!
     ): Subscriber!
@@ -114,6 +130,12 @@ const rootResolvers = {
     editions (root, { ids, publishOnOrAfter, publishOnOrBefore, isApproved }, context) {
       return models.findEditions({ ids, publishOnOrAfter, publishOnOrBefore, isApproved }, context);
     },
+    message (root, { id }, context) {
+      return models.findMessage( id, context );
+    },
+    messages (root, { ids, editionId, subscriberId }, context) {
+      return models.findMessages( { messageIds: ids, editionId, subscriberId }, context );
+    },
     subscriber (root, { id, email }, context) {
       return models.findSubscriber({ id, email }, context);
     },
@@ -143,6 +165,16 @@ const rootResolvers = {
     repositionBlurbs (root, { blurbPositions }, context) {
       return models.repositionBlurbs(blurbPositions, context);
     },
+    sendMessage(root, { editionId, subscriberId }, context) {
+      return Promise.all([
+        models.findEdition({ id: editionId }, context)
+        .then(editionData => models.renderHTMLForEdition(editionData, context).then(renderedHTML => Object.assign(editionData, { renderedHTML }))),
+        models.findSubscriber({ id: subscriberId }, context)
+      ])
+      .then(([ editionData, subscriberData ]) => {
+        return models.sendMessage(editionData, subscriberData, {}, context);
+      })
+    },
     subscribe (root, { email }, context) {
       return models.subscribe(email, context);
     },
@@ -165,6 +197,7 @@ exports.typeDefs = [
   rootSchema,
   blurb.schema,
   edition.schema,
+  message.schema,
   scalar.schema,
   subscriber.schema
 ];
@@ -173,6 +206,7 @@ exports.resolvers = merge.recursive(true,
   rootResolvers,
   blurb.resolvers,
   edition.resolvers,
+  message.resolvers,
   scalar.resolvers,
   subscriber.resolvers
 );

@@ -58,6 +58,18 @@ CREATE TABLE blurbs (
 
 
 --
+-- Name: bounceTypes; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE "bounceTypes" (
+    "bounceTypeId" integer NOT NULL,
+    name text,
+    description text,
+    "retryAfterNSeconds" integer
+);
+
+
+--
 -- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
@@ -67,6 +79,48 @@ CREATE TABLE editions (
     subject text,
     approved_at timestamp without time zone,
     css_href text
+);
+
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE messages (
+    "editionId" uuid NOT NULL,
+    "subscriberId" uuid NOT NULL,
+    "deliveredAt" timestamp without time zone,
+    "messageId" uuid NOT NULL,
+    "bouncedAt" timestamp without time zone,
+    "bounceTypeId" integer
+);
+
+
+--
+-- Name: opens; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE opens (
+    "openId" uuid DEFAULT uuid_generate_v4(),
+    "messageId" uuid,
+    ip inet,
+    "secondsRead" integer,
+    "openedAt" timestamp without time zone,
+    zip text,
+    city text,
+    region text,
+    "regionISOCode" text,
+    country text,
+    "countryISOCode" text,
+    useragent text,
+    platform text,
+    "clientFamily" text,
+    "clientCompany" text,
+    "clientName" text,
+    "osFamily" text,
+    "osCompany" text,
+    "osName" text,
+    coords text
 );
 
 
@@ -83,30 +137,6 @@ CREATE TABLE subscribers (
 
 
 --
--- Data for Name: blurbs; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY blurbs (blurb_id, "position", edition_id, approved_at, blurb_type, data) FROM stdin;
-\.
-
-
---
--- Data for Name: editions; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY editions (edition_id, publish_on, subject, approved_at, css_href) FROM stdin;
-\.
-
-
---
--- Data for Name: subscribers; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY subscribers (email_address, created_at, unsubscribed_at, subscriber_id) FROM stdin;
-\.
-
-
---
 -- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -115,11 +145,27 @@ ALTER TABLE ONLY blurbs
 
 
 --
+-- Name: bounces_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY "bounceTypes"
+    ADD CONSTRAINT bounces_pkey PRIMARY KEY ("bounceTypeId");
+
+
+--
 -- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY editions
     ADD CONSTRAINT editions_pkey PRIMARY KEY (edition_id);
+
+
+--
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY ("messageId");
 
 
 --
@@ -143,7 +189,39 @@ ALTER TABLE ONLY subscribers
 --
 
 ALTER TABLE ONLY blurbs
-    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY (edition_id) REFERENCES editions(edition_id);
+    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY ("edition_id") REFERENCES editions(edition_id);
+
+
+--
+-- Name: editions_subscribers_edition_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT editions_subscribers_edition_id_fkey FOREIGN KEY ("editionId") REFERENCES editions(edition_id);
+
+
+--
+-- Name: editions_subscribers_subscriber_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT editions_subscribers_subscriber_id_fkey FOREIGN KEY ("subscriberId") REFERENCES subscribers(subscriber_id);
+
+
+--
+-- Name: messages_bounce_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_bounce_type_id_fkey FOREIGN KEY ("bounceTypeId") REFERENCES "bounceTypes"("bounceTypeId");
+
+
+--
+-- Name: opens_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY opens
+    ADD CONSTRAINT opens_message_id_fkey FOREIGN KEY ("messageId") REFERENCES messages("messageId");
 
 
 --
