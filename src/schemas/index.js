@@ -3,7 +3,6 @@ const merge = require('merge');
 const blurb = require('./blurb');
 const edition = require('./edition');
 const message = require('./message');
-const models = require('../models');
 const scalar = require('./scalar');
 const subscriber = require('./subscriber');
 
