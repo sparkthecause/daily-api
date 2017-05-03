@@ -1,5 +1,5 @@
 const moment = require('moment');
-// const subscriberModel = require('../models/subscriber');
+const models = require('../models');
 
 exports.schema = `
   type Subscriber {
@@ -10,7 +10,48 @@ exports.schema = `
   }
 `;
 
+exports.query = `
+  subscriber(
+    id: ID
+    email: String
+  ): Subscriber
+
+  subscribers(
+    emails: [String]
+    isActive: Boolean
+    ids: [ID]
+  ): [Subscriber]
+`;
+
+exports.mutation = `
+  subscribe(
+    email: String!
+  ): Subscriber!
+
+  unsubscribe(
+    id: ID!
+  ): Subscriber!
+`;
+
 exports.resolvers = {
+  Query: {
+    subscriber (root, { id, email }, context) {
+      return models.findSubscriber({ id, email }, context);
+    },
+    subscribers (root, { ids, isActive, emails }, context) {
+      return models.findSubscribers({ isActive, ids, emails }, context);
+    }
+  },
+
+  Mutation: {
+    subscribe (root, { email }, context) {
+      return models.subscribe(email, context);
+    },
+    unsubscribe (root, { id }, context) {
+      return models.unsubscribe(id, context);
+    }
+  },
+
   Subscriber: {
     createdAt (root, { format }, context) {
       return (format) ? moment(root.createdAt).format(format) : root.createdAt;
