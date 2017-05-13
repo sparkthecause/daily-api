@@ -44,7 +44,7 @@ exports.resolvers = {
 
   Mutation: {
     createUser (root, { username, password, firstName, lastName, canAccess }, context) {
-      return models.createUser(username, password, { firstName, lastName, canAccess });
+      return models.createUser(username, password, { firstName, lastName, canAccess }, context);
     }
   }
 };

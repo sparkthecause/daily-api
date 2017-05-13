@@ -15,7 +15,7 @@ const userModel = {
   },
 
   createUser (username, password, optionalData, { knex }) {
-    if (!username || !passport) throw new Error('username and password are required');
+    if (!username || !password) throw new Error('username and password are required');
 
     return bcrypt.hash(password, 8)
     .then(hashedPassword => Object.assign({ username, password: hashedPassword }, optionalData))
