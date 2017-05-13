@@ -27,6 +27,7 @@
   "homepage": "https://github.com/sparkthecause/daily-api",
   "dependencies": {
     "aws-sdk": "^2.36.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "cron": "^1.1.0",

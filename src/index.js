@@ -1,4 +1,4 @@
-const BasicStrategy = require('passport-http').BasicStrategy;
+const basicAuth = require('./utils/basicAuth');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const cors = require('cors');
@@ -33,6 +33,8 @@ app.set('context', {
   s3
 });
 
+passport.use(basicAuth(pg));
+
 // Redirect non-HTTPS traffic in production
 if (config.env === 'production') app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
@@ -46,7 +48,7 @@ app.get('/', (req, res) => res.json({
 }));
 
 // GraphQL stuffs curtesy of the Apollo team
-app.use('/graphql', bodyParser.json(), graphql.server(app));
+app.use('/graphql', passport.authenticate('basic', { session: false }), bodyParser.json(), graphql.server(app));
 if (config.env === 'development') {
   app.use('/graphiql', graphql.graphiql);
 }
