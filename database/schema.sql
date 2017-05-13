@@ -44,7 +44,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE blurbs (
@@ -58,7 +58,7 @@ CREATE TABLE blurbs (
 
 
 --
--- Name: bounceTypes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: bounceTypes; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE "bounceTypes" (
@@ -70,7 +70,7 @@ CREATE TABLE "bounceTypes" (
 
 
 --
--- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE editions (
@@ -83,7 +83,7 @@ CREATE TABLE editions (
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE messages (
@@ -97,7 +97,7 @@ CREATE TABLE messages (
 
 
 --
--- Name: opens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: opens; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE opens (
@@ -125,7 +125,7 @@ CREATE TABLE opens (
 
 
 --
--- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE subscribers (
@@ -137,7 +137,7 @@ CREATE TABLE subscribers (
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE users (
@@ -151,7 +151,7 @@ CREATE TABLE users (
 
 
 --
--- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY blurbs
@@ -159,7 +159,7 @@ ALTER TABLE ONLY blurbs
 
 
 --
--- Name: bounceTypes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: bounceTypes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY "bounceTypes"
@@ -167,7 +167,7 @@ ALTER TABLE ONLY "bounceTypes"
 
 
 --
--- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY editions
@@ -175,7 +175,7 @@ ALTER TABLE ONLY editions
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY messages
@@ -183,7 +183,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: opens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: opens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY opens
@@ -191,7 +191,7 @@ ALTER TABLE ONLY opens
 
 
 --
--- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY subscribers
@@ -199,7 +199,7 @@ ALTER TABLE ONLY subscribers
 
 
 --
--- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY subscribers
@@ -207,7 +207,7 @@ ALTER TABLE ONLY subscribers
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -215,7 +215,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -265,4 +265,3 @@ ALTER TABLE ONLY opens
 --
 -- PostgreSQL database dump complete
 --
-
