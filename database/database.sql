@@ -146,7 +146,7 @@ CREATE TABLE users (
     password text,
     "firstName" text,
     "lastName" text,
-    "hasAccess" boolean DEFAULT true
+    "canAccess" boolean DEFAULT true
 );
 
 
