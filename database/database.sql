@@ -44,7 +44,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: blurbs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE blurbs (
@@ -58,7 +58,7 @@ CREATE TABLE blurbs (
 
 
 --
--- Name: bounceTypes; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: bounceTypes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE "bounceTypes" (
@@ -70,7 +70,7 @@ CREATE TABLE "bounceTypes" (
 
 
 --
--- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: editions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE editions (
@@ -83,7 +83,7 @@ CREATE TABLE editions (
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE messages (
@@ -97,11 +97,11 @@ CREATE TABLE messages (
 
 
 --
--- Name: opens; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: opens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE opens (
-    "openId" uuid DEFAULT uuid_generate_v4(),
+    "openId" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "messageId" uuid,
     ip inet,
     "secondsRead" integer,
@@ -125,7 +125,7 @@ CREATE TABLE opens (
 
 
 --
--- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace:
+-- Name: subscribers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE subscribers (
@@ -137,7 +137,21 @@ CREATE TABLE subscribers (
 
 
 --
--- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE users (
+    "userId" uuid DEFAULT uuid_generate_v4() NOT NULL,
+    username text,
+    password text,
+    "firstName" text,
+    "lastName" text,
+    "hasAccess" boolean DEFAULT true
+);
+
+
+--
+-- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY blurbs
@@ -145,15 +159,15 @@ ALTER TABLE ONLY blurbs
 
 
 --
--- Name: bounces_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: bounceTypes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY "bounceTypes"
-    ADD CONSTRAINT bounces_pkey PRIMARY KEY ("bounceTypeId");
+    ADD CONSTRAINT "bounceTypes_pkey" PRIMARY KEY ("bounceTypeId");
 
 
 --
--- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY editions
@@ -161,7 +175,7 @@ ALTER TABLE ONLY editions
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY messages
@@ -169,7 +183,15 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: opens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY opens
+    ADD CONSTRAINT opens_pkey PRIMARY KEY ("openId");
+
+
+--
+-- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY subscribers
@@ -177,7 +199,7 @@ ALTER TABLE ONLY subscribers
 
 
 --
--- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: subscribers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY subscribers
@@ -185,11 +207,27 @@ ALTER TABLE ONLY subscribers
 
 
 --
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY ("userId");
+
+
+--
+-- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
 -- Name: blurbs_edition_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY blurbs
-    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY ("edition_id") REFERENCES editions(edition_id);
+    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY (edition_id) REFERENCES editions(edition_id);
 
 
 --
@@ -227,3 +265,4 @@ ALTER TABLE ONLY opens
 --
 -- PostgreSQL database dump complete
 --
+
