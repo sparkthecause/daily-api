@@ -1,5 +1,6 @@
 const basicAuth = require('./utils/basicAuth');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const config = require('./config');
 const cors = require('cors');
 const cron = require('./utils/cron');
@@ -25,6 +26,7 @@ app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(compression());
 
 app.set('context', {
   config,
