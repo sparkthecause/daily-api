@@ -7,6 +7,7 @@ const cron = require('./utils/cron');
 const enforce = require('express-sslify');
 const express = require('express');
 const graphql = require('./graphql');
+const models = require('./models');
 const passport = require('passport');
 const postmark = require('postmark');
 const s3 = require('./connectors/s3');
@@ -48,6 +49,13 @@ app.get('/', (req, res) => res.json({
   env: config.env,
   version: config.version
 }));
+
+app.post('/login', bodyParser.json(), (req, res) => {
+  const { username, password } = req.body;
+  return models.login(username, password, { knex: pg })
+  .then(user => res.json(user))
+  .catch(error => res.status(401).json({ error }));
+});
 
 // GraphQL stuffs curtesy of the Apollo team
 app.use('/graphql', passport.authenticate('basic', { session: false }), bodyParser.json(), graphql.server(app));
