@@ -2,6 +2,7 @@ const moment = require('moment');
 const models = require('../models');
 
 exports.schema = `
+  # Users are editors and/or authors in the Composer
   type User {
     userId: ID!
     username: String!
