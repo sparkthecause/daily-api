@@ -36,17 +36,17 @@ const messageModel = {
     }).into('messages').returning('*'));
   },
 
-  messageBounced(messageId, bouncedAt, bounceTypeId, { knex }) {
+  messageBounced (messageId, bouncedAt, bounceTypeId, { knex }) {
     return knex('messages').update({ bouncedAt, bounceTypeId }).where({ messageId }).returning('*');
   },
 
-  messageDelivered(messageId, deliveredAt, { knex }) {
+  messageDelivered (messageId, deliveredAt, { knex }) {
     return knex('messages').update({ deliveredAt }).where({ messageId }).returning('*');
   },
 
-  messageOpened(messageId, openedAt, metadata, { knex }) {
+  messageOpened (messageId, openedAt, metadata, { knex }) {
     const data = Object.assign({ messageId, openedAt }, metadata);
-    return knex.insert(data).into('opens').returning('*')
+    return knex.insert(data).into('opens').returning('*');
   }
 
 };

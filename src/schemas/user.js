@@ -1,4 +1,3 @@
-const moment = require('moment');
 const models = require('../models');
 
 exports.schema = `
@@ -36,10 +35,10 @@ exports.mutation = `
 exports.resolvers = {
   Query: {
     user (root, { userId }, context) {
-      return models.findUser( userId, context );
+      return models.findUser(userId, context);
     },
     users (root, { userIds, canAccess }, context) {
-      return models.findUsers( { userIds, canAccess }, context );
+      return models.findUsers({ userIds, canAccess }, context);
     }
   },
 

@@ -16,11 +16,11 @@ const extensionFromDataURI = (dataURI) => {
   const extRegex = /[^data:image/]\w+[\w\W]+?(?=;)/;
   const matches = extRegex.exec(dataURI);
   return (matches) ? matches[0] : null;
-}
+};
 
 const CDNifySrcData = (id, data, { config, s3 }) => {
-  if ( data.hasOwnProperty('srcData') ) {
-    const fileData = Buffer.from(data.srcData.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+  if (data.hasOwnProperty('srcData')) {
+    const fileData = Buffer.from(data.srcData.replace(/^data:image\/\w+;base64,/, ''), 'base64');
     const extension = extensionFromDataURI(data.srcData);
     return uploadImageForBlurb(id, fileData, extension, { s3, config })
     .then(url => {
