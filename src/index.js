@@ -54,7 +54,10 @@ app.post('/login', bodyParser.json(), (req, res) => {
   const { username, password } = req.body;
   return models.login(username, password, { knex: pg })
   .then(user => res.json(user))
-  .catch(error => res.status(401).json({ error }));
+  .catch(error => {
+    const isInvalidCredentials = error.message === 'InvalidCredentials';
+    return (isInvalidCredentials) ? res.status(401).json({ error }) : res.sendStatus(500);
+  });
 });
 
 // GraphQL stuffs curtesy of the Apollo team

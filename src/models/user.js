@@ -25,8 +25,13 @@ const userModel = {
 
   login (username, password, { knex }) {
     return knex.select('*').from('users').where({ username })
-    .then(users => (users.length && bcrypt.compare(password, users[0].password)) ? done(null, users[0]) : done(null, false))
-    .catch(error => done(error));
+    .then(users => {
+      const isValid = users.length && bcrypt.compare(password, users[0].password);
+      if (isValid) {
+        return users[0];
+      }
+      throw new Error('InvalidCredentials');
+    });
   }
 
 };
