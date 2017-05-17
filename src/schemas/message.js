@@ -42,15 +42,15 @@ exports.mutation = `
 exports.resolvers = {
   Query: {
     message (root, { id }, context) {
-      return models.findMessage( id, context );
+      return models.findMessage(id, context);
     },
     messages (root, { ids, editionId, subscriberId }, context) {
-      return models.findMessages( { messageIds: ids, editionId, subscriberId }, context );
+      return models.findMessages({ messageIds: ids, editionId, subscriberId }, context);
     }
   },
 
   Mutation: {
-    sendMessage(root, { editionId, subscriberId }, context) {
+    sendMessage (root, { editionId, subscriberId }, context) {
       return Promise.all([
         models.findEdition({ id: editionId }, context)
         .then(editionData => models.renderHTMLForEdition(editionData, context).then(renderedHTML => Object.assign(editionData, { renderedHTML }))),
@@ -58,7 +58,7 @@ exports.resolvers = {
       ])
       .then(([ editionData, subscriberData ]) => {
         return models.sendMessage(editionData, subscriberData, {}, context);
-      })
+      });
     }
   },
 

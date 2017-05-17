@@ -7,7 +7,8 @@ const port = url.parse(config.postgres).port || 5432; // default PG port
 const psql = [
   `psql --port ${port} --command 'DROP DATABASE IF EXISTS ${db}'`,
   `psql --port ${port} --command 'CREATE DATABASE ${db}'`,
-  `psql --port ${port} --dbname ${db} --file database/database.sql`
+  `psql --port ${port} --dbname ${db} --file database/schema.sql`,
+  `psql --port ${port} --dbname ${db} --file database/data.sql`
 ].join(' && ');
 
 exec(psql, (error, stdout, stderr) => {

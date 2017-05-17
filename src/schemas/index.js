@@ -5,6 +5,7 @@ const edition = require('./edition');
 const message = require('./message');
 const scalar = require('./scalar');
 const subscriber = require('./subscriber');
+const user = require('./user');
 
 const rootSchema = `
   type Query {
@@ -12,6 +13,7 @@ const rootSchema = `
     ${edition.query}
     ${message.query}
     ${subscriber.query}
+    ${user.query}
   }
 
   type Mutation {
@@ -19,6 +21,7 @@ const rootSchema = `
     ${edition.mutation}
     ${message.mutation}
     ${subscriber.mutation}
+    ${user.mutation}
   }
 
   schema {
@@ -33,7 +36,8 @@ exports.typeDefs = [
   edition.schema,
   message.schema,
   scalar.schema,
-  subscriber.schema
+  subscriber.schema,
+  user.schema
 ];
 
 exports.resolvers = merge.recursive(true,
@@ -41,5 +45,6 @@ exports.resolvers = merge.recursive(true,
   edition.resolvers,
   message.resolvers,
   scalar.resolvers,
-  subscriber.resolvers
+  subscriber.resolvers,
+  user.resolvers
 );

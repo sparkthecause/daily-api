@@ -3,7 +3,6 @@ const s3 = new AWS.S3();
 
 module.exports = {
   upload: (name, data) => {
-
     const params = {
       Bucket: 'cdn.sparkthecause.com',
       Key: `daily/${name}`,
@@ -16,6 +15,5 @@ module.exports = {
         resolve(data);
       });
     });
-
   }
 };

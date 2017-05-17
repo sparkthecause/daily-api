@@ -101,7 +101,7 @@ CREATE TABLE messages (
 --
 
 CREATE TABLE opens (
-    "openId" uuid DEFAULT uuid_generate_v4(),
+    "openId" uuid DEFAULT uuid_generate_v4() NOT NULL,
     "messageId" uuid,
     ip inet,
     "secondsRead" integer,
@@ -137,6 +137,20 @@ CREATE TABLE subscribers (
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE users (
+    "userId" uuid DEFAULT uuid_generate_v4() NOT NULL,
+    username text,
+    password text,
+    "firstName" text,
+    "lastName" text,
+    "canAccess" boolean DEFAULT true
+);
+
+
+--
 -- Name: blurbs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -145,11 +159,11 @@ ALTER TABLE ONLY blurbs
 
 
 --
--- Name: bounces_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: bounceTypes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY "bounceTypes"
-    ADD CONSTRAINT bounces_pkey PRIMARY KEY ("bounceTypeId");
+    ADD CONSTRAINT "bounceTypes_pkey" PRIMARY KEY ("bounceTypeId");
 
 
 --
@@ -169,6 +183,14 @@ ALTER TABLE ONLY messages
 
 
 --
+-- Name: opens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY opens
+    ADD CONSTRAINT opens_pkey PRIMARY KEY ("openId");
+
+
+--
 -- Name: subscribers_email_address_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -185,11 +207,27 @@ ALTER TABLE ONLY subscribers
 
 
 --
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY ("userId");
+
+
+--
+-- Name: users_username_key; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
 -- Name: blurbs_edition_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY blurbs
-    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY ("edition_id") REFERENCES editions(edition_id);
+    ADD CONSTRAINT blurbs_edition_id_fkey FOREIGN KEY (edition_id) REFERENCES editions(edition_id);
 
 
 --
