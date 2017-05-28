@@ -52,6 +52,9 @@ app.get('/', (req, res) => res.json({
 
 app.post('/login', bodyParser.json(), (req, res) => {
   const { username, password } = req.body;
+  if (!(username && password)) {
+    return res.status(400).json({ error: 'Username and password are required to login' })
+  }
   return models.login(username, password, { knex: pg })
   .then(user => res.json(user))
   .catch(error => {

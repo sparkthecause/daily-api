@@ -28,7 +28,9 @@ const userModel = {
     .then(users => {
       const isValid = users.length && bcrypt.compare(password, users[0].password);
       if (isValid) {
-        return users[0];
+        let user = users[0];
+        delete user.password;
+        return user;
       }
       throw new Error('InvalidCredentials');
     });

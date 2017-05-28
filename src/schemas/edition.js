@@ -10,6 +10,9 @@ exports.schema = `
     approvedAt (format: String): Timestamp
     blurbs: [Blurb]
     renderedHTML: String
+    messagesSent: Int
+    messagesOpened: Int
+    messagesBounced: Int
   }
 `;
 
@@ -72,17 +75,30 @@ exports.resolvers = {
   },
 
   Edition: {
-    approvedAt (root, { format }, context) {
-      return (format) ? moment(root.approvedAt).format(format) : root.approvedAt;
+    approvedAt ({ approvedAt }, { format }, context) {
+      return (format) ? moment(approvedAt).format(format) : approvedAt;
     },
-    blurbs (root, args, context) {
-      return models.findBlurbsForEdition(root.id, context);
+    blurbs ({ id }, args, context) {
+      return models.findBlurbsForEdition(id, context);
     },
-    publishOn (root, { format }, context) {
-      return (format) ? moment(root.publishOn).format(format) : root.publishOn;
+    publishOn ({ publishOn }, { format }, context) {
+      return (format) ? moment(publishOn).format(format) : publishOn;
     },
     renderedHTML (root, args, context) {
       return models.renderHTMLForEdition(root, context);
+    },
+    messagesSent ({ id }, args, context) {
+      return models.findMessages({ editionId: id }, context)
+      .then(messages => messages.filter(message => Boolean(message.deliveredAt)).length);
+    },
+    messagesOpened ({ id }, args, context) {
+      // TODO: Search opens table
+      return models.findMessages({ editionId: id }, context)
+      .then(messages => messages.filter(message => Boolean(message.deliveredAt)).length);
+    },
+    messagesBounced ({ id }, args, context) {
+      return models.findMessages({ editionId: id }, context)
+      .then(messages => messages.filter(message => Boolean(message.bouncedAt)).length);
     }
   }
 };
