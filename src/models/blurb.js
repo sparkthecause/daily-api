@@ -24,7 +24,7 @@ const CDNifySrcData = (id, data, { config, s3 }) => {
     const extension = extensionFromDataURI(data.srcData);
     return uploadImageForBlurb(id, fileData, extension, { s3, config })
     .then(url => {
-      const dataWithUrls = Object.assign({ src: url }, data);
+      const dataWithUrls = Object.assign(data, { src: url });
       delete dataWithUrls['srcData'];
       return dataWithUrls;
     });
