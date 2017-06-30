@@ -1,3 +1,4 @@
+const { apolloUploadExpress } = require('apollo-upload-server');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const { typeDefs, resolvers } = require('./schemas');
@@ -9,5 +10,9 @@ exports.server = (app) => {
     context: app.get('context')
   });
 };
+
+exports.uploads = () => apolloUploadExpress({
+  uploadDir: '/tmp/uploads'
+});
 
 exports.graphiql = graphiqlExpress({ endpointURL: '/graphql' });

@@ -8,6 +8,13 @@ const subscriber = require('./subscriber');
 const user = require('./user');
 
 const rootSchema = `
+  input Upload {
+    name: String!
+    type: String!
+    size: Int!
+    path: String!
+  }
+
   type Query {
     ${blurb.query}
     ${edition.query}
