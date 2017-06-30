@@ -1,3 +1,10 @@
+const fs = require('fs');
+const mime = require('mime-types');
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
+const deleteFile = util.promisify(fs.unlink);
+
 const formatBlurbData = (blurbData) => ({
   id: blurbData.blurb_id,
   position: blurbData.position,
@@ -6,30 +13,13 @@ const formatBlurbData = (blurbData) => ({
   data: blurbData.data
 });
 
-const uploadImageForBlurb = (id, data, extension, { config, s3 }) => {
-  const fileName = `${id}.${extension}`;
-  return s3.upload(`blurbs/${fileName}`, data)
-  .then(({ ETag }) => ETag && `${config.cdn}/blurbs/${fileName}`);
-};
-
-const extensionFromDataURI = (dataURI) => {
-  const extRegex = /[^data:image/]\w+[\w\W]+?(?=;)/;
-  const matches = extRegex.exec(dataURI);
-  return (matches) ? matches[0] : null;
-};
-
-const CDNifySrcData = (id, data, { config, s3 }) => {
-  if (data.hasOwnProperty('srcData')) {
-    const fileData = Buffer.from(data.srcData.replace(/^data:image\/\w+;base64,/, ''), 'base64');
-    const extension = extensionFromDataURI(data.srcData);
-    return uploadImageForBlurb(id, fileData, extension, { s3, config })
-    .then(url => {
-      const dataWithUrls = Object.assign(data, { src: url });
-      delete dataWithUrls['srcData'];
-      return dataWithUrls;
-    });
-  }
-  return Promise.resolve(data);
+const uploadImageForBlurb = (id, file, { config, s3 }) => {
+  const extension = mime.extension(file.type);
+  const fileName = `blurbs/${id}.${extension}`;
+  return readFile(file.path)
+  .then(data => new Buffer(data, 'binary'))
+  .then(base64Data => s3.upload(fileName, base64Data))
+  .then(etag => deleteFile(file.path).then(() => `${config.cdn}/${fileName}`));
 };
 
 const blurbModel = {
@@ -62,8 +52,7 @@ const blurbModel = {
     );
   },
   updateBlurbData (id, { data }, { config, knex, s3 }) {
-    return CDNifySrcData(id, data, { config, s3 })
-    .then(uploadedData => knex('blurbs').update({ data: uploadedData }).where({ blurb_id: id }).returning('*'))
+    return knex('blurbs').update({ data }).where({ blurb_id: id }).returning('*')
     .then(blurbData => formatBlurbData(blurbData[0]));
   },
   uploadImageForBlurb

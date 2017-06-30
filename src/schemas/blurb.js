@@ -53,12 +53,12 @@ exports.mutation = `
   updateBlurbData(
     id: ID!
     data: JSON
+    file: Upload
   ): Blurb!
 
   uploadImageForBlurb(
     id: ID!
-    data: String!
-    extension: String!
+    file: Upload!
   ): String
 `;
 
@@ -81,11 +81,15 @@ exports.resolvers = {
     repositionBlurbs (root, { blurbPositions }, context) {
       return models.repositionBlurbs(blurbPositions, context);
     },
-    updateBlurbData (root, { id, data }, context) {
+    updateBlurbData (root, { id, data, file }, context) {
+      if (file) {
+        return models.uploadImageForBlurb(id, file, context)
+        .then(url => models.updateBlurbData(id, { data: Object.assign(data, { src: url }) }, context));
+      }
       return models.updateBlurbData(id, { data }, context);
     },
-    uploadImageForBlurb (root, { id, data, extension }, context) {
-      return models.uploadImageForBlurb(id, data, extension, context);
+    uploadImageForBlurb (root, { id, file }, context) {
+      return models.uploadImageForBlurb(id, file, context);
     }
   },
 
