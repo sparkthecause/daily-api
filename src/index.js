@@ -23,7 +23,7 @@ const pg = require('knex')({
 app.disable('x-powered-by');
 
 app.use(cors());
-app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.json({ limit: '2mb' }));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -64,7 +64,7 @@ app.post('/login', bodyParser.json(), (req, res) => {
 });
 
 // GraphQL stuffs curtesy of the Apollo team
-app.use('/graphql', passport.authenticate('basic', { session: false }), bodyParser.json(), graphql.server(app));
+app.use('/graphql', passport.authenticate('basic', { session: false }), bodyParser.json(), graphql.uploads(), graphql.server(app));
 if (config.env === 'development') {
   app.use('/graphiql', graphql.graphiql);
 }
