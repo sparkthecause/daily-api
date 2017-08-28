@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const model = require('./models');
+const model = require("./models");
 
 /* SAMPLE RESPONSE FROM http://developer.postmarkapp.com/developer-bounce-webhook.html
 {
@@ -23,10 +23,16 @@ const model = require('./models');
 }
 */
 
-router.post('/postmark/bounced', (req, res) => {
-  const context = req.app.get('context');
-  const { BouncedAt: bouncedAt, MessageID: id, TypeCode: bounceTypeId } = req.body;
-  model.messageBounced(id, bouncedAt, bounceTypeId, context).then(res.sendStatus(200));
+router.post("/postmark/bounced", (req, res) => {
+  const context = req.app.get("context");
+  const {
+    BouncedAt: bouncedAt,
+    MessageID: id,
+    TypeCode: bounceTypeId
+  } = req.body;
+  model
+    .messageBounced(id, bouncedAt, bounceTypeId, context)
+    .then(res.sendStatus(200));
 });
 
 /* SAMPLE RESPONSE FROM http://developer.postmarkapp.com/developer-delivery-webhook.html
@@ -40,8 +46,8 @@ router.post('/postmark/bounced', (req, res) => {
 }
 */
 
-router.post('/postmark/delivered', (req, res) => {
-  const context = req.app.get('context');
+router.post("/postmark/delivered", (req, res) => {
+  const context = req.app.get("context");
   const { DeliveredAt: deliveredAt, MessageID: id } = req.body;
   model.messageDelivered(id, deliveredAt, context).then(res.sendStatus(200));
 });
@@ -79,8 +85,8 @@ router.post('/postmark/delivered', (req, res) => {
 }
 */
 
-router.post('/postmark/opened', (req, res) => {
-  const context = req.app.get('context');
+router.post("/postmark/opened", (req, res) => {
+  const context = req.app.get("context");
   console.log(req.body);
   const {
     ReceivedAt: openedAt,
@@ -88,16 +94,8 @@ router.post('/postmark/opened', (req, res) => {
     ReadSeconds: secondsRead,
     UserAgent: useragent,
     Platform: platform,
-    Client: {
-      Name: clientName,
-      Company: clientCompany,
-      Family: clientFamily
-    },
-    OS: {
-      Name: osName,
-      Company: osCompany,
-      Family: osFamily
-    },
+    Client: { Name: clientName, Company: clientCompany, Family: clientFamily },
+    OS: { Name: osName, Company: osCompany, Family: osFamily },
     Geo: {
       CountryISOCode: countryISOCode,
       Country: country,
@@ -109,25 +107,32 @@ router.post('/postmark/opened', (req, res) => {
       IP: ip
     }
   } = req.body;
-  model.messageOpened(messageId, openedAt, {
-    city,
-    clientName,
-    clientCompany,
-    clientFamily,
-    coords,
-    country,
-    countryISOCode,
-    ip,
-    osName,
-    osCompany,
-    osFamily,
-    platform,
-    region,
-    regionISOCode,
-    secondsRead,
-    useragent,
-    zip
-  }, context).then(res.sendStatus(200));
+  model
+    .messageOpened(
+      messageId,
+      openedAt,
+      {
+        city,
+        clientName,
+        clientCompany,
+        clientFamily,
+        coords,
+        country,
+        countryISOCode,
+        ip,
+        osName,
+        osCompany,
+        osFamily,
+        platform,
+        region,
+        regionISOCode,
+        secondsRead,
+        useragent,
+        zip
+      },
+      context
+    )
+    .then(res.sendStatus(200));
 });
 
 module.exports = router;
