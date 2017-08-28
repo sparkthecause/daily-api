@@ -1,14 +1,15 @@
-const pjson = require('../package.json');
+const pjson = require("../package.json");
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config();
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config();
 }
 
-const isCodeship = (process.env.CI_NAME && process.env.CI_NAME === 'codeship');
+const isCodeship = process.env.CI_NAME && process.env.CI_NAME === "codeship";
 if (isCodeship) {
-  process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@localhost:5434/test`;
+  process.env.DATABASE_URL = `postgresql://${process.env.PG_USER}:${process.env
+    .PG_PASSWORD}@localhost:5434/test`;
 }
 
 module.exports = {
@@ -17,9 +18,9 @@ module.exports = {
   port: process.env.PORT,
   postgres: process.env.DATABASE_URL,
   postmark: process.env.POSTMARK_API_KEY,
-  cdn: 'https://cdn.sparkthecause.com/daily',
+  cdn: "https://cdn.sparkthecause.com/daily",
   email: {
-    from: 'daily@sparkthecause.com',
-    fromname: 'Spark Daily'
+    from: "daily@sparkthecause.com",
+    fromname: "Spark Daily"
   }
 };
