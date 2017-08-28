@@ -1,5 +1,5 @@
 const { apolloUploadExpress } = require('apollo-upload-server');
-const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const { typeDefs, resolvers } = require('./schemas');
 
